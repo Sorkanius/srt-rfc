@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>The SRT Protocol</title>
+<meta content="Maxim Sharabayko" name="author">
+<meta content="
+       TODO Abstract 
+    " name="description">
+<meta content="xml2rfc 2.37.3" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-ietf-sharabayko-srt-latest" name="ietf.draft">
+<link href="draft-sharabayko-srt.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
+
+html {
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --small-font-size: 14.5px;
+}
+body {
+  max-width: 624px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+#title {
+  padding: 1em 0 0.2em;
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 26px;
+}
+h4, h5, h6 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p, #abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 18px;
+  line-height: 24px;
+}
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href].selfRef {
+  color: var(--text-color);
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px 'Oxygen Mono', monospace;
+}
+pre {
+  border: 1px solid var(--line-color);
+  line-height: 17px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  pre {
+    display: inline-block;
+    overflow-x: auto;
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  pre + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #eee;
+}
+tr:nth-child(2n) > td {
+  background-color: var(--background-color);
+}
+tr:nth-child(2n+1) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n+1) > td {
+  background-color: var(--background-color);
+}
+table caption {
+  font-style: italic;
+  margin: 0.3em 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  visibility: hidden;
+  user-select: none;
+}
+a.pilcrow[href] { color: #ddd; }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media screen {
+  :hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 8em;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  margin: 0;
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0 0 0 calc(1em + var(--identifier-width));
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .index ul ul {
+    column-count: 1;
+    column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 600px) {
+  #authors-addresses {
+    display: relative;
+    padding: 32px 0 0;
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #name-authors-addresses {
+    position: absolute;
+    top: 0px;
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+  }
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 953px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 954px) {
+  body {
+    padding-right: 380px;
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul p, #toc ul li {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table td.text-left,
+table th.text-left {
+  text-align: left;
+}
+table td.text-center,
+table th.text-center {
+  text-align: center;
+}
+table td.text-right,
+table th.text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+</style>
+<link href="rfc-local.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<script src="metadata.min.js"></script>
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">SRT</td>
+<td class="right">February 2020</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Sharabayko</td>
+<td class="center">Expires 20 August 2020</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">mops</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-ietf-sharabayko-srt-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2020-02-17" class="published">17 February 2020</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Standards Track</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2020-08-20">20 August 2020</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">M.P. Sharabayko</div>
+<div class="org">Haivision</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">The SRT Protocol</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note" id="section-note.1">
+      <h2 id="name-note-to-readers">
+<a href="#name-note-to-readers" class="section-name selfRef">Note to Readers</a>
+      </h2>
+<p id="section-note.1-1">Source for this draft and an issue tracker can be found at
+  <a href="https://github.com/haivision/srt-rfc">https://github.com/haivision/srt-rfc</a>.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 20 August 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2020 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Simplified BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Simplified BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-conventions-and-definitions" class="xref">Conventions and Definitions</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-packet-structure" class="xref">Packet Structure</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-data-packets" class="xref">Data Packets</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-control-packets" class="xref">Control Packets</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.1">
+                    <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="xref">3.2.1</a>.  <a href="#name-handshake" class="xref">Handshake</a><a href="#section-toc.1-1.3.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.2">
+                    <p id="section-toc.1-1.3.2.2.2.2.1"><a href="#section-3.2.2" class="xref">3.2.2</a>.  <a href="#name-keep-alive" class="xref">Keep Alive</a><a href="#section-toc.1-1.3.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.3">
+                    <p id="section-toc.1-1.3.2.2.2.3.1"><a href="#section-3.2.3" class="xref">3.2.3</a>.  <a href="#name-ack-acknowledgement" class="xref">ACK (Acknowledgement)</a><a href="#section-toc.1-1.3.2.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.4">
+                    <p id="section-toc.1-1.3.2.2.2.4.1"><a href="#section-3.2.4" class="xref">3.2.4</a>.  <a href="#name-nak-loss-report" class="xref">NAK (Loss Report)</a><a href="#section-toc.1-1.3.2.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.5">
+                    <p id="section-toc.1-1.3.2.2.2.5.1"><a href="#section-3.2.5" class="xref">3.2.5</a>.  <a href="#name-congestion-warning" class="xref">Congestion Warning</a><a href="#section-toc.1-1.3.2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.6">
+                    <p id="section-toc.1-1.3.2.2.2.6.1"><a href="#section-3.2.6" class="xref">3.2.6</a>.  <a href="#name-shutdown" class="xref">Shutdown</a><a href="#section-toc.1-1.3.2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.7">
+                    <p id="section-toc.1-1.3.2.2.2.7.1"><a href="#section-3.2.7" class="xref">3.2.7</a>.  <a href="#name-ackack" class="xref">ACKACK</a><a href="#section-toc.1-1.3.2.2.2.7.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.8">
+                    <p id="section-toc.1-1.3.2.2.2.8.1"><a href="#section-3.2.8" class="xref">3.2.8</a>.  <a href="#name-drop-request" class="xref">Drop Request</a><a href="#section-toc.1-1.3.2.2.2.8.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.9">
+                    <p id="section-toc.1-1.3.2.2.2.9.1"><a href="#section-3.2.9" class="xref">3.2.9</a>.  <a href="#name-peer-error" class="xref">Peer Error</a><a href="#section-toc.1-1.3.2.2.2.9.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-srt-data-transmission-and-c" class="xref">SRT Data Transmission and Control</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-srt-buffer-latency" class="xref">SRT Buffer Latency</a><a href="#section-toc.1-1.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-timestamp-based-packet-deli" class="xref">Timestamp Based Packet Delivery</a><a href="#section-toc.1-1.4.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-too-late-packet-drop" class="xref">Too-Late-Packet-Drop</a><a href="#section-toc.1-1.4.2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-packet-acknowledgement-acks" class="xref">Packet Acknowledgement (ACKs)</a><a href="#section-toc.1-1.4.2.4.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.5">
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-packet-retransmission-naks" class="xref">Packet Retransmission (NAKs)</a><a href="#section-toc.1-1.4.2.5.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.6">
+                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-packet-acknowledgment-in-sr" class="xref">Packet Acknowledgment in SRT</a><a href="#section-toc.1-1.4.2.6.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.7">
+                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-bidirectional-transmission-" class="xref">Bidirectional Transmission Queues</a><a href="#section-toc.1-1.4.2.7.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8">
+                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="xref">4.8</a>.  <a href="#name-acks-ackacks-round-trip-tim" class="xref">ACKs, ACKACKs &amp; Round Trip Time</a><a href="#section-toc.1-1.4.2.8.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.9">
+                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="xref">4.9</a>.  <a href="#name-loss-list" class="xref">Loss List</a><a href="#section-toc.1-1.4.2.9.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-encryption" class="xref">Encryption</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-overview" class="xref">Overview</a><a href="#section-toc.1-1.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-definitions" class="xref">Definitions</a><a href="#section-toc.1-1.5.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-encryption-process-walkthro" class="xref">Encryption Process Walkthrough</a><a href="#section-toc.1-1.5.2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-messages" class="xref">Messages</a><a href="#section-toc.1-1.5.2.4.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.5">
+                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="xref">5.5</a>.  <a href="#name-parameters" class="xref">Parameters</a><a href="#section-toc.1-1.5.2.5.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.6">
+                <p id="section-toc.1-1.5.2.6.1"><a href="#section-5.6" class="xref">5.6</a>.  <a href="#name-security-issues" class="xref">Security Issues</a><a href="#section-toc.1-1.5.2.6.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.7">
+                <p id="section-toc.1-1.5.2.7.1"><a href="#section-5.7" class="xref">5.7</a>.  <a href="#name-implementation-notes" class="xref">Implementation Notes</a><a href="#section-toc.1-1.5.2.7.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.9.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.9.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.9.2.2.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-appendix.a" class="xref">Appendix A</a>.  <a href="#name-packet-sequence-list-coding" class="xref">Packet Sequence List coding</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-appendix.b" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a><a href="#section-toc.1-1.11.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-2">
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      </h2>
+<p id="section-2-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in BCP 14 <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="xref">RFC8174</a>]</span>
+when, and only when, they appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="packet-structure">
+<section id="section-3">
+      <h2 id="name-packet-structure">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-packet-structure" class="section-name selfRef">Packet Structure</a>
+      </h2>
+<p id="section-3-1">SRT packets are transmitted in UDP packets.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-3-2">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+|            SrcPort            |            DstPort            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ UDP Header
+|              Len              |            ChkSum             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+|                                                               |
++                          SRT Packet                           +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre><a href="#section-3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3-3">The structure of the SRT packet is shown in Figure 2.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<span id="name-srt-packet-structure"></span><div id="srtpacket">
+<figure id="figure-1">
+        <div class="artwork art-text alignLeft" id="section-3-4.1">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|F|        (Field meaning depends on the packet type)           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          (Field meaning depends on the packet type)           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Timestamp                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Destination Socket ID                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++    (Packet contents: depends on the packet type)              +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-srt-packet-structure" class="selfRef">SRT packet structure</a>
+        </figcaption></figure>
+</div>
+<dl class="dlParallel" id="section-3-5">
+        <dt id="section-3-5.1">F (1 bit):</dt>
+<dd id="section-3-5.2">
+  Packet Type Flag. The control packet must set this flag as "1".
+The data packet must set this flag as "0".<a href="#section-3-5.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3-5.3">Timestamp (32 bits):</dt>
+<dd id="section-3-5.4">
+  The time stamp of the packet in microseconds.
+The value is relative to the time the SRT connection was established.
+This is relative time value starting from when the connection is established.
+Depending on the transmission mode, the field stores the packet sent time or
+the packet origin time.<a href="#section-3-5.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3-5.5">Destination Socket ID (32 bits):</dt>
+<dd id="section-3-5.6">
+  A fixed-width field providing the socket ID to which a packet should be dispatched.
+The field may have the special value "0" when the packet is a connection request.<a href="#section-3-5.6" class="pilcrow">¶</a>
+</dd>
+</dl>
+<div id="data-packets">
+<section id="section-3.1">
+        <h3 id="name-data-packets">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-data-packets" class="section-name selfRef">Data Packets</a>
+        </h3>
+<p id="section-3.1-1">The structure of the SRT data packet is the following.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span id="name-data-packet-structure"></span><div id="srtdatapacket">
+<figure id="figure-2">
+          <div class="artwork art-text alignLeft" id="section-3.1-2.1">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|0|                    Packet Sequence Number                   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| PP|O|KK |R|                   Message Number                  |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Timestamp                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Destination Socket ID                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                              Data                             +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-data-packet-structure" class="selfRef">data packet structure</a>
+          </figcaption></figure>
+</div>
+<dl class="dlParallel" id="section-3.1-3">
+          <dt id="section-3.1-3.1">Packet Sequence Number (31 bits):</dt>
+<dd id="section-3.1-3.2">
+  The sequential number of the data packet.<a href="#section-3.1-3.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.1-3.3">PP (2 bits):</dt>
+<dd id="section-3.1-3.4">
+  Packet Position. This field indicates the position of data packet in the message.
+The value "10b" means the first packet of the message, "00b" - a packet in the middle,
+"01b" is the last packet. If a single data packet forms the whole message,
+the value is "11b".<a href="#section-3.1-3.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.1-3.5">O (1 bit):</dt>
+<dd id="section-3.1-3.6">
+  Order Flag. Indicates whether the message should be delivered by the receiver
+in order (1) or not (0).
+Note. In file transfer mode this a message with O=0 that is sent later 
+(but reassembled before an earlier message which may be incomplete due to packet loss)
+is allowed to be delivered immediately, without waiting for the earlier message to be completed.
+In Live Transmission Mode the only valid value is "1".<a href="#section-3.1-3.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.1-3.7">KK (2 bits):</dt>
+<dd id="section-3.1-3.8">
+  Encryption Flag. The flag bits indicate whether or not data is encrypted.
+The value "00b" means data is not encrypted, "01b" - data is encrypted with even key, 
+"11b" - data is encrypted with odd key.<a href="#section-3.1-3.8" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.1-3.9">R (1 bit):</dt>
+<dd id="section-3.1-3.10">
+  Retransmitted Packet Flag. This flag is clear when a packet is transmitted the very first time.
+The flag set to "1" means the packet is retransmitted.<a href="#section-3.1-3.10" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.1-3.11">Message Number (26 bits):</dt>
+<dd id="section-3.1-3.12">
+  The sequential number of the message formed by consecutive data packets (see PP field).<a href="#section-3.1-3.12" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.1-3.13">Data (variable length):</dt>
+<dd id="section-3.1-3.14">
+  The payload of the data packet. The length of the data is the remaining length of the UDP packet.<a href="#section-3.1-3.14" class="pilcrow">¶</a>
+</dd>
+</dl>
+</section>
+</div>
+<div id="control-packets">
+<section id="section-3.2">
+        <h3 id="name-control-packets">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-control-packets" class="section-name selfRef">Control Packets</a>
+        </h3>
+<p id="section-3.2-1">SRT control packet has the following structure.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<span id="name-control-packet-structure"></span><div id="controlpacket">
+<figure id="figure-3">
+          <div class="artwork art-text alignLeft" id="section-3.2-2.1">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|1|         Control Type        |            Subtype            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Type-specific Information                   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Timestamp                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Destination Socket ID                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                   Control Information Field                   +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-control-packet-structure" class="selfRef">control packet structure</a>
+          </figcaption></figure>
+</div>
+<dl class="dlParallel" id="section-3.2-3">
+          <dt id="section-3.2-3.1">Type (15 bits):</dt>
+<dd id="section-3.2-3.2">
+  Control Packet Type. The use of these bits is determined
+by the control packet type definition. See Table 1.<a href="#section-3.2-3.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2-3.3">Subtype (16 bits):</dt>
+<dd id="section-3.2-3.4">
+  This field specifies additional subtype of specific packets.
+See Table 1.<a href="#section-3.2-3.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2-3.5">Type-specific Information (32 bits):</dt>
+<dd id="section-3.2-3.6">
+  The use of this field is defined by the particular control
+packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2-3.7">Control Information Field (variable length):</dt>
+<dd id="section-3.2-3.8">
+  The use of this field is defined by the Type field of the control packet.<a href="#section-3.2-3.8" class="pilcrow">¶</a>
+</dd>
+</dl>
+<p id="section-3.2-4">The types of SRT control packets are shown in Table 1.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<span id="name-srt-control-packet-types"></span><div id="srt-ctrl-pkt-type-table">
+<table class="center" id="table-1">
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-srt-control-packet-types" class="selfRef">SRT Control Packet Types</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Packet Type</th>
+              <th class="text-center" rowspan="1" colspan="1">Type</th>
+              <th class="text-center" rowspan="1" colspan="1">Subtype</th>
+              <th class="text-left" rowspan="1" colspan="1">Section</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">HANDSHAKE</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0000</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">KEEPALIVE</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0001</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ACK</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0002</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">NAK (Loss Report)</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0003</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Congestion Warning</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0004</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SHUTDOWN</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0005</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ACKACK</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0006</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">DROPREQ</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0007</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">PEER_ERROR</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0008</td>
+              <td class="text-center" rowspan="1" colspan="1">0x0</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Extension</td>
+              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
+              <td class="text-center" rowspan="1" colspan="1">-</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SRT_HSREQ</td>
+              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
+              <td class="text-center" rowspan="1" colspan="1">0x1</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SRT_HSRSP</td>
+              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
+              <td class="text-center" rowspan="1" colspan="1">0x2</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SRT_KMREQ</td>
+              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
+              <td class="text-center" rowspan="1" colspan="1">0x3</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">SRT_KMRSP</td>
+              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
+              <td class="text-center" rowspan="1" colspan="1">0x4</td>
+              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<div id="handshake">
+<section id="section-3.2.1">
+          <h4 id="name-handshake">
+<a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-handshake" class="section-name selfRef">Handshake</a>
+        </h4>
+</section>
+</div>
+<div id="keep-alive">
+<section id="section-3.2.2">
+          <h4 id="name-keep-alive">
+<a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-keep-alive" class="section-name selfRef">Keep Alive</a>
+        </h4>
+</section>
+</div>
+<div id="ack-acknowledgement">
+<section id="section-3.2.3">
+          <h4 id="name-ack-acknowledgement">
+<a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-ack-acknowledgement" class="section-name selfRef">ACK (Acknowledgement)</a>
+          </h4>
+<p id="section-3.2.3-1">Acknowledgement control packets are used to provide delivery status of data packets.
+These packets may also carry some additional information from the receiver like
+RTT, bandwidth, receiving speed, etc.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
+<span id="name-ack-control-packet"></span><div id="ack-control-packet">
+<figure id="figure-4">
+            <div class="artwork art-text alignLeft" id="section-3.2.3-2.1">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|1|         Control Type        |            Subtype            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Type-specific Information                   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Timestamp                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Destination Socket ID                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+----
+|            Last Acknowledged Packet Sequence Number           | Lite ACK
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+----
+|                              RTT                              |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          RTT variance                         | Small Ack
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Available Buffer Size                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+----
+|                     Packets Receiving Rate                    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Estimated Link Capacity                   | Full ACK
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         Receiving Rate                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+----
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-ack-control-packet" class="selfRef">ACK control packet</a>
+            </figcaption></figure>
+</div>
+<dl class="dlParallel" id="section-3.2.3-3">
+            <dt id="section-3.2.3-3.1">Control Type:</dt>
+<dd id="section-3.2.3-3.2">
+  The type value of ACK control packet is "2".<a href="#section-3.2.3-3.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.3">Subtype:</dt>
+<dd id="section-3.2.3-3.4">
+  The type value of ACK control packet is "0".<a href="#section-3.2.3-3.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.5">Last Acknowledged Packet Sequence Number (32 bits):</dt>
+<dd id="section-3.2.3-3.6">
+  The sequence number of the last acknowledged data packet +1.<a href="#section-3.2.3-3.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.7">RTT (32 bits):</dt>
+<dd id="section-3.2.3-3.8">
+  RTT value estimated by the receiver based on the ACK-ACKACK packets exchange.<a href="#section-3.2.3-3.8" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.9">RTT variance (32 bits):</dt>
+<dd id="section-3.2.3-3.10">
+  The variance of the RTT estimation.<a href="#section-3.2.3-3.10" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.11">Available Buffer Size (32 bits):</dt>
+<dd id="section-3.2.3-3.12">
+  Available size of the receiver's buffer.<a href="#section-3.2.3-3.12" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.13">Packets Receiving Rate (32 bits):</dt>
+<dd id="section-3.2.3-3.14">
+  The receiving rate of the packets in packets / second.<a href="#section-3.2.3-3.14" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.15">Estimated Link Capacity (32 bits):</dt>
+<dd id="section-3.2.3-3.16">
+  Estimated bandwidth of the link.<a href="#section-3.2.3-3.16" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.3-3.17">Receiving Rate (32 bits):</dt>
+<dd id="section-3.2.3-3.18">
+  Estimated receiving rate.<a href="#section-3.2.3-3.18" class="pilcrow">¶</a>
+</dd>
+</dl>
+</section>
+</div>
+<div id="nak-loss-report">
+<section id="section-3.2.4">
+          <h4 id="name-nak-loss-report">
+<a href="#section-3.2.4" class="section-number selfRef">3.2.4. </a><a href="#name-nak-loss-report" class="section-name selfRef">NAK (Loss Report)</a>
+        </h4>
+</section>
+</div>
+<div id="congestion-warning">
+<section id="section-3.2.5">
+          <h4 id="name-congestion-warning">
+<a href="#section-3.2.5" class="section-number selfRef">3.2.5. </a><a href="#name-congestion-warning" class="section-name selfRef">Congestion Warning</a>
+        </h4>
+</section>
+</div>
+<div id="shutdown">
+<section id="section-3.2.6">
+          <h4 id="name-shutdown">
+<a href="#section-3.2.6" class="section-number selfRef">3.2.6. </a><a href="#name-shutdown" class="section-name selfRef">Shutdown</a>
+        </h4>
+</section>
+</div>
+<div id="ackack">
+<section id="section-3.2.7">
+          <h4 id="name-ackack">
+<a href="#section-3.2.7" class="section-number selfRef">3.2.7. </a><a href="#name-ackack" class="section-name selfRef">ACKACK</a>
+          </h4>
+<p id="section-3.2.7-1">ACKACK control packets are used to acknowledge the reception of an ACK.
+Furthermore, these packets are used in the calculation of RTT by the receiver.<a href="#section-3.2.7-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-3.2.7-2">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|1|         Control Type        |            Subtype            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       ACK Sequence Number                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Timestamp                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Destination Socket ID                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
++                             None                              +
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre><a href="#section-3.2.7-2" class="pilcrow">¶</a>
+</div>
+<dl class="dlParallel" id="section-3.2.7-3">
+            <dt id="section-3.2.7-3.1">Control Type:</dt>
+<dd id="section-3.2.7-3.2">
+  The type value of ACKACK control packet is "6".<a href="#section-3.2.7-3.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.7-3.3">ACK Sequence Number:</dt>
+<dd id="section-3.2.7-3.4">
+  This field stores the sequence number of the ACK packet acknowledged.<a href="#section-3.2.7-3.4" class="pilcrow">¶</a>
+</dd>
+</dl>
+</section>
+</div>
+<div id="drop-request">
+<section id="section-3.2.8">
+          <h4 id="name-drop-request">
+<a href="#section-3.2.8" class="section-number selfRef">3.2.8. </a><a href="#name-drop-request" class="section-name selfRef">Drop Request</a>
+        </h4>
+</section>
+</div>
+<div id="peer-error">
+<section id="section-3.2.9">
+          <h4 id="name-peer-error">
+<a href="#section-3.2.9" class="section-number selfRef">3.2.9. </a><a href="#name-peer-error" class="section-name selfRef">Peer Error</a>
+        </h4>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="srt-data-transmission-and-control">
+<section id="section-4">
+      <h2 id="name-srt-data-transmission-and-c">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-srt-data-transmission-and-c" class="section-name selfRef">SRT Data Transmission and Control</a>
+      </h2>
+<p id="section-4-1">TODO: Priority 2.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="srt-buffer-latency">
+<section id="section-4.1">
+        <h3 id="name-srt-buffer-latency">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-srt-buffer-latency" class="section-name selfRef">SRT Buffer Latency</a>
+        </h3>
+<p id="section-4.1-1">The sender and receiver have buffers to store packets.
+On the sender, latency is the time that SRT holds a packet to give it a chance to be
+delivered successfully while maintaining the rate of the sender at the receiver.
+The effect of latency is minimal on the sender, where it is used in the context of
+dropping packets if an ACK is missing or late. It's much clearer on the receiver side.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">Latency is a value specified in milliseconds, which can cover hundreds or even thousands
+of packets at high bitrate. Latency can be thought of as a window that slides over time,
+during which a number of activities take place.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="timestamp-based-packet-delivery">
+<section id="section-4.2">
+        <h3 id="name-timestamp-based-packet-deli">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-timestamp-based-packet-deli" class="section-name selfRef">Timestamp Based Packet Delivery</a>
+        </h3>
+<p id="section-4.2-1">This feature uses the timestamp of the SRT data packet header.
+TsbPD allows a receiver to deliver packets to the decoder at the same pace they were
+provided to the SRT sender by an encoder. Basically, the sender timestamp
+in the received packet is adjusted to the receiver's local time
+(compensating for time drift or different time zone)
+before releasing the packet to the application.
+Packets can be withheld by SRT for a configured receiver delay (ms).
+Higher delay can accommodate a larger uniform packet drop rate or larger packet burst drop.
+Packets received after their "play time" are dropped.
+The packet timestamp (in microseconds) is relative to the SRT connection creation time.
+The origin time (in microseconds) of the packet is already sampled when a packet is first
+submitted by the application to the SRT sender.
+The TsbPD feature uses this time to stamp the packet for first transmission
+and any subsequent re-transmission. This timestamp and the configured latency
+control the recovery buffer size and the instant that packets are delivered at the destination.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="too-late-packet-drop">
+<section id="section-4.3">
+        <h3 id="name-too-late-packet-drop">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-too-late-packet-drop" class="section-name selfRef">Too-Late-Packet-Drop</a>
+        </h3>
+<p id="section-4.3-1">Too-Late-Packet Drop allows the sender to drop packets that have no chance to be delivered in time.
+In the SRT sender, when Too-Late Packet Drop is enabled, and a packet timestamp
+is older than 125% of the SRT latency, it is considered too late to be delivered and may be dropped
+by the sender. Packets of an IFrame tail can then be dropped before being delivered.
+In the receiver, tail packets of a big I-Frame may be quite late and not held by the SRT receive buffer.
+They pass through to the application. The receiver buffer depletes and there is no time left
+for retransmission if missing packets are discovered. Missing packets are then skipped by the receiver.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="packet-acknowledgement-acks">
+<section id="section-4.4">
+        <h3 id="name-packet-acknowledgement-acks">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-packet-acknowledgement-acks" class="section-name selfRef">Packet Acknowledgement (ACKs)</a>
+      </h3>
+</section>
+</div>
+<div id="packet-retransmission-naks">
+<section id="section-4.5">
+        <h3 id="name-packet-retransmission-naks">
+<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-packet-retransmission-naks" class="section-name selfRef">Packet Retransmission (NAKs)</a>
+      </h3>
+</section>
+</div>
+<div id="packet-acknowledgment-in-srt">
+<section id="section-4.6">
+        <h3 id="name-packet-acknowledgment-in-sr">
+<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-packet-acknowledgment-in-sr" class="section-name selfRef">Packet Acknowledgment in SRT</a>
+      </h3>
+</section>
+</div>
+<div id="bidirectional-transmission-queues">
+<section id="section-4.7">
+        <h3 id="name-bidirectional-transmission-">
+<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-bidirectional-transmission-" class="section-name selfRef">Bidirectional Transmission Queues</a>
+      </h3>
+</section>
+</div>
+<div id="acks-ackacks-round-trip-time">
+<section id="section-4.8">
+        <h3 id="name-acks-ackacks-round-trip-tim">
+<a href="#section-4.8" class="section-number selfRef">4.8. </a><a href="#name-acks-ackacks-round-trip-tim" class="section-name selfRef">ACKs, ACKACKs &amp; Round Trip Time</a>
+      </h3>
+</section>
+</div>
+<div id="loss-list">
+<section id="section-4.9">
+        <h3 id="name-loss-list">
+<a href="#section-4.9" class="section-number selfRef">4.9. </a><a href="#name-loss-list" class="section-name selfRef">Loss List</a>
+      </h3>
+</section>
+</div>
+</section>
+</div>
+<div id="encryption">
+<section id="section-5">
+      <h2 id="name-encryption">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-encryption" class="section-name selfRef">Encryption</a>
+      </h2>
+<p id="section-5-1">TODO: Priority 3.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="overview">
+<section id="section-5.1">
+        <h3 id="name-overview">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-overview" class="section-name selfRef">Overview</a>
+      </h3>
+</section>
+</div>
+<div id="definitions">
+<section id="section-5.2">
+        <h3 id="name-definitions">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-definitions" class="section-name selfRef">Definitions</a>
+      </h3>
+</section>
+</div>
+<div id="encryption-process-walkthrough">
+<section id="section-5.3">
+        <h3 id="name-encryption-process-walkthro">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-encryption-process-walkthro" class="section-name selfRef">Encryption Process Walkthrough</a>
+      </h3>
+</section>
+</div>
+<div id="messages">
+<section id="section-5.4">
+        <h3 id="name-messages">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-messages" class="section-name selfRef">Messages</a>
+      </h3>
+</section>
+</div>
+<div id="parameters">
+<section id="section-5.5">
+        <h3 id="name-parameters">
+<a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-parameters" class="section-name selfRef">Parameters</a>
+      </h3>
+</section>
+</div>
+<div id="security-issues">
+<section id="section-5.6">
+        <h3 id="name-security-issues">
+<a href="#section-5.6" class="section-number selfRef">5.6. </a><a href="#name-security-issues" class="section-name selfRef">Security Issues</a>
+      </h3>
+</section>
+</div>
+<div id="implementation-notes">
+<section id="section-5.7">
+        <h3 id="name-implementation-notes">
+<a href="#section-5.7" class="section-number selfRef">5.7. </a><a href="#name-implementation-notes" class="section-name selfRef">Implementation Notes</a>
+      </h3>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-6-1">TODO Security<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-7">
+      <h2 id="name-iana-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-7-1">TODO IANA<a href="#section-7-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="section-8">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="section-8-1">TODO acknowledge.<a href="#section-8-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-9">
+      <h2 id="name-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-9.1">
+        <h3 id="name-normative-references">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+<dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+</dl>
+</section>
+<section id="section-9.2">
+        <h3 id="name-informative-references">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC8174">[RFC8174]</dt>
+<dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+</dl>
+</section>
+</section>
+<div id="packet-seq-list-coding">
+<section id="section-appendix.a">
+      <h2 id="name-packet-sequence-list-coding">
+<a href="#section-appendix.a" class="section-number selfRef">Appendix A. </a><a href="#name-packet-sequence-list-coding" class="section-name selfRef">Packet Sequence List coding</a>
+    </h2>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="section-appendix.b">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Maxim Sharabayko</span></div>
+<div dir="auto" class="left"><span class="org">Haivision</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:maxsharabayko@haivision.com" class="email">maxsharabayko@haivision.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>var toc = document.getElementById("toc");
+var tocToggle = toc.querySelector("h2");
+var tocNav = toc.querySelector("nav");
+
+// mobile menu toggle
+tocToggle.onclick = function(event) {
+    if (window.innerWidth < 1024) {
+ var tocNavDisplay = tocNav.currentStyle ? tocNav.currentStyle.display : getComputedStyle(tocNav, null).display;
+ if (tocNavDisplay == "none") {
+     tocNav.style.display = "block";
+ } else {
+     tocNav.style.display = "none";
+ }
+    }
+}
+
+// toc anchor scroll to anchor
+tocNav.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (event.target.nodeName == 'A') {
+ if (window.innerWidth < 1024) {
+     tocNav.style.display = "none";
+ }
+ var href = event.target.getAttribute("href");
+ var anchorId = href.substr(1);
+ var anchor =  document.getElementById(anchorId);
+ anchor.scrollIntoView(true);
+ window.history.pushState("","",href);
+    }
+});
+
+// switch toc mode when window resized
+window.onresize = function () {
+    if (window.innerWidth < 1024) {
+ tocNav.style.display = "none";
+    } else {
+ tocNav.style.display = "block";
+    }
+}
+</script>
+</body>
+</html>
