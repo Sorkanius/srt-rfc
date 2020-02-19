@@ -10,7 +10,7 @@ Expires: 22 August 2020                             SK Telecom Co., Ltd.
 
 
                             The SRT Protocol
-                    draft-ietf-sharabayko-srt-latest
+                       draft-sharabayko-mops-srt
 
 Abstract
 
