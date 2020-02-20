@@ -820,7 +820,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sharabayko &amp; Kim</td>
-<td class="center">Expires 22 August 2020</td>
+<td class="center">Expires 23 August 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -833,12 +833,12 @@ table.left {
 <dd class="internet-draft">draft-sharabayko-mops-srt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-02-19" class="published">19 February 2020</time>
+<time datetime="2020-02-20" class="published">20 February 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-08-22">22 August 2020</time></dd>
+<dd class="expires"><time datetime="2020-08-23">23 August 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -883,7 +883,7 @@ table.left {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 August 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 August 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -940,19 +940,10 @@ table.left {
                     <p id="section-toc.1-1.3.2.2.2.4.1"><a href="#section-3.2.4" class="xref">3.2.4</a>.  <a href="#name-nak-loss-report" class="xref">NAK (Loss Report)</a><a href="#section-toc.1-1.3.2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.5">
-                    <p id="section-toc.1-1.3.2.2.2.5.1"><a href="#section-3.2.5" class="xref">3.2.5</a>.  <a href="#name-congestion-warning" class="xref">Congestion Warning</a><a href="#section-toc.1-1.3.2.2.2.5.1" class="pilcrow">¶</a></p>
+                    <p id="section-toc.1-1.3.2.2.2.5.1"><a href="#section-3.2.5" class="xref">3.2.5</a>.  <a href="#name-shutdown" class="xref">Shutdown</a><a href="#section-toc.1-1.3.2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.6">
-                    <p id="section-toc.1-1.3.2.2.2.6.1"><a href="#section-3.2.6" class="xref">3.2.6</a>.  <a href="#name-shutdown" class="xref">Shutdown</a><a href="#section-toc.1-1.3.2.2.2.6.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.7">
-                    <p id="section-toc.1-1.3.2.2.2.7.1"><a href="#section-3.2.7" class="xref">3.2.7</a>.  <a href="#name-ackack" class="xref">ACKACK</a><a href="#section-toc.1-1.3.2.2.2.7.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.8">
-                    <p id="section-toc.1-1.3.2.2.2.8.1"><a href="#section-3.2.8" class="xref">3.2.8</a>.  <a href="#name-drop-request" class="xref">Drop Request</a><a href="#section-toc.1-1.3.2.2.2.8.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.3.2.2.2.9">
-                    <p id="section-toc.1-1.3.2.2.2.9.1"><a href="#section-3.2.9" class="xref">3.2.9</a>.  <a href="#name-peer-error" class="xref">Peer Error</a><a href="#section-toc.1-1.3.2.2.2.9.1" class="pilcrow">¶</a></p>
+                    <p id="section-toc.1-1.3.2.2.2.6.1"><a href="#section-3.2.6" class="xref">3.2.6</a>.  <a href="#name-ackack" class="xref">ACKACK</a><a href="#section-toc.1-1.3.2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -1238,15 +1229,15 @@ The flag set to "1" means the packet is retransmitted.<a href="#section-3.1-3.10
           </figcaption></figure>
 </div>
 <dl class="dlParallel" id="section-3.2-3">
-          <dt id="section-3.2-3.1">Type (15 bits):</dt>
+          <dt id="section-3.2-3.1">Control Type (15 bits):</dt>
 <dd id="section-3.2-3.2">
   Control Packet Type. The use of these bits is determined
-by the control packet type definition. See Table 1.<a href="#section-3.2-3.2" class="pilcrow">¶</a>
+by the control packet type definition. See <a href="#srt-ctrl-pkt-type-table" class="xref">Table 1</a><a href="#section-3.2-3.2" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2-3.3">Subtype (16 bits):</dt>
 <dd id="section-3.2-3.4">
   This field specifies additional subtype of specific packets.
-See Table 1.<a href="#section-3.2-3.4" class="pilcrow">¶</a>
+See <a href="#srt-ctrl-pkt-type-table" class="xref">Table 1</a><a href="#section-3.2-3.4" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2-3.5">Type-specific Information (32 bits):</dt>
 <dd id="section-3.2-3.6">
@@ -1255,10 +1246,11 @@ packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" c
 </dd>
 <dt id="section-3.2-3.7">Control Information Field (variable length):</dt>
 <dd id="section-3.2-3.8">
-  The use of this field is defined by the Type field of the control packet.<a href="#section-3.2-3.8" class="pilcrow">¶</a>
+  The use of this field is defined by the Control Type field of the control packet.<a href="#section-3.2-3.8" class="pilcrow">¶</a>
 </dd>
 </dl>
-<p id="section-3.2-4">The types of SRT control packets are shown in Table 1.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">The types of SRT control packets are shown as following. The value, "0x7ffff", is
+reserved for user-defined type.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <span id="name-srt-control-packet-types"></span><div id="srt-ctrl-pkt-type-table">
 <table class="center" id="table-1">
           <caption>
@@ -1268,7 +1260,7 @@ packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" c
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Packet Type</th>
-              <th class="text-center" rowspan="1" colspan="1">Type</th>
+              <th class="text-center" rowspan="1" colspan="1">Control Type</th>
               <th class="text-center" rowspan="1" colspan="1">Subtype</th>
               <th class="text-left" rowspan="1" colspan="1">Section</th>
             </tr>
@@ -1278,90 +1270,60 @@ packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" c
               <td class="text-left" rowspan="1" colspan="1">HANDSHAKE</td>
               <td class="text-center" rowspan="1" colspan="1">0x0000</td>
               <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#ctrl-pkt-handshake" class="xref">Section 3.2.1</a>
+</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">KEEPALIVE</td>
               <td class="text-center" rowspan="1" colspan="1">0x0001</td>
               <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#ctrl-pkt-keepalive" class="xref">Section 3.2.2</a>
+</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ACK</td>
               <td class="text-center" rowspan="1" colspan="1">0x0002</td>
               <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#ctrl-pkt-ack" class="xref">Section 3.2.3</a>
+</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">NAK (Loss Report)</td>
               <td class="text-center" rowspan="1" colspan="1">0x0003</td>
               <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Congestion Warning</td>
-              <td class="text-center" rowspan="1" colspan="1">0x0004</td>
-              <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#ctrl-pkt-nak" class="xref">Section 3.2.4</a>
+</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">SHUTDOWN</td>
               <td class="text-center" rowspan="1" colspan="1">0x0005</td>
               <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#ctrl-pkt-shutdown" class="xref">Section 3.2.5</a>
+</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ACKACK</td>
               <td class="text-center" rowspan="1" colspan="1">0x0006</td>
               <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#ctrl-pkt-ackack" class="xref">Section 3.2.6</a>
+</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">DROPREQ</td>
-              <td class="text-center" rowspan="1" colspan="1">0x0007</td>
-              <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">PEER_ERROR</td>
-              <td class="text-center" rowspan="1" colspan="1">0x0008</td>
-              <td class="text-center" rowspan="1" colspan="1">0x0</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">Extension</td>
+              <td class="text-left" rowspan="1" colspan="1">User-Defined Type</td>
               <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
               <td class="text-center" rowspan="1" colspan="1">-</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">SRT_HSREQ</td>
-              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
-              <td class="text-center" rowspan="1" colspan="1">0x1</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">SRT_HSRSP</td>
-              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
-              <td class="text-center" rowspan="1" colspan="1">0x2</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">SRT_KMREQ</td>
-              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
-              <td class="text-center" rowspan="1" colspan="1">0x3</td>
-              <td class="text-left" rowspan="1" colspan="1">N/A</td>
-            </tr>
-            <tr>
-              <td class="text-left" rowspan="1" colspan="1">SRT_KMRSP</td>
-              <td class="text-center" rowspan="1" colspan="1">0x7FFF</td>
-              <td class="text-center" rowspan="1" colspan="1">0x4</td>
               <td class="text-left" rowspan="1" colspan="1">N/A</td>
             </tr>
           </tbody>
         </table>
 </div>
-<div id="handshake">
+<div id="ctrl-pkt-handshake">
 <section id="section-3.2.1">
           <h4 id="name-handshake">
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-handshake" class="section-name selfRef">Handshake</a>
@@ -1485,7 +1447,7 @@ packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" c
 </div>
 </section>
 </div>
-<div id="keep-alive">
+<div id="ctrl-pkt-keepalive">
 <section id="section-3.2.2">
           <h4 id="name-keep-alive">
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-keep-alive" class="section-name selfRef">Keep Alive</a>
@@ -1508,7 +1470,7 @@ enable SRT streams to be automatically restored after a connection loss.<a href=
 </dl>
 </section>
 </div>
-<div id="ack-acknowledgement">
+<div id="ctrl-pkt-ack">
 <section id="section-3.2.3">
           <h4 id="name-ack-acknowledgement">
 <a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-ack-acknowledgement" class="section-name selfRef">ACK (Acknowledgement)</a>
@@ -1591,7 +1553,7 @@ RTT, bandwidth, receiving speed, etc.<a href="#section-3.2.3-1" class="pilcrow">
 </dl>
 </section>
 </div>
-<div id="nak-loss-report">
+<div id="ctrl-pkt-nak">
 <section id="section-3.2.4">
           <h4 id="name-nak-loss-report">
 <a href="#section-3.2.4" class="section-number selfRef">3.2.4. </a><a href="#name-nak-loss-report" class="section-name selfRef">NAK (Loss Report)</a>
@@ -1616,43 +1578,36 @@ The NAK packet contains a list of sequence numbers of lost packets.<a href="#sec
 </dl>
 </section>
 </div>
-<div id="congestion-warning">
+<div id="ctrl-pkt-shutdown">
 <section id="section-3.2.5">
-          <h4 id="name-congestion-warning">
-<a href="#section-3.2.5" class="section-number selfRef">3.2.5. </a><a href="#name-congestion-warning" class="section-name selfRef">Congestion Warning</a>
-        </h4>
-</section>
-</div>
-<div id="shutdown">
-<section id="section-3.2.6">
           <h4 id="name-shutdown">
-<a href="#section-3.2.6" class="section-number selfRef">3.2.6. </a><a href="#name-shutdown" class="section-name selfRef">Shutdown</a>
+<a href="#section-3.2.5" class="section-number selfRef">3.2.5. </a><a href="#name-shutdown" class="section-name selfRef">Shutdown</a>
           </h4>
-<p id="section-3.2.6-1">Shutdown control packets are used to initiate the closing of an SRT connection.<a href="#section-3.2.6-1" class="pilcrow">¶</a></p>
-<dl class="dlParallel" id="section-3.2.6-2">
-            <dt id="section-3.2.6-2.1">Control Type:</dt>
-<dd id="section-3.2.6-2.2">
-  The type value of Shutdown control packet is "5".<a href="#section-3.2.6-2.2" class="pilcrow">¶</a>
+<p id="section-3.2.5-1">Shutdown control packets are used to initiate the closing of an SRT connection.<a href="#section-3.2.5-1" class="pilcrow">¶</a></p>
+<dl class="dlParallel" id="section-3.2.5-2">
+            <dt id="section-3.2.5-2.1">Control Type:</dt>
+<dd id="section-3.2.5-2.2">
+  The type value of Shutdown control packet is "5".<a href="#section-3.2.5-2.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.6-2.3">Type-specific Information:</dt>
-<dd id="section-3.2.6-2.4">
-  This field is reserved for future definition.<a href="#section-3.2.6-2.4" class="pilcrow">¶</a>
+<dt id="section-3.2.5-2.3">Type-specific Information:</dt>
+<dd id="section-3.2.5-2.4">
+  This field is reserved for future definition.<a href="#section-3.2.5-2.4" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.6-2.5">Control Information Field:</dt>
-<dd id="section-3.2.6-2.6">
-  This field must not appear in shutdown control packets.<a href="#section-3.2.6-2.6" class="pilcrow">¶</a>
+<dt id="section-3.2.5-2.5">Control Information Field:</dt>
+<dd id="section-3.2.5-2.6">
+  This field must not appear in shutdown control packets.<a href="#section-3.2.5-2.6" class="pilcrow">¶</a>
 </dd>
 </dl>
 </section>
 </div>
-<div id="ackack">
-<section id="section-3.2.7">
+<div id="ctrl-pkt-ackack">
+<section id="section-3.2.6">
           <h4 id="name-ackack">
-<a href="#section-3.2.7" class="section-number selfRef">3.2.7. </a><a href="#name-ackack" class="section-name selfRef">ACKACK</a>
+<a href="#section-3.2.6" class="section-number selfRef">3.2.6. </a><a href="#name-ackack" class="section-name selfRef">ACKACK</a>
           </h4>
-<p id="section-3.2.7-1">ACKACK control packets are used to acknowledge the reception of an ACK.
-Furthermore, these packets are used in the calculation of RTT by the receiver.<a href="#section-3.2.7-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-3.2.7-2">
+<p id="section-3.2.6-1">ACKACK control packets are used to acknowledge the reception of an ACK.
+Furthermore, these packets are used in the calculation of RTT by the receiver.<a href="#section-3.2.6-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-3.2.6-2">
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1667,32 +1622,18 @@ Furthermore, these packets are used in the calculation of RTT by the receiver.<a
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 +                             None                              +
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-</pre><a href="#section-3.2.7-2" class="pilcrow">¶</a>
+</pre><a href="#section-3.2.6-2" class="pilcrow">¶</a>
 </div>
-<dl class="dlParallel" id="section-3.2.7-3">
-            <dt id="section-3.2.7-3.1">Control Type:</dt>
-<dd id="section-3.2.7-3.2">
-  The type value of ACKACK control packet is "6".<a href="#section-3.2.7-3.2" class="pilcrow">¶</a>
+<dl class="dlParallel" id="section-3.2.6-3">
+            <dt id="section-3.2.6-3.1">Control Type:</dt>
+<dd id="section-3.2.6-3.2">
+  The type value of ACKACK control packet is "6".<a href="#section-3.2.6-3.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.7-3.3">ACK Sequence Number:</dt>
-<dd id="section-3.2.7-3.4">
-  This field stores the sequence number of the ACK packet acknowledged.<a href="#section-3.2.7-3.4" class="pilcrow">¶</a>
+<dt id="section-3.2.6-3.3">ACK Sequence Number:</dt>
+<dd id="section-3.2.6-3.4">
+  This field stores the sequence number of the ACK packet acknowledged.<a href="#section-3.2.6-3.4" class="pilcrow">¶</a>
 </dd>
 </dl>
-</section>
-</div>
-<div id="drop-request">
-<section id="section-3.2.8">
-          <h4 id="name-drop-request">
-<a href="#section-3.2.8" class="section-number selfRef">3.2.8. </a><a href="#name-drop-request" class="section-name selfRef">Drop Request</a>
-        </h4>
-</section>
-</div>
-<div id="peer-error">
-<section id="section-3.2.9">
-          <h4 id="name-peer-error">
-<a href="#section-3.2.9" class="section-number selfRef">3.2.9. </a><a href="#name-peer-error" class="section-name selfRef">Peer Error</a>
-        </h4>
 </section>
 </div>
 </section>
