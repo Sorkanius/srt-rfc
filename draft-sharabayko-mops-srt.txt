@@ -5,8 +5,8 @@
 mops                                                     M.P. Sharabayko
 Internet-Draft                                                 Haivision
 Intended status: Standards Track                                  J. Kim
-Expires: 31 August 2020                             SK Telecom Co., Ltd.
-                                                        28 February 2020
+Expires: 1 September 2020                           SK Telecom Co., Ltd.
+                                                        29 February 2020
 
 
                             The SRT Protocol
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2020.
+   This Internet-Draft will expire on 1 September 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 1]
+Sharabayko & Kim        Expires 1 September 2020                [Page 1]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -69,47 +69,47 @@ Table of Contents
      3.1.  Data Packets  . . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  Control Packets . . . . . . . . . . . . . . . . . . . . .   6
        3.2.1.  Handshake . . . . . . . . . . . . . . . . . . . . . .   7
-       3.2.2.  Keep Alive  . . . . . . . . . . . . . . . . . . . . .  11
-       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  12
-       3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  13
-       3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  13
-       3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  13
-   4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  14
-     4.1.  Data Transmission Mode  . . . . . . . . . . . . . . . . .  14
-       4.1.1.  Live mode . . . . . . . . . . . . . . . . . . . . . .  14
-       4.1.2.  File mode . . . . . . . . . . . . . . . . . . . . . .  14
-     4.2.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  14
-       4.2.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  14
-       4.2.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  14
-     4.3.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  14
-     4.4.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  15
-     4.5.  Too-Late-Packet-Drop  . . . . . . . . . . . . . . . . . .  15
-     4.6.  Packet Acknowledgement (ACKs) . . . . . . . . . . . . . .  15
-     4.7.  Packet Retransmission (NAKs)  . . . . . . . . . . . . . .  16
-     4.8.  Packet Acknowledgment in SRT  . . . . . . . . . . . . . .  16
-     4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  16
-     4.10. ACKs, ACKACKs & Round Trip Time . . . . . . . . . . . . .  16
-     4.11. Loss List . . . . . . . . . . . . . . . . . . . . . . . .  16
-   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  16
-     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  16
-     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  16
-     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  16
-     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  16
-     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  16
-     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  16
-     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  16
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  16
-   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  16
-     Normative References  . . . . . . . . . . . . . . . . . . . . .  16
-     Informative References  . . . . . . . . . . . . . . . . . . . .  17
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  17
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
+       3.2.2.  Keep Alive  . . . . . . . . . . . . . . . . . . . . .  12
+       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  13
+       3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  14
+       3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  14
+       3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  14
+   4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  15
+     4.1.  Data Transmission Mode  . . . . . . . . . . . . . . . . .  15
+       4.1.1.  Live mode . . . . . . . . . . . . . . . . . . . . . .  15
+       4.1.2.  File mode . . . . . . . . . . . . . . . . . . . . . .  15
+     4.2.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  15
+       4.2.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  15
+       4.2.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  15
+     4.3.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  15
+     4.4.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  16
+     4.5.  Too-Late-Packet-Drop  . . . . . . . . . . . . . . . . . .  16
+     4.6.  Packet Acknowledgement (ACKs) . . . . . . . . . . . . . .  16
+     4.7.  Packet Retransmission (NAKs)  . . . . . . . . . . . . . .  17
+     4.8.  Packet Acknowledgment in SRT  . . . . . . . . . . . . . .  17
+     4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  17
+     4.10. ACKs, ACKACKs & Round Trip Time . . . . . . . . . . . . .  17
+     4.11. Loss List . . . . . . . . . . . . . . . . . . . . . . . .  17
+   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  17
+     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  17
+     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  17
+     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  17
+     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  17
+     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  17
+     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  17
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  17
+   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     Normative References  . . . . . . . . . . . . . . . . . . . . .  17
+     Informative References  . . . . . . . . . . . . . . . . . . . .  18
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  18
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  18
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 2]
+Sharabayko & Kim        Expires 1 September 2020                [Page 2]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -128,9 +128,9 @@ Internet-Draft                     SRT                     February 2020
 
 3.  Packet Structure
 
-   SRT packets are transmitted in UDP packets.  Every UDP packet
-   carrying SRT traffic contains an SRT header (immediately after the
-   UDP header).
+   SRT packets are transmitted in UDP packets [RFC0768].  Every UDP
+   packet carrying SRT traffic contains an SRT header (immediately after
+   the UDP header).
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -146,9 +146,9 @@ Internet-Draft                     SRT                     February 2020
 
                     Figure 1: SRT packet as UDP payload
 
-   SRT has two kinds of packets distinguished by the first bit; data
-   packet and conrol packet.  The structure of the SRT packet is shown
-   in Figure 2.
+   SRT has two types of packets distinguished by the Packet Type Flag:
+   data packet and conrol packet.  The structure of the SRT packet is
+   shown in Figure 2.
 
 
 
@@ -165,7 +165,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 3]
+Sharabayko & Kim        Expires 1 September 2020                [Page 3]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -188,23 +188,22 @@ Internet-Draft                     SRT                     February 2020
 
                        Figure 2: SRT packet structure
 
-   F (1 bit):  Packet Type Flag.  The control packet must set this flag
-      as "1".  The data packet must set this flag as "0".
+   F (1 bit):  Packet Type Flag.  The control packet has this flag set
+      to "1".  The data packet has this flag set to "0".
 
    Timestamp (32 bits):  The time stamp of the packet in microseconds.
       The value is relative to the time the SRT connection was
-      established.  This is relative time value starting from when the
-      connection is established.  Depending on the transmission mode,
-      the field stores the packet sent time or the packet origin time.
+      established.  Depending on the transmission mode Section 4.1, the
+      field stores the packet send time or the packet origin time.
 
    Destination Socket ID (32 bits):  A fixed-width field providing the
-      socket ID to which a packet should be dispatched.  The field may
-      have the special value "0" when the packet is a connection
+      SRT socket ID to which a packet should be dispatched.  The field
+      may have the special value "0" when the packet is a connection
       request.
 
 3.1.  Data Packets
 
-   The structure of the SRT data packet is the following.
+   The structure of the SRT data packet is shown in Figure 3.
 
 
 
@@ -221,7 +220,8 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 4]
+
+Sharabayko & Kim        Expires 1 September 2020                [Page 4]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -231,7 +231,7 @@ Internet-Draft                     SRT                     February 2020
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |0|                    Packet Sequence Number                   |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | PP|O|KK |R|                   Message Number                  |
+   |P P|O|K K|R|                   Message Number                  |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                           Timestamp                           |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -247,16 +247,16 @@ Internet-Draft                     SRT                     February 2020
    Packet Sequence Number (31 bits):  The sequential number of the data
       packet.
 
-   PP (2 bits):  Packet Position.  This field indicates the position of
-      data packet in the message.  The value "10b" means the first
-      packet of the message. "00b" indicates a packet in the middle,
-      "01b" is the last packet.  If a single data packet forms the whole
-      message, the value is "11b".
+   PP (2 bits):  Packet Position Flags.  This field indicates the
+      position of the data packet in the message.  The value "10b" means
+      the first packet of the message. "00b" indicates a packet in the
+      middle, "01b" is the last packet.  If a single data packet forms
+      the whole message, the value is "11b".
 
    O (1 bit):  Order Flag.  Indicates whether the message should be
-      delivered by the receiver in order (1) or not (0).  This field is
-      used to determine behaviour of data transmission mode.  See in
-      Section 4.1.
+      delivered by the receiver in order (1) or not (0).  Certain
+      restrictions apply depending on the data transmission mode used
+      (Section 4.1).
 
    KK (2 bits):  Encryption Flag.  The flag bits indicate whether or not
       data is encrypted.  The value "00b" means data is not encrypted,
@@ -277,7 +277,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 5]
+Sharabayko & Kim        Expires 1 September 2020                [Page 5]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -317,7 +317,7 @@ Internet-Draft                     SRT                     February 2020
    Control Information Field (variable length):  The use of this field
       is defined by the Control Type field of the control packet.
 
-   The types of SRT control packets are shown as following.  The value,
+   The types of SRT control packets are shown in Table 1.  The value,
    "0x7ffff", is reserved for user-defined type.
 
 
@@ -333,7 +333,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 6]
+Sharabayko & Kim        Expires 1 September 2020                [Page 6]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -360,13 +360,11 @@ Internet-Draft                     SRT                     February 2020
 
 3.2.1.  Handshake
 
-   The handshake control packet is for exchanging peer configuration and
-   implementation information to ensure seamless upgrades while evolving
-   the protocol.
+   The handshake control packets are used to exchange peer
+   configurations, agree on the and connection parameters and establish
+   the connection.
 
-   The CIF of handshake control packet is revealed as the following.
-
-
+   The CIF of handshake control packet is shown in Figure 5.
 
 
 
@@ -389,7 +387,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 7]
+
+
+Sharabayko & Kim        Expires 1 September 2020                [Page 7]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -403,13 +403,13 @@ Internet-Draft                     SRT                     February 2020
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                 Initial Packet Sequence Number                |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                      Maximum Packet Size                      |
+   |                Maximum Transmission Unit Size                 |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                    Maximum Flow Window Size                   |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                        Connection Type                        |
+   |                         Handshake Type                        |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                           Socket ID                           |
+   |                         SRT Socket ID                         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                           SYN Cookie                          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -430,9 +430,9 @@ Internet-Draft                     SRT                     February 2020
 
                     Figure 5: handshake packet structure
 
-   Version (32 bits):  A base protocol version number.  It has fixed
-      value as 5.  The value greater than 5 is reserved for future
-      definition, but the less than 5 is not used.
+   Version (32 bits):  A base protocol version number.  Currently used
+      values are 4 and 5.  The value greater than 5 is reserved for
+      future definition.
 
    Encryption Field (16 bits):  Block cipher family and block size.  The
       values of this field are described as the following.
@@ -445,7 +445,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                 [Page 8]
+Sharabayko & Kim        Expires 1 September 2020                [Page 8]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -466,7 +466,7 @@ Internet-Draft                     SRT                     February 2020
                                   Values
 
    Extension Field (16 bits):  This field is message specific extension
-      related to Connection Type field.  The value must be set as 0
+      related to Handshake Type field.  The value must be set as 0
       except for the following cases.  If the handshake control packet
       is a INDUCTION message, this field is sent back by the Listener.
       In case of CONCLUSION message, this field value should contain a
@@ -474,59 +474,93 @@ Internet-Draft                     SRT                     February 2020
       Section 4.2.1.
 
    Initial Packet Sequence Number (32 bits):  The sequence number for
-      the first data packet.
+      the first data packet to be sent.
 
-   Maximum Packet Size (32 bits):  The value is typically 1500 to follow
-      default size of MTU(Maximum Transmission Unit) in Ethernet, but
-      can be less.
+   Maximum Transmission Unit Size (32 bits):  The value is typically
+      1500 to follow default size of MTU (Maximum Transmission Unit) in
+      Ethernet, but can be less.
 
    Maximum Flow Window Size (32 bits):  The value of this field is the
-      maximum number of buffers allowed to be "in flight" which means
-      that the number of sent packets without receiving ACK control
-      packet.
+      maximum number of data packets allowed to be "in flight" which
+      means that the number of sent packets without receiving ACK
+      control packet.
 
-   Connection Type (32 bits):  This field indicates the handshake
-      message types and the type is 32 bits signed integer.  The value 0
-      means WAVEHAND message, INDUCTION message has 1.  If the message
-      is CONCLUSION, the value is -1.  The value -2 means AGREEMENT.
-      For more details of handshake message type, see in Section 4.2.
+   Handshake Type (32 bits):  This field indicates the handshake packet
+      types.  The possible values are described in Table 3.  For more
+      details refer to Section 4.2.
 
-   Socket ID (32 bits):  The value of this field has the source socket
-      id from that the message is issued.  It is the destination socket
-      id in SRT header.
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 1 September 2020                [Page 9]
+
+Internet-Draft                     SRT                     February 2020
+
+
+                      +------------+----------------+
+                      | Value      | Handshake type |
+                      +============+================+
+                      | 0xFFFFFFFD |      DONE      |
+                      +------------+----------------+
+                      | 0xFFFFFFFE |   AGREEMENT    |
+                      +------------+----------------+
+                      | 0xFFFFFFFF |   CONCLUSION   |
+                      +------------+----------------+
+                      | 0x00000000 |    WAVEHAND    |
+                      +------------+----------------+
+                      | 0x00000001 |   INDUCTION    |
+                      +------------+----------------+
+
+                          Table 3: Handshake Type
+
+   SRT Socket ID (32 bits):  The value of this field has the source SRT
+      socket id from which the handshake packet is issued.
 
    SYN Cookie (32 bits):  Randomized value for processing handshake.
       The value of this field is specified by handshake message type.
       See in Section 4.2.
 
-
-
-Sharabayko & Kim         Expires 31 August 2020                 [Page 9]
-
-Internet-Draft                     SRT                     February 2020
-
-
    Peer IP Address (128 bits):  The sender's IPv4 or IPv6 IP address.
-      It consists of four 32-bit field.
+      The value consists of four 32-bit fields.
 
    Extension Type (16 bits):  The value of this field is used for
       processing integrated handshake.  There are two basic extension;
-      Handshake Extension(Section 3.2.1.1) and Key Material
-      Exchange(Section 3.2.1.2).  Each extension can have a pair of
+      Handshake Extension Message (Section 3.2.1.1) and Key Material
+      Exchange (Section 3.2.1.2).  Each extension can have a pair of
       request and response type.
 
    Extension Length (16 bits):  The length of Extension Contents.
 
-   Extension Contents (variable length):  The payload of the extension
-      type.
+   Extension Contents (variable length):  The payload of the extension.
 
-3.2.1.1.  Handshake Extension
+3.2.1.1.  Handshake Extension Message
 
    In Handshake Extension, the value of the Extension Field of handshake
    control packet is defined as 1 for Handshake Extension Request, or 2
    for Handshake Extension Response.
 
-   The Extension Contents is revealed as the following.
+   The HS Extension Message Contents is revealed as the following.
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 1 September 2020               [Page 10]
+
+Internet-Draft                     SRT                     February 2020
+
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -538,7 +572,38 @@ Internet-Draft                     SRT                     February 2020
    |      Receiver TsbPd Delay     |       Sender TsbPd Delay      |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                  Figure 6: handshake extension structure
+              Figure 6: Handshake extension message structure
+
+   SRT Version (32 bits):  SRT library version.
+
+   SRT Falgs (32 bits):  SRT configuration flags.
+
+                       +------------+-------------+
+                       | Bitfield   |     Flag    |
+                       +============+=============+
+                       | 0xFFFFFFFD |   TSBPDSND  |
+                       +------------+-------------+
+                       | 0xFFFFFFFE |   TSBPDRCV  |
+                       +------------+-------------+
+                       | 0xFFFFFFFF |    CRYPT    |
+                       +------------+-------------+
+                       | 0x00000000 |  TLPKTDROP  |
+                       +------------+-------------+
+                       | 0x00000001 | PERIODICNAK |
+                       +------------+-------------+
+                       | 0x00000001 |  REXMITFLG  |
+                       +------------+-------------+
+                       | 0x00000001 |    STREAM   |
+                       +------------+-------------+
+
+                          Table 4: HS Extension
+                              Message Flags
+
+   Receiver TsbPd Delay (16 bits):  TSBPD delay of the receiver.  Refer
+      to Section 4.4.
+
+   Sender TsbPd Delay (16 bits):  TSBPD delay of the sender.  Refer to
+      Section 4.4.
 
 3.2.1.2.  Key Material Exchange
 
@@ -548,16 +613,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-
-
-
-
-
-
-
-
-
-Sharabayko & Kim         Expires 31 August 2020                [Page 10]
+Sharabayko & Kim        Expires 1 September 2020               [Page 11]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -613,7 +669,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                [Page 11]
+Sharabayko & Kim        Expires 1 September 2020               [Page 12]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -669,7 +725,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                [Page 12]
+Sharabayko & Kim        Expires 1 September 2020               [Page 13]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -725,7 +781,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                [Page 13]
+Sharabayko & Kim        Expires 1 September 2020               [Page 14]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -781,7 +837,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                [Page 14]
+Sharabayko & Kim        Expires 1 September 2020               [Page 15]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -837,7 +893,7 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                [Page 15]
+Sharabayko & Kim        Expires 1 September 2020               [Page 16]
 
 Internet-Draft                     SRT                     February 2020
 
@@ -886,17 +942,22 @@ References
 
 Normative References
 
+   [RFC0768]  Postel, J., "User Datagram Protocol", STD 6, RFC 768,
+              DOI 10.17487/RFC0768, August 1980,
+              <https://www.rfc-editor.org/info/rfc768>.
+
+
+
+
+Sharabayko & Kim        Expires 1 September 2020               [Page 17]
+
+Internet-Draft                     SRT                     February 2020
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
-
-
-Sharabayko & Kim         Expires 31 August 2020                [Page 16]
-
-Internet-Draft                     SRT                     February 2020
-
 
 Informative References
 
@@ -940,6 +1001,15 @@ Authors' Addresses
    Email: maxsharabayko@haivision.com
 
 
+
+
+
+
+Sharabayko & Kim        Expires 1 September 2020               [Page 18]
+
+Internet-Draft                     SRT                     February 2020
+
+
    Jeongseok Kim
    SK Telecom Co., Ltd.
 
@@ -949,4 +1019,46 @@ Authors' Addresses
 
 
 
-Sharabayko & Kim         Expires 31 August 2020                [Page 17]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 1 September 2020               [Page 19]
