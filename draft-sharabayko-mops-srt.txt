@@ -5,8 +5,8 @@
 mops                                                     M.P. Sharabayko
 Internet-Draft                                                 Haivision
 Intended status: Standards Track                                  J. Kim
-Expires: 1 September 2020                           SK Telecom Co., Ltd.
-                                                        29 February 2020
+Expires: 3 September 2020                           SK Telecom Co., Ltd.
+                                                            2 March 2020
 
 
                             The SRT Protocol
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 September 2020.
+   This Internet-Draft will expire on 3 September 2020.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 1]
+Sharabayko & Kim        Expires 3 September 2020                [Page 1]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
    as described in Section 4.e of the Trust Legal Provisions and are
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 2]
+Sharabayko & Kim        Expires 3 September 2020                [Page 2]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 3]
+Sharabayko & Kim        Expires 3 September 2020                [Page 3]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
     0                   1                   2                   3
@@ -221,9 +221,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 4]
+Sharabayko & Kim        Expires 3 September 2020                [Page 4]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
     0                   1                   2                   3
@@ -277,9 +277,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 5]
+Sharabayko & Kim        Expires 3 September 2020                [Page 5]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 3.2.  Control Packets
@@ -333,9 +333,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 6]
+Sharabayko & Kim        Expires 3 September 2020                [Page 6]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
       +-------------------+--------------+---------+---------------+
@@ -389,9 +389,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 7]
+Sharabayko & Kim        Expires 3 September 2020                [Page 7]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
     0                   1                   2                   3
@@ -445,9 +445,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 8]
+Sharabayko & Kim        Expires 3 September 2020                [Page 8]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
                  +-------+------------------------------+
@@ -501,9 +501,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020                [Page 9]
+Sharabayko & Kim        Expires 3 September 2020                [Page 9]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
                       +------------+----------------+
@@ -557,9 +557,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 10]
+Sharabayko & Kim        Expires 3 September 2020               [Page 10]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
     0                   1                   2                   3
@@ -613,9 +613,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 11]
+Sharabayko & Kim        Expires 3 September 2020               [Page 11]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
     0                   1                   2                   3
@@ -669,9 +669,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 12]
+Sharabayko & Kim        Expires 3 September 2020               [Page 12]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 3.2.3.  ACK (Acknowledgement)
@@ -725,9 +725,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 13]
+Sharabayko & Kim        Expires 3 September 2020               [Page 13]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 3.2.4.  NAK (Loss Report)
@@ -781,9 +781,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 14]
+Sharabayko & Kim        Expires 3 September 2020               [Page 14]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 4.  SRT Data Transmission and Control
@@ -837,9 +837,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 15]
+Sharabayko & Kim        Expires 3 September 2020               [Page 15]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 4.4.  Timestamp Based Packet Delivery
@@ -893,9 +893,9 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 16]
+Sharabayko & Kim        Expires 3 September 2020               [Page 16]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
 4.7.  Packet Retransmission (NAKs)
@@ -949,9 +949,9 @@ Normative References
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 17]
+Sharabayko & Kim        Expires 3 September 2020               [Page 17]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -1005,9 +1005,9 @@ Authors' Addresses
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 18]
+Sharabayko & Kim        Expires 3 September 2020               [Page 18]
 
-Internet-Draft                     SRT                     February 2020
+Internet-Draft                     SRT                        March 2020
 
 
    Jeongseok Kim
@@ -1061,4 +1061,4 @@ Internet-Draft                     SRT                     February 2020
 
 
 
-Sharabayko & Kim        Expires 1 September 2020               [Page 19]
+Sharabayko & Kim        Expires 3 September 2020               [Page 19]
