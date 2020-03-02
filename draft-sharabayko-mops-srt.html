@@ -1990,18 +1990,269 @@ the portions of any size.<a href="#section-4.2.3-2" class="pilcrow">¶</a></p>
         <h3 id="name-handshake-messages">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-handshake-messages" class="section-name selfRef">Handshake Messages</a>
         </h3>
+<p id="section-4.3-1">SRT is a connection protocol. It embraces the concepts of "connection"
+and "session". The UDP system protocol is used by SRT for sending data
+and control packets.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">An SRT connection is characterized by the fact that it is:<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3-3.1">first engaged by a handshake process<a href="#section-4.3-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-3.2">maintained as long as any packets are being exchanged in a timely manner<a href="#section-4.3-3.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-3.3">considered closed when a party receives the appropriate close command from
+its peer (connection closed by the foreign host), or when it receives no
+packets at all for some predefined time (connection broken on timeout).<a href="#section-4.3-3.3" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3-4">SRT supports two connection configurations:<a href="#section-4.3-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3-5">
+          <li id="section-4.3-5.1">Caller-Listener, where one side waits for the other to initiate a connection<a href="#section-4.3-5.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-5.2">Rendezvous, where both sides attempt to initiate a connection<a href="#section-4.3-5.2" class="pilcrow">¶</a>
+</li>
+</ol>
+<p id="section-4.3-6">The handshake is performed between two parties: "Initiator" and "Responder":<a href="#section-4.3-6" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3-7.1">Initiator starts the extended SRT handshake process and sends appropriate
+SRT extended handshake requests;<a href="#section-4.3-7.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-7.2">Responder expects the SRT extended handshake requests to be sent by the
+Initiator and sends SRT extended handshake responses back.<a href="#section-4.3-7.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3-8">There are two basic types of SRT handshake extensions that are exchanged
+in the handshake:<a href="#section-4.3-8" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3-9.1">Handhshake Extension Message exchanges the basic SRT information;<a href="#section-4.3-9.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-9.2">Key Material Exchange exchanges the wrapped stream encryption key (used only if
+encryption is requested).<a href="#section-4.3-9.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3-10">The Initiator and Responder roles are assigned depending on the connection mode.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
+<p id="section-4.3-11">For Caller-Listener connections: the Caller is the Initiator,
+the Listener is the Responder.
+For Rendezvous connections: the Initiator and Responder roles are assigned
+based on the initial data interchange during the handshake.<a href="#section-4.3-11" class="pilcrow">¶</a></p>
+<p id="section-4.3-12">The Handshake Type field in the Handshake Structure (see <a href="#handshake-packet-structure" class="xref">Figure 5</a>) 
+indicates the handshake message type.<a href="#section-4.3-12" class="pilcrow">¶</a></p>
+<p id="section-4.3-13">Caller-Listener handshake exchange has the following order of Handshake Types:<a href="#section-4.3-13" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3-14">
+          <li id="section-4.3-14.1">Caller to Listener: INDUCTION<a href="#section-4.3-14.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-14.2">Listener to Caller: INDUCTION (reports cookie)<a href="#section-4.3-14.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-14.3">Caller to Listener: CONCLUSION (uses previously returned cookie)<a href="#section-4.3-14.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-14.4">Listener to Caller: CONCLUSION (confirms connection established)<a href="#section-4.3-14.4" class="pilcrow">¶</a>
+</li>
+</ol>
+<p id="section-4.3-15">Rendezvous handshake exchange has the following order of Handshake Types:<a href="#section-4.3-15" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3-16">
+          <li id="section-4.3-16.1">After starting the connection: <code>URQ_WAVEAHAND</code><a href="#section-4.3-16.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-16.2">After receiving the above message from the peer: <code>URQ_CONCLUSION</code><a href="#section-4.3-16.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3-16.3">After receiving the above message from the peer: <code>URQ_AGREEMENT</code>.<a href="#section-4.3-16.3" class="pilcrow">¶</a>
+</li>
+</ol>
+<p id="section-4.3-17">In case when the connection process has failed when the party was about to
+send the CONCLUSION handshake, the Handshake Type field will contain appropriate
+error value. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 5</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
+<span id="name-hs-rejection-reason-codes"></span><div id="hs-rej-reason">
+<table class="center" id="table-5">
+          <caption>
+<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#name-hs-rejection-reason-codes" class="selfRef">HS Rejection Reason Codes</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Code</th>
+              <th class="text-center" rowspan="1" colspan="1">Rejection Reason</th>
+              <th class="text-center" rowspan="1" colspan="1">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1000</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_UNKNOWN,</td>
+              <td class="text-center" rowspan="1" colspan="1">Unknown reason</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1001</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_SYSTEM,</td>
+              <td class="text-center" rowspan="1" colspan="1">System function error</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1002</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_PEER,</td>
+              <td class="text-center" rowspan="1" colspan="1">Rejected by peer</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1003</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_RESOURCE,</td>
+              <td class="text-center" rowspan="1" colspan="1">Resource allocation problem</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1004</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_ROGUE,</td>
+              <td class="text-center" rowspan="1" colspan="1">incorrect data in handshake</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1005</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_BACKLOG,</td>
+              <td class="text-center" rowspan="1" colspan="1">listener's backlog exceeded</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1006</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_IPE,</td>
+              <td class="text-center" rowspan="1" colspan="1">internal program error</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1007</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_CLOSE,</td>
+              <td class="text-center" rowspan="1" colspan="1">socket is closing</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1008</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_VERSION,</td>
+              <td class="text-center" rowspan="1" colspan="1">peer is older version than agent's minimum set</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1009</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_RDVCOOKIE,</td>
+              <td class="text-center" rowspan="1" colspan="1">rendezvous cookie collision</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1010</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_BADSECRET,</td>
+              <td class="text-center" rowspan="1" colspan="1">wrong password</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1011</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_UNSECURE,</td>
+              <td class="text-center" rowspan="1" colspan="1">password required or unexpected</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1012</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_MESSAGEAPI,</td>
+              <td class="text-center" rowspan="1" colspan="1">Stream flag collision</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1013</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_CONGESTION,</td>
+              <td class="text-center" rowspan="1" colspan="1">incompatible congestion-controller type</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1014</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_FILTER,</td>
+              <td class="text-center" rowspan="1" colspan="1">incompatible packet filter</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">1015</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_GROUP,</td>
+              <td class="text-center" rowspan="1" colspan="1">incompatible group</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<p id="section-4.3-19">The specification of <code>PBKEYLEN</code> is decided by the Sender. When the transmission 
+is bidirectional, this value must be agreed upon at the outset because when both 
+are set, the Responder wins. For Caller-Listener connections it is reasonable to 
+set this value on the Listener only. In the case of Rendezvous the only reasonable 
+approach is to decide upon the correct value from the different sources and to 
+set it on both parties (note that <strong>AES-128</strong> is the default).<a href="#section-4.3-19" class="pilcrow">¶</a></p>
 <div id="caller-listener-handshake">
 <section id="section-4.3.1">
           <h4 id="name-caller-listener-handshake">
 <a href="#section-4.3.1" class="section-number selfRef">4.3.1. </a><a href="#name-caller-listener-handshake" class="section-name selfRef">Caller-Listener Handshake</a>
-        </h4>
+          </h4>
+<p id="section-4.3.1-1">This section describes the handshaking process where a Listener is
+waiting for an incoming Handshake request on a bound UDP port from a Caller.
+The process has two phases: induction and conclusion.<a href="#section-4.3.1-1" class="pilcrow">¶</a></p>
+<div id="the-induction-phase">
+<section id="section-4.3.1.1">
+            <h5 id="name-the-induction-phase">
+<a href="#section-4.3.1.1" class="section-number selfRef">4.3.1.1. </a><a href="#name-the-induction-phase" class="section-name selfRef">The Induction Phase</a>
+            </h5>
+<p id="section-4.3.1.1-1">The Caller begins by sending an "induction" message, which contains the following
+(significant) fields:<a href="#section-4.3.1.1-1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.1.1-2.1">Version: must always be 4<a href="#section-4.3.1.1-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-2.2">Encryption Field: 0<a href="#section-4.3.1.1-2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-2.3">Extension Field: 2<a href="#section-4.3.1.1-2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-2.4">Handshake Type: INDUCTION<a href="#section-4.3.1.1-2.4" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-2.5">SRT Socket ID: SRT Socket ID of the Caller<a href="#section-4.3.1.1-2.5" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-2.6">SYN Cookie: 0<a href="#section-4.3.1.1-2.6" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3.1.1-3">The Destination Socket ID of the SRT packet header in this message is 0, which is
+interpreted as a connection request.<a href="#section-4.3.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.1-4">NOTE: The handshake version number is set to 4 in this initial handshake.
+It is due to the initial design of SRT that was to be compliant with the UDT
+protocol (<span>[<a href="#I-D.gg-udt" class="xref">I-D.gg-udt</a>]</span>) it is based on.<a href="#section-4.3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.1-5">NOTE: This phase serves only to set a cookie on the Listener so that it
+doesn't allocate resources, thus mitigating a potential DOS attack that might be
+perpetrated by flooding the Listener with handshake commands.<a href="#section-4.3.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.1-6">The Listener responds with the following:<a href="#section-4.3.1.1-6" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.1.1-7.1">Version: 5<a href="#section-4.3.1.1-7.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-7.2">Encryption Field: Advertised cipher family and block size.<a href="#section-4.3.1.1-7.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-7.3">Extension Field: SRT magic code 0x4A17<a href="#section-4.3.1.1-7.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-7.4">Handshake Type: INDUCTION<a href="#section-4.3.1.1-7.4" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-7.5">ID: Socket ID of the HSv5 Listener<a href="#section-4.3.1.1-7.5" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-7.6">SYN Cookie: a cookie that is crafted based on host, port and current time
+with 1 minute accuracy<a href="#section-4.3.1.1-7.6" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3.1.1-8">NOTE: At this point the Listener still doesn't know if the Caller is SRT or UDT,
+and it responds with the same set of values regardless of whether the Caller is
+SRT or UDT.<a href="#section-4.3.1.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.1-9">If the party is SRT, it does interpret the values in Version and Type.
+If it receives the value 5 in Version, it understands that it comes from an SRT
+party, so it knows that it should prepare the proper handshake messages
+phase. It also checks the following:<a href="#section-4.3.1.1-9" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.1.1-10.1">whether the Extension Flags contains the magic value 0x4A17; otherwise the
+connection is rejected. This is a contingency for the case where someone who,
+in an attempt to extend UDT independently, increases the Version value to 5
+and tries to test it against SRT.<a href="#section-4.3.1.1-10.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.1.1-10.2">whether the Encryption Flags contain a non-zero
+value, which is interpreted as an advertised cipher family and block size.<a href="#section-4.3.1.1-10.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3.1.1-11">The legacy UDT party completely ignores the values reported in Version and
+Handshake Type.  It is, however, interested in the SYN Cookie value, as this must be
+passed to the next phase. It does interpret these fields, but only in the "conclusion" message.<a href="#section-4.3.1.1-11" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="rendezvous-handshake">
 <section id="section-4.3.2">
           <h4 id="name-rendezvous-handshake">
 <a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-rendezvous-handshake" class="section-name selfRef">Rendezvous Handshake</a>
-        </h4>
+          </h4>
+<p id="section-4.3.2-1">Rendezvous handshake exchange has the following order of Handshake Types:<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2-2">
+            <li id="section-4.3.2-2.1">After starting the connection: <code>URQ_WAVEAHAND</code><a href="#section-4.3.2-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2-2.2">After receiving the above message from the peer: <code>URQ_CONCLUSION</code><a href="#section-4.3.2-2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2-2.3">After receiving the above message from the peer: <code>URQ_AGREEMENT</code>.<a href="#section-4.3.2-2.3" class="pilcrow">¶</a>
+</li>
+</ol>
 </section>
 </div>
 </section>
