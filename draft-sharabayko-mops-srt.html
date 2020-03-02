@@ -1646,6 +1646,10 @@ and 2 for Handshake Extension Response.<a href="#section-3.2.1.1-1" class="pilcr
                   <td class="text-left" rowspan="1" colspan="1">0x00000040</td>
                   <td class="text-center" rowspan="1" colspan="1">STREAM</td>
                 </tr>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">0x00000080</td>
+                  <td class="text-center" rowspan="1" colspan="1">PACKET_FILTER</td>
+                </tr>
               </tbody>
             </table>
 </div>
@@ -2075,82 +2079,82 @@ error value. See the list of error codes in <a href="#hs-rej-reason" class="xref
           <tbody>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1000</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_UNKNOWN,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_UNKNOWN</td>
               <td class="text-center" rowspan="1" colspan="1">Unknown reason</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1001</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_SYSTEM,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_SYSTEM</td>
               <td class="text-center" rowspan="1" colspan="1">System function error</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1002</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_PEER,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_PEER</td>
               <td class="text-center" rowspan="1" colspan="1">Rejected by peer</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1003</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_RESOURCE,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_RESOURCE</td>
               <td class="text-center" rowspan="1" colspan="1">Resource allocation problem</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1004</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_ROGUE,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_ROGUE</td>
               <td class="text-center" rowspan="1" colspan="1">incorrect data in handshake</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1005</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_BACKLOG,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_BACKLOG</td>
               <td class="text-center" rowspan="1" colspan="1">listener's backlog exceeded</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1006</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_IPE,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_IPE</td>
               <td class="text-center" rowspan="1" colspan="1">internal program error</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1007</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_CLOSE,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_CLOSE</td>
               <td class="text-center" rowspan="1" colspan="1">socket is closing</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1008</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_VERSION,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_VERSION</td>
               <td class="text-center" rowspan="1" colspan="1">peer is older version than agent's minimum set</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1009</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_RDVCOOKIE,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_RDVCOOKIE</td>
               <td class="text-center" rowspan="1" colspan="1">rendezvous cookie collision</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1010</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_BADSECRET,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_BADSECRET</td>
               <td class="text-center" rowspan="1" colspan="1">wrong password</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1011</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_UNSECURE,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_UNSECURE</td>
               <td class="text-center" rowspan="1" colspan="1">password required or unexpected</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1012</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_MESSAGEAPI,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_MESSAGEAPI</td>
               <td class="text-center" rowspan="1" colspan="1">Stream flag collision</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1013</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_CONGESTION,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_CONGESTION</td>
               <td class="text-center" rowspan="1" colspan="1">incompatible congestion-controller type</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1014</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_FILTER,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_FILTER</td>
               <td class="text-center" rowspan="1" colspan="1">incompatible packet filter</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1015</td>
-              <td class="text-center" rowspan="1" colspan="1">REJ_GROUP,</td>
+              <td class="text-center" rowspan="1" colspan="1">REJ_GROUP</td>
               <td class="text-center" rowspan="1" colspan="1">incompatible group</td>
             </tr>
           </tbody>

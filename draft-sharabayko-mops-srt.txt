@@ -83,10 +83,10 @@ Table of Contents
    4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  15
      4.1.  Stream Multiplexing . . . . . . . . . . . . . . . . . . .  15
      4.2.  Data Transmission Modes . . . . . . . . . . . . . . . . .  15
-       4.2.1.  Message Mode  . . . . . . . . . . . . . . . . . . . .  15
+       4.2.1.  Message Mode  . . . . . . . . . . . . . . . . . . . .  16
        4.2.2.  Live mode . . . . . . . . . . . . . . . . . . . . . .  16
        4.2.3.  Buffer mode . . . . . . . . . . . . . . . . . . . . .  16
-     4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  16
+     4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  17
        4.3.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  20
        4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  21
      4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  21
@@ -578,23 +578,25 @@ Internet-Draft                     SRT                        March 2020
 
    SRT Flags (32 bits):  SRT configuration flags.
 
-                       +------------+-------------+
-                       | Bitmask    |     Flag    |
-                       +============+=============+
-                       | 0x00000001 |   TSBPDSND  |
-                       +------------+-------------+
-                       | 0x00000002 |   TSBPDRCV  |
-                       +------------+-------------+
-                       | 0x00000004 |    CRYPT    |
-                       +------------+-------------+
-                       | 0x00000008 |  TLPKTDROP  |
-                       +------------+-------------+
-                       | 0x00000010 | PERIODICNAK |
-                       +------------+-------------+
-                       | 0x00000020 |  REXMITFLG  |
-                       +------------+-------------+
-                       | 0x00000040 |    STREAM   |
-                       +------------+-------------+
+                      +------------+---------------+
+                      | Bitmask    |      Flag     |
+                      +============+===============+
+                      | 0x00000001 |    TSBPDSND   |
+                      +------------+---------------+
+                      | 0x00000002 |    TSBPDRCV   |
+                      +------------+---------------+
+                      | 0x00000004 |     CRYPT     |
+                      +------------+---------------+
+                      | 0x00000008 |   TLPKTDROP   |
+                      +------------+---------------+
+                      | 0x00000010 |  PERIODICNAK  |
+                      +------------+---------------+
+                      | 0x00000020 |   REXMITFLG   |
+                      +------------+---------------+
+                      | 0x00000040 |     STREAM    |
+                      +------------+---------------+
+                      | 0x00000080 | PACKET_FILTER |
+                      +------------+---------------+
 
                           Table 4: HS Extension
                               Message Flags
@@ -605,10 +607,8 @@ Internet-Draft                     SRT                        March 2020
    Sender TsbPd Delay (16 bits):  TSBPD delay of the sender.  Refer to
       Section 4.5.
 
-3.2.1.2.  Key Material Exchange
 
-   The Key Material Exchange has both request and response type
-   extensions.  The value of request is 3, and the response value is 4.
+
 
 
 
@@ -617,6 +617,11 @@ Sharabayko & Kim        Expires 3 September 2020               [Page 11]
 
 Internet-Draft                     SRT                        March 2020
 
+
+3.2.1.2.  Key Material Exchange
+
+   The Key Material Exchange has both request and response type
+   extensions.  The value of request is 3, and the response value is 4.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -661,11 +666,6 @@ Internet-Draft                     SRT                        March 2020
 
    Control Type:  The type value of keep-alive control packet is "1".
 
-   Type-specific Information:  This field is reserved for future
-      definition.
-
-   Control Information Field:  This field must not appear in keep-alive
-      control packets.
 
 
 
@@ -673,6 +673,12 @@ Sharabayko & Kim        Expires 3 September 2020               [Page 12]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   Type-specific Information:  This field is reserved for future
+      definition.
+
+   Control Information Field:  This field must not appear in keep-alive
+      control packets.
 
 3.2.3.  ACK (Acknowledgement)
 
@@ -716,12 +722,6 @@ Internet-Draft                     SRT                        March 2020
    Available Buffer Size (32 bits):  Available size of the receiver's
       buffer in packets.
 
-   Packets Receiving Rate (32 bits):  The receiving rate of the packets
-      in packets / second.
-
-   Estimated Link Capacity (32 bits):  Estimated bandwidth of the link
-      in packets per second.
-
 
 
 
@@ -729,6 +729,12 @@ Sharabayko & Kim        Expires 3 September 2020               [Page 13]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   Packets Receiving Rate (32 bits):  The receiving rate of the packets
+      in packets / second.
+
+   Estimated Link Capacity (32 bits):  Estimated bandwidth of the link
+      in packets per second.
 
    Receiving Rate (32 bits):  Estimated receiving rate in bytes per
       second.
@@ -772,12 +778,6 @@ Internet-Draft                     SRT                        March 2020
    Shutdown control packets are used to initiate the closing of an SRT
    connection.
 
-   Control Type:  The type value of Shutdown control packet is "5".
-
-   Type-specific Information:  This field is reserved for future
-      definition.
-
-
 
 
 
@@ -785,6 +785,11 @@ Sharabayko & Kim        Expires 3 September 2020               [Page 14]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   Control Type:  The type value of Shutdown control packet is "5".
+
+   Type-specific Information:  This field is reserved for future
+      definition.
 
    Control Information Field:  This field must not appear in shutdown
       control packets.
@@ -827,13 +832,8 @@ Internet-Draft                     SRT                        March 2020
    for the earlier message to be completed.  In Live Transmission Mode
    the only valid value is "1".
 
-4.2.1.  Message Mode
 
-   When the STREAM flag of the handshake Extension Message Flags is set
-   to 0, the protocol operates in the message mode.
 
-   Every packet has its own Packet Sequence Number.  One or several
-   consecutive SRT Data packet can form a message.  In that case all the
 
 
 
@@ -842,6 +842,13 @@ Sharabayko & Kim        Expires 3 September 2020               [Page 15]
 Internet-Draft                     SRT                        March 2020
 
 
+4.2.1.  Message Mode
+
+   When the STREAM flag of the handshake Extension Message Flags is set
+   to 0, the protocol operates in the message mode.
+
+   Every packet has its own Packet Sequence Number.  One or several
+   consecutive SRT Data packet can form a message.  In that case all the
    packets belonging to the same message have similar message number set
    in the Message Number field.
 
@@ -884,19 +891,18 @@ Internet-Draft                     SRT                        March 2020
    In this mode the consecutive packets form one consecutive stream that
    can be read with the portions of any size.
 
-4.3.  Handshake Messages
-
-   SRT is a connection protocol.  It embraces the concepts of
-   "connection" and "session".  The UDP system protocol is used by SRT
-   for sending data and control packets.
-
-
 
 
 Sharabayko & Kim        Expires 3 September 2020               [Page 16]
 
 Internet-Draft                     SRT                        March 2020
 
+
+4.3.  Handshake Messages
+
+   SRT is a connection protocol.  It embraces the concepts of
+   "connection" and "session".  The UDP system protocol is used by SRT
+   for sending data and control packets.
 
    An SRT connection is characterized by the fact that it is:
 
@@ -939,12 +945,6 @@ Internet-Draft                     SRT                        March 2020
 
    For Caller-Listener connections: the Caller is the Initiator, the
    Listener is the Responder.  For Rendezvous connections: the Initiator
-   and Responder roles are assigned based on the initial data
-   interchange during the handshake.
-
-   The Handshake Type field in the Handshake Structure (see Figure 5)
-   indicates the handshake message type.
-
 
 
 
@@ -953,6 +953,12 @@ Sharabayko & Kim        Expires 3 September 2020               [Page 17]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   and Responder roles are assigned based on the initial data
+   interchange during the handshake.
+
+   The Handshake Type field in the Handshake Structure (see Figure 5)
+   indicates the handshake message type.
 
    Caller-Listener handshake exchange has the following order of
    Handshake Types:
@@ -999,12 +1005,6 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-
-
-
-
-
-
 Sharabayko & Kim        Expires 3 September 2020               [Page 18]
 
 Internet-Draft                     SRT                        March 2020
@@ -1013,40 +1013,40 @@ Internet-Draft                     SRT                        March 2020
          +------+------------------+-----------------------------+
          | Code | Rejection Reason |         Description         |
          +======+==================+=============================+
-         | 1000 |   REJ_UNKNOWN,   |        Unknown reason       |
+         | 1000 |   REJ_UNKNOWN    |        Unknown reason       |
          +------+------------------+-----------------------------+
-         | 1001 |   REJ_SYSTEM,    |    System function error    |
+         | 1001 |    REJ_SYSTEM    |    System function error    |
          +------+------------------+-----------------------------+
-         | 1002 |    REJ_PEER,     |       Rejected by peer      |
+         | 1002 |     REJ_PEER     |       Rejected by peer      |
          +------+------------------+-----------------------------+
-         | 1003 |  REJ_RESOURCE,   | Resource allocation problem |
+         | 1003 |   REJ_RESOURCE   | Resource allocation problem |
          +------+------------------+-----------------------------+
-         | 1004 |    REJ_ROGUE,    | incorrect data in handshake |
+         | 1004 |    REJ_ROGUE     | incorrect data in handshake |
          +------+------------------+-----------------------------+
-         | 1005 |   REJ_BACKLOG,   | listener's backlog exceeded |
+         | 1005 |   REJ_BACKLOG    | listener's backlog exceeded |
          +------+------------------+-----------------------------+
-         | 1006 |     REJ_IPE,     |    internal program error   |
+         | 1006 |     REJ_IPE      |    internal program error   |
          +------+------------------+-----------------------------+
-         | 1007 |    REJ_CLOSE,    |      socket is closing      |
+         | 1007 |    REJ_CLOSE     |      socket is closing      |
          +------+------------------+-----------------------------+
-         | 1008 |   REJ_VERSION,   |  peer is older version than |
+         | 1008 |   REJ_VERSION    |  peer is older version than |
          |      |                  |     agent's minimum set     |
          +------+------------------+-----------------------------+
-         | 1009 |  REJ_RDVCOOKIE,  | rendezvous cookie collision |
+         | 1009 |  REJ_RDVCOOKIE   | rendezvous cookie collision |
          +------+------------------+-----------------------------+
-         | 1010 |  REJ_BADSECRET,  |        wrong password       |
+         | 1010 |  REJ_BADSECRET   |        wrong password       |
          +------+------------------+-----------------------------+
-         | 1011 |  REJ_UNSECURE,   |     password required or    |
+         | 1011 |   REJ_UNSECURE   |     password required or    |
          |      |                  |          unexpected         |
          +------+------------------+-----------------------------+
-         | 1012 | REJ_MESSAGEAPI,  |    Stream flag collision    |
+         | 1012 |  REJ_MESSAGEAPI  |    Stream flag collision    |
          +------+------------------+-----------------------------+
-         | 1013 | REJ_CONGESTION,  |   incompatible congestion-  |
+         | 1013 |  REJ_CONGESTION  |   incompatible congestion-  |
          |      |                  |       controller type       |
          +------+------------------+-----------------------------+
-         | 1014 |   REJ_FILTER,    |  incompatible packet filter |
+         | 1014 |    REJ_FILTER    |  incompatible packet filter |
          +------+------------------+-----------------------------+
-         | 1015 |    REJ_GROUP,    |      incompatible group     |
+         | 1015 |    REJ_GROUP     |      incompatible group     |
          +------+------------------+-----------------------------+
 
                      Table 5: HS Rejection Reason Codes
