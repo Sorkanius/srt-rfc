@@ -88,24 +88,24 @@ Table of Contents
        4.2.3.  Buffer mode . . . . . . . . . . . . . . . . . . . . .  18
      4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  18
        4.3.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  22
-       4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  23
-     4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  23
-     4.5.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  24
-     4.6.  Too-Late-Packet-Drop  . . . . . . . . . . . . . . . . . .  24
-     4.7.  Acknowledgement and Lost Packet Handling  . . . . . . . .  25
-       4.7.1.  Packet Acknowledgement (ACKs) . . . . . . . . . . . .  25
-       4.7.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  26
-       4.7.3.  Packet Acknowledgment in SRT  . . . . . . . . . . . .  27
-       4.7.4.  Bidirectional Transmission Queues . . . . . . . . . .  27
-       4.7.5.  Round Trip Time Estimation  . . . . . . . . . . . . .  27
-       4.7.6.  Loss List . . . . . . . . . . . . . . . . . . . . . .  27
-   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  27
-     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  27
-     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  27
-     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  28
-     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  28
-     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  28
-     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  28
+       4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  24
+     4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  25
+     4.5.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  25
+     4.6.  Too-Late-Packet-Drop  . . . . . . . . . . . . . . . . . .  26
+     4.7.  Acknowledgement and Lost Packet Handling  . . . . . . . .  26
+       4.7.1.  Packet Acknowledgement (ACKs) . . . . . . . . . . . .  27
+       4.7.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  27
+       4.7.3.  Packet Acknowledgment in SRT  . . . . . . . . . . . .  28
+       4.7.4.  Bidirectional Transmission Queues . . . . . . . . . .  28
+       4.7.5.  Round Trip Time Estimation  . . . . . . . . . . . . .  29
+       4.7.6.  Loss List . . . . . . . . . . . . . . . . . . . . . .  29
+   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  29
+     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  29
 
 
 
@@ -114,15 +114,15 @@ Sharabayko & Kim        Expires 4 September 2020                [Page 2]
 Internet-Draft                     SRT                        March 2020
 
 
-     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  28
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  28
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  28
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  28
-   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  28
-     Normative References  . . . . . . . . . . . . . . . . . . . . .  28
-     Informative References  . . . . . . . . . . . . . . . . . . . .  28
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  29
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
+     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  29
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  29
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  29
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  29
+   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  29
+     Normative References  . . . . . . . . . . . . . . . . . . . . .  30
+     Informative References  . . . . . . . . . . . . . . . . . . . .  30
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  30
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
 
 1.  Introduction
 
@@ -361,10 +361,10 @@ Internet-Draft                     SRT                        March 2020
 3.2.1.  Handshake
 
    The handshake control packets are used to exchange peer
-   configurations, agree on the and connection parameters and establish
-   the connection.
+   configurations, agree on the connection parameters and establish the
+   connection.
 
-   The CIF of handshake control packet is shown in Figure 5.
+   The CIF of the handshake control packet is shown in Figure 5.
 
 
 
@@ -435,7 +435,7 @@ Internet-Draft                     SRT                        March 2020
       future definition.
 
    Encryption Field (16 bits):  Block cipher family and block size.  The
-      values of this field are described om Table 2.
+      values of this field are described in Table 2.
 
 
 
@@ -1032,10 +1032,14 @@ Internet-Draft                     SRT                        March 2020
    There are two basic types of SRT handshake extensions that are
    exchanged in the handshake:
 
-   *  Handhshake Extension Message exchanges the basic SRT information;
+   *  Handshake Extension Message exchanges the basic SRT information;
 
    *  Key Material Exchange exchanges the wrapped stream encryption key
       (used only if encryption is requested).
+
+   *  Stream ID extension exchanges some stream-specific information
+      that can be used by the application to identify the incoming
+      stream connection.
 
    The Initiator and Responder roles are assigned depending on the
    connection mode.
@@ -1055,10 +1059,6 @@ Internet-Draft                     SRT                        March 2020
 
    2.  Listener to Caller: INDUCTION (reports cookie)
 
-   3.  Caller to Listener: CONCLUSION (uses previously returned cookie)
-
-   4.  Listener to Caller: CONCLUSION (confirms connection established)
-
 
 
 Sharabayko & Kim        Expires 4 September 2020               [Page 19]
@@ -1066,23 +1066,23 @@ Sharabayko & Kim        Expires 4 September 2020               [Page 19]
 Internet-Draft                     SRT                        March 2020
 
 
+   3.  Caller to Listener: CONCLUSION (uses previously returned cookie)
+
+   4.  Listener to Caller: CONCLUSION (confirms connection established)
+
    Rendezvous handshake exchange has the following order of Handshake
    Types:
 
-   1.  After starting the connection: "URQ_WAVEAHAND"
+   1.  After starting the connection: WAVEAHAND.
 
-   2.  After receiving the above message from the peer: "URQ_CONCLUSION"
+   2.  After receiving the above message from the peer: CONCLUSION.
 
-   3.  After receiving the above message from the peer: "URQ_AGREEMENT".
+   3.  After receiving the above message from the peer: AGREEMENT.
 
-   In case when the connection process has failed when the party was
-   about to send the CONCLUSION handshake, the Handshake Type field will
-   contain appropriate error value.  See the list of error codes in
+   In case the connection process has failed on the stage when the party
+   was about to send the CONCLUSION handshake, the Handshake Type field
+   will contain appropriate error value.  See the list of error codes in
    Table 6.
-
-
-
-
 
 
 
@@ -1163,12 +1163,12 @@ Internet-Draft                     SRT                        March 2020
 
                      Table 6: HS Rejection Reason Codes
 
-   The specification of "PBKEYLEN" is decided by the Sender.  When the
-   transmission is bidirectional, this value must be agreed upon at the
-   outset because when both are set, the Responder wins.  For Caller-
-   Listener connections it is reasonable to set this value on the
-   Listener only.  In the case of Rendezvous the only reasonable
-   approach is to decide upon the correct value from the different
+   The specification of the cipher family and block size is decided by
+   the Sender.  When the transmission is bidirectional, this value must
+   be agreed upon at the outset because when both are set, the Responder
+   wins.  For Caller-Listener connections it is reasonable to set this
+   value on the Listener only.  In the case of Rendezvous the only
+   reasonable approach is to decide upon the correct value from the
 
 
 
@@ -1178,8 +1178,8 @@ Sharabayko & Kim        Expires 4 September 2020               [Page 21]
 Internet-Draft                     SRT                        March 2020
 
 
-   sources and to set it on both parties (note that *AES-128* is the
-   default).
+   different sources and to set it on both parties (note that *AES-128*
+   is the default).
 
 4.3.1.  Caller-Listener Handshake
 
@@ -1189,7 +1189,7 @@ Internet-Draft                     SRT                        March 2020
 
 4.3.1.1.  The Induction Phase
 
-   The Caller begins by sending an "induction" message, which contains
+   The Caller begins by sending the INDUCTION handshake, which contains
    the following (significant) fields:
 
    *  Version: must always be 4
@@ -1212,7 +1212,7 @@ Internet-Draft                     SRT                        March 2020
    compliant with the UDT protocol ([GHG04b]) it is based on.
 
    NOTE: This phase serves only to set a cookie on the Listener so that
-   it doesn't allocate resources, thus mitigating a potential DOS attack
+   it doesn't allocate resources, thus mitigating a potential DoS attack
    that might be perpetrated by flooding the Listener with handshake
    commands.
 
@@ -1234,7 +1234,7 @@ Sharabayko & Kim        Expires 4 September 2020               [Page 22]
 Internet-Draft                     SRT                        March 2020
 
 
-   *  ID: Socket ID of the HSv5 Listener
+   *  SRT Socket ID: Socket ID of the Listener
 
    *  SYN Cookie: a cookie that is crafted based on host, port and
       current time with 1 minute accuracy
@@ -1244,9 +1244,10 @@ Internet-Draft                     SRT                        March 2020
    whether the Caller is SRT or UDT.
 
    If the party is SRT, it does interpret the values in Version and
-   Type.  If it receives the value 5 in Version, it understands that it
-   comes from an SRT party, so it knows that it should prepare the
-   proper handshake messages phase.  It also checks the following:
+   Extension Field.  If it receives the value 5 in Version, it
+   understands that it comes from an SRT party, so it knows that it
+   should prepare the proper handshake messages phase.  It also checks
+   the following:
 
    *  whether the Extension Flags contains the magic value 0x4A17;
       otherwise the connection is rejected.  This is a contingency for
@@ -1262,6 +1263,64 @@ Internet-Draft                     SRT                        March 2020
    Cookie value, as this must be passed to the next phase.  It does
    interpret these fields, but only in the "conclusion" message.
 
+4.3.1.2.  The Conclusion Phase
+
+   Once the Caller gets the SYN cookie from the Listener, it sends the
+   CONCLUSION handshake to the Listener.
+
+   The following values are set by the compliant caller:
+
+   *  Version: 5
+
+   *  Handshake Type: CONCLUSION
+
+   *  SRT Socket ID: Socket ID of the Caller
+
+   *  SYN Cookie: the cookie previously received in the induction phase
+
+   The Destination Socket ID in this message is the socket ID that was
+   previously received in the induction phase in the SRT Socket ID field
+   of the handshake structure.
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 23]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   *  Encryption Flags: advertised cipher family and block size.
+
+   *  Extension Flags: A set of flags that define the extensions
+      provided in the handshake.
+
+                          +------------+--------+
+                          | Bitmask    |  Flag  |
+                          +============+========+
+                          | 0x00000001 | HSREQ  |
+                          +------------+--------+
+                          | 0x00000002 | KMREQ  |
+                          +------------+--------+
+                          | 0x00000004 | CONFIG |
+                          +------------+--------+
+
+                           Table 7: HS Extension
+                                   Flags
+
+   The Listener responds with the same values shown above, without the
+   cookie (which isn't needed here), as well as the extensions for HSv5
+   (which will probably be exactly the same).
+
+   IMPORTANT: There isn't any "negotiation" here.  If the values passed
+   in the handshake are in any way not acceptable by the other side, the
+   connection will be rejected.  The only case when the Listener can
+   have precedence over the Caller is the advertised Cipher Family and
+   Block Size (Table 2) in the Encryption Field of the Handshake.
+
+   The value for latency is always agreed to be the greater of those
+   reported by each party.
+
 4.3.2.  Rendezvous Handshake
 
    Rendezvous handshake exchange has the following order of Handshake
@@ -1273,6 +1332,20 @@ Internet-Draft                     SRT                        March 2020
 
    3.  After receiving the above message from the peer: "URQ_AGREEMENT".
 
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 24]
+
+Internet-Draft                     SRT                        March 2020
+
+
 4.4.  SRT Buffer Latency
 
    The sender and receiver have buffers to store packets.  On the
@@ -1282,14 +1355,6 @@ Internet-Draft                     SRT                        March 2020
    configured latency, the packet is dropped from the sender buffer.
    The packet can be retransmitted, while the packet exists in the
    buffer for the latency window.  On the receiver, a packet delivered
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 23]
-
-Internet-Draft                     SRT                        March 2020
-
-
    to an application from a buffer after latency time passed, to recover
    from a potential packet loss.
 
@@ -1328,6 +1393,15 @@ Internet-Draft                     SRT                        March 2020
    maximum value of Receiver/Sender TsbPd Delay from initiator/responder
    (see section #ctrl-pkt-handshake).
 
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 25]
+
+Internet-Draft                     SRT                        March 2020
+
+
 4.6.  Too-Late-Packet-Drop
 
    Too-Late-Packet Drop allows the sender to drop packets that have no
@@ -1338,14 +1412,6 @@ Internet-Draft                     SRT                        March 2020
    before being delivered.  In the receiver, tail packets of a big
    I-Frame may be quite late and not held by the SRT receive buffer.
    They pass through to the application.  The receiver buffer depletes
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 24]
-
-Internet-Draft                     SRT                        March 2020
-
-
    and there is no time left for retransmission if missing packets are
    discovered.  Missing packets are then skipped by the receiver.
 
@@ -1380,6 +1446,18 @@ Internet-Draft                     SRT                        March 2020
    receiver acknowledges its receival, or if both peers agree to drop
    this packet (see Section 4.6).
 
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 26]
+
+Internet-Draft                     SRT                        March 2020
+
+
 4.7.1.  Packet Acknowledgement (ACKs)
 
    At certain intervals (see ACKs, ACKACKs & Round Trip Time), the
@@ -1394,14 +1472,6 @@ Internet-Draft                     SRT                        March 2020
    conditions for sending an acknowledgement.  A full ACK is based on a
    timer of 10 milliseconds (the ACK period).  For high bit rate
    transmissions, a "light ACK" can be sent, which is an ACK for a
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 25]
-
-Internet-Draft                     SRT                        March 2020
-
-
    sequence of packets.  In a 10 milliseconds interval, there are often
    so many packets being sent and received that the ACK position on the
    sender doesn't advance quickly enough.  To mitigate this, after 64
@@ -1436,6 +1506,14 @@ Internet-Draft                     SRT                        March 2020
    packets are in the loss list, to determine if they can be removed
    from there as well so that they are not retransmitted unnecessarily.
 
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 27]
+
+Internet-Draft                     SRT                        March 2020
+
+
    What the sender sees is the NAKs that it has received.  There is a
    counter for the packets that are resent.  If there is no ACK for a
    packet, it will stay in the loss list and can be resent more than
@@ -1450,14 +1528,6 @@ Internet-Draft                     SRT                        March 2020
    This condition where packets are unsent doesn't happen often.  There
    is a maximum number of packets held in the send buffer based on the
    configured latency.  Older packets that have no chance to be
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 26]
-
-Internet-Draft                     SRT                        March 2020
-
-
    retransmitted and played in time are dropped, making room for newer
    real-time packets produced by the sending application.  A minimum of
    one second is applied before dropping the packet when low latency is
@@ -1490,6 +1560,16 @@ Internet-Draft                     SRT                        March 2020
    Once an SRT connection is established, both peers can send data
    packets simultaneously.
 
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 28]
+
+Internet-Draft                     SRT                        March 2020
+
+
 4.7.5.  Round Trip Time Estimation
 
    The round-trip time is estimated during the transmission of SRT data
@@ -1505,14 +1585,6 @@ Internet-Draft                     SRT                        March 2020
 5.1.  Overview
 
 5.2.  Definitions
-
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 27]
-
-Internet-Draft                     SRT                        March 2020
-
 
 5.3.  Encryption Process Walkthrough
 
@@ -1546,6 +1618,14 @@ Acknowledgments
 
 References
 
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 29]
+
+Internet-Draft                     SRT                        March 2020
+
+
 Normative References
 
    [RFC0768]  Postel, J., "User Datagram Protocol", STD 6, RFC 768,
@@ -1561,15 +1641,6 @@ Informative References
 
    [GHG04b]   Gu, Y., Hong, X., and R.L. Grossman,, "Experiences in
               Design and Implementation of a High Performance Transport
-
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 28]
-
-Internet-Draft                     SRT                        March 2020
-
-
               Protocol", DOI 10.1109/SC.2004.24, December 2004,
               <https://doi.org/10.1109/SC.2004.24>.
 
@@ -1602,6 +1673,15 @@ Appendix A.  Packet Sequence List coding
    and the the last (b) sequence numbers in the list field, and modify
    the the first bit of a to "1".
 
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 30]
+
+Internet-Draft                     SRT                        March 2020
+
+
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -1618,12 +1698,6 @@ Authors' Addresses
    Haivision Network Video, GmbH
 
    Email: maxsharabayko@haivision.com
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 29]
-
-Internet-Draft                     SRT                        March 2020
 
 
    Jeongseok Kim
@@ -1659,22 +1733,4 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Sharabayko & Kim        Expires 4 September 2020               [Page 30]
+Sharabayko & Kim        Expires 4 September 2020               [Page 31]
