@@ -5,8 +5,8 @@
 mops                                                     M.P. Sharabayko
 Internet-Draft                             Haivision Network Video, GmbH
 Intended status: Standards Track                                  J. Kim
-Expires: 3 September 2020                           SK Telecom Co., Ltd.
-                                                            2 March 2020
+Expires: 4 September 2020                           SK Telecom Co., Ltd.
+                                                            3 March 2020
 
 
                             The SRT Protocol
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2020.
+   This Internet-Draft will expire on 4 September 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 1]
+Sharabayko & Kim        Expires 4 September 2020                [Page 1]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -75,54 +75,54 @@ Table of Contents
      3.1.  Data Packets  . . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  Control Packets . . . . . . . . . . . . . . . . . . . . .   6
        3.2.1.  Handshake . . . . . . . . . . . . . . . . . . . . . .   7
-       3.2.2.  Keep Alive  . . . . . . . . . . . . . . . . . . . . .  12
-       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  13
-       3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  14
-       3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  14
-       3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  15
-   4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  15
-     4.1.  Stream Multiplexing . . . . . . . . . . . . . . . . . . .  15
-     4.2.  Data Transmission Modes . . . . . . . . . . . . . . . . .  15
-       4.2.1.  Message Mode  . . . . . . . . . . . . . . . . . . . .  16
-       4.2.2.  Live mode . . . . . . . . . . . . . . . . . . . . . .  16
-       4.2.3.  Buffer mode . . . . . . . . . . . . . . . . . . . . .  16
-     4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  17
-       4.3.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  20
-       4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  21
-     4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  21
-     4.5.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  22
-     4.6.  Too-Late-Packet-Drop  . . . . . . . . . . . . . . . . . .  22
-     4.7.  Acknowledgement and Lost Packet Handling  . . . . . . . .  23
-       4.7.1.  Packet Acknowledgement (ACKs) . . . . . . . . . . . .  23
-       4.7.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  24
-       4.7.3.  Packet Acknowledgment in SRT  . . . . . . . . . . . .  25
-       4.7.4.  Bidirectional Transmission Queues . . . . . . . . . .  25
-       4.7.5.  Round Trip Time Estimation  . . . . . . . . . . . . .  25
-       4.7.6.  Loss List . . . . . . . . . . . . . . . . . . . . . .  25
-   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  25
-     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  25
-     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  25
-     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  26
-     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  26
-     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  26
-     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  26
+       3.2.2.  Keep Alive  . . . . . . . . . . . . . . . . . . . . .  14
+       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  14
+       3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  16
+       3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  16
+       3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  16
+   4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  17
+     4.1.  Stream Multiplexing . . . . . . . . . . . . . . . . . . .  17
+     4.2.  Data Transmission Modes . . . . . . . . . . . . . . . . .  17
+       4.2.1.  Message Mode  . . . . . . . . . . . . . . . . . . . .  17
+       4.2.2.  Live mode . . . . . . . . . . . . . . . . . . . . . .  18
+       4.2.3.  Buffer mode . . . . . . . . . . . . . . . . . . . . .  18
+     4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  18
+       4.3.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  22
+       4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  23
+     4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  23
+     4.5.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  24
+     4.6.  Too-Late-Packet-Drop  . . . . . . . . . . . . . . . . . .  24
+     4.7.  Acknowledgement and Lost Packet Handling  . . . . . . . .  25
+       4.7.1.  Packet Acknowledgement (ACKs) . . . . . . . . . . . .  25
+       4.7.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  26
+       4.7.3.  Packet Acknowledgment in SRT  . . . . . . . . . . . .  27
+       4.7.4.  Bidirectional Transmission Queues . . . . . . . . . .  27
+       4.7.5.  Round Trip Time Estimation  . . . . . . . . . . . . .  27
+       4.7.6.  Loss List . . . . . . . . . . . . . . . . . . . . . .  27
+   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  27
+     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  27
+     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  27
+     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  28
+     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  28
+     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  28
+     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  28
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 2]
+Sharabayko & Kim        Expires 4 September 2020                [Page 2]
 
 Internet-Draft                     SRT                        March 2020
 
 
-     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  26
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  26
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  26
-   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  26
-     Normative References  . . . . . . . . . . . . . . . . . . . . .  26
-     Informative References  . . . . . . . . . . . . . . . . . . . .  26
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  27
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
+     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  28
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  28
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  28
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  28
+   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  28
+     Normative References  . . . . . . . . . . . . . . . . . . . . .  28
+     Informative References  . . . . . . . . . . . . . . . . . . . .  28
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  29
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 1.  Introduction
 
@@ -165,7 +165,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 3]
+Sharabayko & Kim        Expires 4 September 2020                [Page 3]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 4]
+Sharabayko & Kim        Expires 4 September 2020                [Page 4]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -277,7 +277,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 5]
+Sharabayko & Kim        Expires 4 September 2020                [Page 5]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 6]
+Sharabayko & Kim        Expires 4 September 2020                [Page 6]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 7]
+Sharabayko & Kim        Expires 4 September 2020                [Page 7]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 8]
+Sharabayko & Kim        Expires 4 September 2020                [Page 8]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020                [Page 9]
+Sharabayko & Kim        Expires 4 September 2020                [Page 9]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 10]
+Sharabayko & Kim        Expires 4 September 2020               [Page 10]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 11]
+Sharabayko & Kim        Expires 4 September 2020               [Page 11]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -641,6 +641,72 @@ Internet-Draft                     SRT                        March 2020
 
                  Figure 7: Key Material Extension structure
 
+   S (1 bit):  Start Bit. The value of this field sets to 0.
+
+   V (3 bits):  SRT Version.  The initial version value is 1.
+
+   PT (4 bits):  Packet Type.  The value of this field always sets to 2.
+      The other values are reserved for future definition.
+
+   Sign (16 bits):  Signature.  This field is PnP Vendor ID([PNPID]) in
+      big endian order.
+
+   Rev (4 bits):  Reserved.
+
+   KK (2 bits):  Encryption Flag.  Refer to KK field in Section 3.1.
+
+   KEKI (32 bits):  Key Encryption Key Index in big endian order.  The
+      default stream associated key set to 0.  The values from 1 to 255
+      are reserved for manually indexed keys.
+
+   Cipher (8 bits):  Encryption Cipher and mode.
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 12]
+
+Internet-Draft                     SRT                        March 2020
+
+
+     +---------+-----------------------------------------------------+
+     | Bitmask |                         Flag                        |
+     +=========+=====================================================+
+     | 0x00    |          None or KEK indexed crypto context         |
+     +---------+-----------------------------------------------------+
+     | 0x01    | AES-ECB (potentially for VF 2.0 compatible message) |
+     +---------+-----------------------------------------------------+
+     | 0x02    |                AES-CTR ([SP800-38A])                |
+     +---------+-----------------------------------------------------+
+
+               Table 5: HS Key Material Exchange Cipher mode
+
+   Auth (8 bits):  Message authentication code algorithm.  The default
+      value of this field sets to 0 which means None or KEK indexed
+      crypto context.
+
+   SE (8 bits):  Stream Encapsulation.  The value, 0, of this field
+      means Unspecified or KEK indexed crypto context.  If the stream is
+      MPEG-TS over UDP, this field sets to 1.  The value, 2, indicates
+      that the stream is encapsulated as MPEG-TS over SRT.
+
+   SLen (4 bits):  Salt length in bytes divided by 4.  The value of this
+      field can be 0 if no salt or initial vector presents.
+
+   KLen (4 bits):  Stream encrypting key length in bytes divided by 4.
+      The value is the size of one key even if two keys presents.
+
+   Salt (32 bits):  Salt Key. The length of salt key is SLen * 4 * 8.
+
+   Wrapped Key (variable length):  The length of this field is 64 + KLen
+      * n * 4 * 8, n is the number of keys; 1 or 2.  This field is
+      expanded as the following.
+
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -655,6 +721,26 @@ Internet-Draft                     SRT                        March 2020
 
                      Figure 8: Unwrapped key structure
 
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 13]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   ICV (64 bits):  64-bit Integrity Check Vector(AES key wrap
+      integrity).
+
+   xSEK (variable length):  This field identifies an odd or even SEK.
+      If both keys are present, then this field is eSEK (even key) and
+      the next one is the odd key.  The length of this field is
+      calculated by KLen * 4 * 8.
+
+   oSEK (variable length):  This field is present only when the message
+      carries the two SEKs.
+
 3.2.2.  Keep Alive
 
    Keep-alive control packets are sent after a certain timeout from the
@@ -665,14 +751,6 @@ Internet-Draft                     SRT                        March 2020
    The default timeout for keepalive packet to be sent is 1 second.
 
    Control Type:  The type value of keep-alive control packet is "1".
-
-
-
-
-Sharabayko & Kim        Expires 3 September 2020               [Page 12]
-
-Internet-Draft                     SRT                        March 2020
-
 
    Type-specific Information:  This field is reserved for future
       definition.
@@ -686,6 +764,27 @@ Internet-Draft                     SRT                        March 2020
    of data packets.  These packets may also carry some additional
    information from the receiver like RTT, bandwidth, receiving speed,
    etc.  The CIF of the ACK control packet is expanded as the following.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 14]
+
+Internet-Draft                     SRT                        March 2020
+
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -722,14 +821,6 @@ Internet-Draft                     SRT                        March 2020
    Available Buffer Size (32 bits):  Available size of the receiver's
       buffer in packets.
 
-
-
-
-Sharabayko & Kim        Expires 3 September 2020               [Page 13]
-
-Internet-Draft                     SRT                        March 2020
-
-
    Packets Receiving Rate (32 bits):  The receiving rate of the packets
       in packets / second.
 
@@ -743,6 +834,14 @@ Internet-Draft                     SRT                        March 2020
    is sent every 10 ms and has all the fields of Figure 9.  The Lite ACK
    control packet includes only Last Acknowledged Packet Sequence Number
    field, and the Type-specific Information field should be set to 0.
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 15]
+
+Internet-Draft                     SRT                        March 2020
+
+
    The Small ACK includes the fields up to and including the Available
    Buffer Size field.  The Type-specific Information field should be set
    to 0.
@@ -778,14 +877,6 @@ Internet-Draft                     SRT                        March 2020
    Shutdown control packets are used to initiate the closing of an SRT
    connection.
 
-
-
-
-Sharabayko & Kim        Expires 3 September 2020               [Page 14]
-
-Internet-Draft                     SRT                        March 2020
-
-
    Control Type:  The type value of Shutdown control packet is "5".
 
    Type-specific Information:  This field is reserved for future
@@ -799,6 +890,13 @@ Internet-Draft                     SRT                        March 2020
    ACKACK control packets are used to acknowledge the reception of the
    Full ACK.  Furthermore, these packets are used in the calculation of
    RTT by the receiver.
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 16]
+
+Internet-Draft                     SRT                        March 2020
+
 
    Control Type:  The type value of ACKACK control packet is "6".
 
@@ -832,16 +930,6 @@ Internet-Draft                     SRT                        March 2020
    for the earlier message to be completed.  In Live Transmission Mode
    the only valid value is "1".
 
-
-
-
-
-
-Sharabayko & Kim        Expires 3 September 2020               [Page 15]
-
-Internet-Draft                     SRT                        March 2020
-
-
 4.2.1.  Message Mode
 
    When the STREAM flag of the handshake Extension Message Flags is set
@@ -859,9 +947,16 @@ Internet-Draft                     SRT                        March 2020
    message.  The PP field equal to "00b" indicates a packet that belongs
    to the inner part of the message.
 
-   The concept of the message in SRT comes from UDT ([I-D.gg-udt]).  In
-   this mode a single sending instruction passes exactly one piece of
-   data that has boundaries (a message).  This message may span across
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 17]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   The concept of the message in SRT comes from UDT ([GHG04b]).  In this
+   mode a single sending instruction passes exactly one piece of data
+   that has boundaries (a message).  This message may span across
    multiple UDP packets (and multiple SRT data packets).  The only size
    limitation is that it shall fit as a whole in the buffers of the
    sender and the receiver.  Although internally all the operations on
@@ -891,13 +986,6 @@ Internet-Draft                     SRT                        March 2020
    In this mode the consecutive packets form one consecutive stream that
    can be read with the portions of any size.
 
-
-
-Sharabayko & Kim        Expires 3 September 2020               [Page 16]
-
-Internet-Draft                     SRT                        March 2020
-
-
 4.3.  Handshake Messages
 
    SRT is a connection protocol.  It embraces the concepts of
@@ -913,6 +1001,15 @@ Internet-Draft                     SRT                        March 2020
 
    *  considered closed when a party receives the appropriate close
       command from its peer (connection closed by the foreign host), or
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 18]
+
+Internet-Draft                     SRT                        March 2020
+
+
       when it receives no packets at all for some predefined time
       (connection broken on timeout).
 
@@ -945,15 +1042,6 @@ Internet-Draft                     SRT                        March 2020
 
    For Caller-Listener connections: the Caller is the Initiator, the
    Listener is the Responder.  For Rendezvous connections: the Initiator
-
-
-
-
-Sharabayko & Kim        Expires 3 September 2020               [Page 17]
-
-Internet-Draft                     SRT                        March 2020
-
-
    and Responder roles are assigned based on the initial data
    interchange during the handshake.
 
@@ -971,6 +1059,13 @@ Internet-Draft                     SRT                        March 2020
 
    4.  Listener to Caller: CONCLUSION (confirms connection established)
 
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 19]
+
+Internet-Draft                     SRT                        March 2020
+
+
    Rendezvous handshake exchange has the following order of Handshake
    Types:
 
@@ -983,7 +1078,7 @@ Internet-Draft                     SRT                        March 2020
    In case when the connection process has failed when the party was
    about to send the CONCLUSION handshake, the Handshake Type field will
    contain appropriate error value.  See the list of error codes in
-   Table 5.
+   Table 6.
 
 
 
@@ -1005,7 +1100,24 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 18]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 20]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1049,7 +1161,7 @@ Internet-Draft                     SRT                        March 2020
          | 1015 |    REJ_GROUP     |      incompatible group     |
          +------+------------------+-----------------------------+
 
-                     Table 5: HS Rejection Reason Codes
+                     Table 6: HS Rejection Reason Codes
 
    The specification of "PBKEYLEN" is decided by the Sender.  When the
    transmission is bidirectional, this value must be agreed upon at the
@@ -1061,7 +1173,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 19]
+Sharabayko & Kim        Expires 4 September 2020               [Page 21]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1097,7 +1209,7 @@ Internet-Draft                     SRT                        March 2020
 
    NOTE: The handshake version number is set to 4 in this initial
    handshake.  It is due to the initial design of SRT that was to be
-   compliant with the UDT protocol ([I-D.gg-udt]) it is based on.
+   compliant with the UDT protocol ([GHG04b]) it is based on.
 
    NOTE: This phase serves only to set a cookie on the Listener so that
    it doesn't allocate resources, thus mitigating a potential DOS attack
@@ -1117,7 +1229,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 20]
+Sharabayko & Kim        Expires 4 September 2020               [Page 22]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1173,7 +1285,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 21]
+Sharabayko & Kim        Expires 4 September 2020               [Page 23]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1229,7 +1341,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 22]
+Sharabayko & Kim        Expires 4 September 2020               [Page 24]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1285,7 +1397,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 23]
+Sharabayko & Kim        Expires 4 September 2020               [Page 25]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1341,7 +1453,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 24]
+Sharabayko & Kim        Expires 4 September 2020               [Page 26]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1397,7 +1509,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 25]
+Sharabayko & Kim        Expires 4 September 2020               [Page 27]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1426,7 +1538,7 @@ Internet-Draft                     SRT                        March 2020
 
 7.  IANA Considerations
 
-   TODO IANA
+   This document makes no requests of the IANA.
 
 Acknowledgments
 
@@ -1447,23 +1559,30 @@ Normative References
 
 Informative References
 
-   [I-D.gg-udt]
-              Gu, Y., "UDT: UDP-based Data Transfer Protocol", Work in
+   [GHG04b]   Gu, Y., Hong, X., and R.L. Grossman,, "Experiences in
+              Design and Implementation of a High Performance Transport
 
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 26]
+Sharabayko & Kim        Expires 4 September 2020               [Page 28]
 
 Internet-Draft                     SRT                        March 2020
 
 
-              Progress, Internet-Draft, draft-gg-udt-03, 12 April 2010,
-              <http://www.ietf.org/internet-drafts/draft-gg-udt-03.txt>.
+              Protocol", DOI 10.1109/SC.2004.24, December 2004,
+              <https://doi.org/10.1109/SC.2004.24>.
+
+   [PNPID]    "PNP ID AND ACPI ID REGISTRY", March 2020,
+              <https://uefi.org/PNP_ACPI_Registry>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [SP800-38A]
+              Dworkin, M., "Recommendation for Block Cipher Modes of
+              Operation", December 2001.
 
 Appendix A.  Packet Sequence List coding
 
@@ -1501,6 +1620,12 @@ Authors' Addresses
    Email: maxsharabayko@haivision.com
 
 
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 29]
+
+Internet-Draft                     SRT                        March 2020
+
+
    Jeongseok Kim
    SK Telecom Co., Ltd.
 
@@ -1509,4 +1634,47 @@ Authors' Addresses
 
 
 
-Sharabayko & Kim        Expires 3 September 2020               [Page 27]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko & Kim        Expires 4 September 2020               [Page 30]

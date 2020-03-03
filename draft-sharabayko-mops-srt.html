@@ -468,13 +468,13 @@ hr.addr {
   max-width: calc(100% - 16px);
 }
 @media (min-width: 600px) {
-  #authors-addresses {
+  #authors-addresses > section {
     display: relative;
     padding: 32px 0 0;
     column-count: 2;
     column-gap: 20px;
   }
-  #name-authors-addresses {
+  #name-authors-address {
     position: absolute;
     top: 0px;
     column-span: all;
@@ -482,6 +482,7 @@ hr.addr {
   /* hack for break-inside: avoid-column */
   #authors-addresses address {
     display: inline-block;
+    break-inside: avoid-column;
   }
 }
 
@@ -518,7 +519,7 @@ hr.addr {
     padding: 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
-    opacity: 0.9; /* TODO fix when Henrik takes the patch. */
+    opacity: 0.6;
   }
   #toc.active {
       opacity: 1;
@@ -820,7 +821,6 @@ table.left {
 <link href="rfc-local.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<script src="metadata.min.js"></script>
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
@@ -829,7 +829,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Sharabayko &amp; Kim</td>
-<td class="center">Expires 3 September 2020</td>
+<td class="center">Expires 4 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -842,12 +842,12 @@ table.left {
 <dd class="internet-draft">draft-sharabayko-mops-srt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-02" class="published">2 March 2020</time>
+<time datetime="2020-03-03" class="published">3 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-03">3 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-04">4 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -897,7 +897,7 @@ and a mechanism for data encryption.<a href="#section-abstract-1" class="pilcrow
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1697,9 +1697,105 @@ The value of request is 3, and the response value is 4.<a href="#section-3.2.1.2
 <a href="#name-key-material-extension-stru" class="selfRef">Key Material Extension structure</a>
               </figcaption></figure>
 </div>
+<dl class="dlParallel" id="section-3.2.1.2-3">
+              <dt id="section-3.2.1.2-3.1">S (1 bit):</dt>
+<dd id="section-3.2.1.2-3.2">
+  Start Bit. The value of this field sets to 0.<a href="#section-3.2.1.2-3.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.3">V (3 bits):</dt>
+<dd id="section-3.2.1.2-3.4">
+  SRT Version. The initial version value is 1.<a href="#section-3.2.1.2-3.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.5">PT (4 bits):</dt>
+<dd id="section-3.2.1.2-3.6">
+  Packet Type. The value of this field always sets to 2.
+The other values are reserved for future definition.<a href="#section-3.2.1.2-3.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.7">Sign (16 bits):</dt>
+<dd id="section-3.2.1.2-3.8">
+  Signature. This field is PnP Vendor ID(<span>[<a href="#PNPID" class="xref">PNPID</a>]</span>) in big endian order.<a href="#section-3.2.1.2-3.8" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.9">Rev (4 bits):</dt>
+<dd id="section-3.2.1.2-3.10">
+  Reserved.<a href="#section-3.2.1.2-3.10" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.11">KK (2 bits):</dt>
+<dd id="section-3.2.1.2-3.12">
+  Encryption Flag. Refer to KK field in <a href="#data-pkt" class="xref">Section 3.1</a>.<a href="#section-3.2.1.2-3.12" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.13">KEKI (32 bits):</dt>
+<dd id="section-3.2.1.2-3.14">
+  Key Encryption Key Index in big endian order. The default stream associated
+key set to 0. The values from 1 to 255 are reserved for manually indexed keys.<a href="#section-3.2.1.2-3.14" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.15">Cipher (8 bits):</dt>
+<dd id="section-3.2.1.2-3.16">
+  Encryption Cipher and mode.<a href="#section-3.2.1.2-3.16" class="pilcrow">¶</a>
+</dd>
+</dl>
+<span id="name-hs-key-material-exchange-ci"></span><div id="hs-km-msg-flags">
+<table class="center" id="table-5">
+              <caption>
+<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#name-hs-key-material-exchange-ci" class="selfRef">HS Key Material Exchange Cipher mode</a>
+              </caption>
+<thead>
+                <tr>
+                  <th class="text-left" rowspan="1" colspan="1">Bitmask</th>
+                  <th class="text-center" rowspan="1" colspan="1">Flag</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">0x00</td>
+                  <td class="text-center" rowspan="1" colspan="1">None or KEK indexed crypto context</td>
+                </tr>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">0x01</td>
+                  <td class="text-center" rowspan="1" colspan="1">AES-ECB (potentially for VF 2.0 compatible message)</td>
+                </tr>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">0x02</td>
+                  <td class="text-center" rowspan="1" colspan="1">AES-CTR (<span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span>)</td>
+                </tr>
+              </tbody>
+            </table>
+</div>
+<dl class="dlParallel" id="section-3.2.1.2-5">
+              <dt id="section-3.2.1.2-5.1">Auth (8 bits):</dt>
+<dd id="section-3.2.1.2-5.2">
+  Message authentication code algorithm. The default value of this field sets to 0 which
+means None or KEK indexed crypto context.<a href="#section-3.2.1.2-5.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-5.3">SE (8 bits):</dt>
+<dd id="section-3.2.1.2-5.4">
+  Stream Encapsulation. The value, 0, of this field means Unspecified or KEK indexed crypto
+context. If the stream is MPEG-TS over UDP, this field sets to 1. The value, 2, indicates
+that the stream is encapsulated as MPEG-TS over SRT.<a href="#section-3.2.1.2-5.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-5.5">SLen (4 bits):</dt>
+<dd id="section-3.2.1.2-5.6">
+  Salt length in bytes divided by 4. The value of this field can be 0 if no salt or initial
+vector presents.<a href="#section-3.2.1.2-5.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-5.7">KLen (4 bits):</dt>
+<dd id="section-3.2.1.2-5.8">
+  Stream encrypting key length in bytes divided by 4. The value is the size of one key even
+if two keys presents.<a href="#section-3.2.1.2-5.8" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-5.9">Salt (32 bits):</dt>
+<dd id="section-3.2.1.2-5.10">
+  Salt Key. The length of salt key is SLen * 4 * 8.<a href="#section-3.2.1.2-5.10" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-5.11">Wrapped Key (variable length):</dt>
+<dd id="section-3.2.1.2-5.12">
+  The length of this field is 64 + KLen * n * 4 * 8, n is the number of keys; 1 or 2.
+This field is expanded as the following.<a href="#section-3.2.1.2-5.12" class="pilcrow">¶</a>
+</dd>
+</dl>
 <span id="name-unwrapped-key-structure"></span><div id="unwrapped-key-structure">
 <figure id="figure-8">
-              <div class="artwork art-text alignLeft" id="section-3.2.1.2-3.1">
+              <div class="artwork art-text alignLeft" id="section-3.2.1.2-6.1">
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1718,6 +1814,22 @@ The value of request is 3, and the response value is 4.<a href="#section-3.2.1.2
 <a href="#name-unwrapped-key-structure" class="selfRef">Unwrapped key structure</a>
               </figcaption></figure>
 </div>
+<dl class="dlParallel" id="section-3.2.1.2-7">
+              <dt id="section-3.2.1.2-7.1">ICV (64 bits):</dt>
+<dd id="section-3.2.1.2-7.2">
+  64-bit Integrity Check Vector(AES key wrap integrity).<a href="#section-3.2.1.2-7.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-7.3">xSEK (variable length):</dt>
+<dd id="section-3.2.1.2-7.4">
+  This field identifies an odd or even SEK. If both keys are present,
+then this field is eSEK (even key) and the next one is the odd key.
+The length of this field is calculated by KLen * 4 * 8.<a href="#section-3.2.1.2-7.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-7.5">oSEK (variable length):</dt>
+<dd id="section-3.2.1.2-7.6">
+  This field is present only when the message carries the two SEKs.<a href="#section-3.2.1.2-7.6" class="pilcrow">¶</a>
+</dd>
+</dl>
 </section>
 </div>
 </section>
@@ -1953,7 +2065,7 @@ message number set in the Message Number field.<a href="#section-4.2.1-2" class=
 set to 1. The last packet of the message has the second bit of the Packet Position Flags
 set to 1. Thus, PP equal to "11b" indicates a packet that forms the whole message.
 The PP field equal to "00b" indicates a packet that belongs to the inner part of the message.<a href="#section-4.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.2.1-4">The concept of the message in SRT comes from UDT (<span>[<a href="#I-D.gg-udt" class="xref">I-D.gg-udt</a>]</span>).
+<p id="section-4.2.1-4">The concept of the message in SRT comes from UDT (<span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>).
 In this mode a single sending instruction passes exactly one piece of data
 that has boundaries (a message). This message may span across multiple UDP packets
 (and multiple SRT data packets). The only size limitation is that it shall fit as a whole
@@ -2062,11 +2174,11 @@ indicates the handshake message type.<a href="#section-4.3-12" class="pilcrow">�
 </ol>
 <p id="section-4.3-17">In case when the connection process has failed when the party was about to
 send the CONCLUSION handshake, the Handshake Type field will contain appropriate
-error value. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 5</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
+error value. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 6</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
 <span id="name-hs-rejection-reason-codes"></span><div id="hs-rej-reason">
-<table class="center" id="table-5">
+<table class="center" id="table-6">
           <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-hs-rejection-reason-codes" class="selfRef">HS Rejection Reason Codes</a>
           </caption>
 <thead>
@@ -2199,7 +2311,7 @@ The process has two phases: induction and conclusion.<a href="#section-4.3.1-1" 
 interpreted as a connection request.<a href="#section-4.3.1.1-3" class="pilcrow">¶</a></p>
 <p id="section-4.3.1.1-4">NOTE: The handshake version number is set to 4 in this initial handshake.
 It is due to the initial design of SRT that was to be compliant with the UDT
-protocol (<span>[<a href="#I-D.gg-udt" class="xref">I-D.gg-udt</a>]</span>) it is based on.<a href="#section-4.3.1.1-4" class="pilcrow">¶</a></p>
+protocol (<span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>) it is based on.<a href="#section-4.3.1.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.3.1.1-5">NOTE: This phase serves only to set a cookie on the Listener so that it
 doesn't allocate resources, thus mitigating a potential DOS attack that might be
 perpetrated by flooding the Listener with handshake commands.<a href="#section-4.3.1.1-5" class="pilcrow">¶</a></p>
@@ -2534,7 +2646,7 @@ are described in <a href="#encryption" class="xref">Section 5</a>.<a href="#sect
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-7-1">TODO IANA<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">This document makes no requests of the IANA.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
@@ -2567,12 +2679,18 @@ are described in <a href="#encryption" class="xref">Section 5</a>.<a href="#sect
 <a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.gg-udt">[I-D.gg-udt]</dt>
+<dt id="GHG04b">[GHG04b]</dt>
 <dd>
-<span class="refAuthor">Gu, Y.</span>, <span class="refTitle">"UDT: UDP-based Data Transfer Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-gg-udt-03</span>, <time datetime="2010-04-12">12 April 2010</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-gg-udt-03.txt">http://www.ietf.org/internet-drafts/draft-gg-udt-03.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Gu, Y.</span><span class="refAuthor">, Hong, X.</span><span class="refAuthor">, and R.L. Grossman,</span>, <span class="refTitle">"Experiences in Design and Implementation of a High Performance Transport Protocol"</span>, <span class="seriesInfo">DOI 10.1109/SC.2004.24</span>, <time datetime="2004-12">December 2004</time>, <span>&lt;<a href="https://doi.org/10.1109/SC.2004.24">https://doi.org/10.1109/SC.2004.24</a>&gt;</span>. </dd>
+<dt id="PNPID">[PNPID]</dt>
+<dd>
+<span class="refTitle">"PNP ID AND ACPI ID REGISTRY"</span>, <time datetime="2020-03">March 2020</time>, <span>&lt;<a href="https://uefi.org/PNP_ACPI_Registry">https://uefi.org/PNP_ACPI_Registry</a>&gt;</span>. </dd>
 <dt id="RFC8174">[RFC8174]</dt>
 <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dt id="SP800-38A">[SP800-38A]</dt>
+<dd>
+<span class="refAuthor">Dworkin, M.</span>, <span class="refTitle">"Recommendation for Block Cipher Modes of Operation"</span>, <time datetime="2001-12">December 2001</time>. </dd>
 </dl>
 </section>
 </section>
