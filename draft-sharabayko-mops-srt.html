@@ -6,6 +6,7 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>The SRT Protocol</title>
 <meta content="Maxim Sharabayko" name="author">
+<meta content="Maria Sharabayko" name="author">
 <meta content="Jeongseok Kim" name="author">
 <meta content="
        This document specifies Secure Reliable Transport (SRT) protocol. 
@@ -828,8 +829,8 @@ table.left {
 <td class="right">March 2020</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Sharabayko &amp; Kim</td>
-<td class="center">Expires 4 September 2020</td>
+<td class="left">Sharabayko, et al.</td>
+<td class="center">Expires 5 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -842,16 +843,20 @@ table.left {
 <dd class="internet-draft">draft-sharabayko-mops-srt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-03" class="published">3 March 2020</time>
+<time datetime="2020-03-04" class="published">4 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-04">4 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-05">5 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
       <div class="author-name">M.P. Sharabayko</div>
+<div class="org">Haivision Network Video, GmbH</div>
+</div>
+<div class="author">
+      <div class="author-name">M.A. Sharabayko</div>
 <div class="org">Haivision Network Video, GmbH</div>
 </div>
 <div class="author">
@@ -897,7 +902,7 @@ and a mechanism for data encryption.<a href="#section-abstract-1" class="pilcrow
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -999,30 +1004,38 @@ and a mechanism for data encryption.<a href="#section-abstract-1" class="pilcrow
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.4.2.5">
                 <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-timestamp-based-packet-deli" class="xref">Timestamp Based Packet Delivery</a><a href="#section-toc.1-1.4.2.5.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.5.2.1">
+                    <p id="section-toc.1-1.4.2.5.2.1.1"><a href="#section-4.5.1" class="xref">4.5.1</a>.  <a href="#name-packet-delivery-time" class="xref">Packet Delivery Time</a><a href="#section-toc.1-1.4.2.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.4.2.6">
-                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-too-late-packet-drop" class="xref">Too-Late-Packet-Drop</a><a href="#section-toc.1-1.4.2.6.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-drift-management" class="xref">Drift Management</a><a href="#section-toc.1-1.4.2.6.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.4.2.7">
-                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-acknowledgement-and-lost-pa" class="xref">Acknowledgement and Lost Packet Handling</a><a href="#section-toc.1-1.4.2.7.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-too-late-packet-drop" class="xref">Too-Late Packet Drop</a><a href="#section-toc.1-1.4.2.7.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8">
+                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="xref">4.8</a>.  <a href="#name-acknowledgement-and-lost-pa" class="xref">Acknowledgement and Lost Packet Handling</a><a href="#section-toc.1-1.4.2.8.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-toc.1-1.4.2.7.2.1">
-                    <p id="section-toc.1-1.4.2.7.2.1.1"><a href="#section-4.7.1" class="xref">4.7.1</a>.  <a href="#name-packet-acknowledgement-acks" class="xref">Packet Acknowledgement (ACKs)</a><a href="#section-toc.1-1.4.2.7.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8.2.1">
+                    <p id="section-toc.1-1.4.2.8.2.1.1"><a href="#section-4.8.1" class="xref">4.8.1</a>.  <a href="#name-packet-acknowledgement-acks" class="xref">Packet Acknowledgement (ACKs)</a><a href="#section-toc.1-1.4.2.8.2.1.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.4.2.7.2.2">
-                    <p id="section-toc.1-1.4.2.7.2.2.1"><a href="#section-4.7.2" class="xref">4.7.2</a>.  <a href="#name-packet-retransmission-naks" class="xref">Packet Retransmission (NAKs)</a><a href="#section-toc.1-1.4.2.7.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8.2.2">
+                    <p id="section-toc.1-1.4.2.8.2.2.1"><a href="#section-4.8.2" class="xref">4.8.2</a>.  <a href="#name-packet-retransmission-naks" class="xref">Packet Retransmission (NAKs)</a><a href="#section-toc.1-1.4.2.8.2.2.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.4.2.7.2.3">
-                    <p id="section-toc.1-1.4.2.7.2.3.1"><a href="#section-4.7.3" class="xref">4.7.3</a>.  <a href="#name-packet-acknowledgment-in-sr" class="xref">Packet Acknowledgment in SRT</a><a href="#section-toc.1-1.4.2.7.2.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8.2.3">
+                    <p id="section-toc.1-1.4.2.8.2.3.1"><a href="#section-4.8.3" class="xref">4.8.3</a>.  <a href="#name-packet-acknowledgment-in-sr" class="xref">Packet Acknowledgment in SRT</a><a href="#section-toc.1-1.4.2.8.2.3.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.4.2.7.2.4">
-                    <p id="section-toc.1-1.4.2.7.2.4.1"><a href="#section-4.7.4" class="xref">4.7.4</a>.  <a href="#name-bidirectional-transmission-" class="xref">Bidirectional Transmission Queues</a><a href="#section-toc.1-1.4.2.7.2.4.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8.2.4">
+                    <p id="section-toc.1-1.4.2.8.2.4.1"><a href="#section-4.8.4" class="xref">4.8.4</a>.  <a href="#name-bidirectional-transmission-" class="xref">Bidirectional Transmission Queues</a><a href="#section-toc.1-1.4.2.8.2.4.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.4.2.7.2.5">
-                    <p id="section-toc.1-1.4.2.7.2.5.1"><a href="#section-4.7.5" class="xref">4.7.5</a>.  <a href="#name-round-trip-time-estimation" class="xref">Round Trip Time Estimation</a><a href="#section-toc.1-1.4.2.7.2.5.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8.2.5">
+                    <p id="section-toc.1-1.4.2.8.2.5.1"><a href="#section-4.8.5" class="xref">4.8.5</a>.  <a href="#name-round-trip-time-estimation" class="xref">Round Trip Time Estimation</a><a href="#section-toc.1-1.4.2.8.2.5.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.4.2.7.2.6">
-                    <p id="section-toc.1-1.4.2.7.2.6.1"><a href="#section-4.7.6" class="xref">4.7.6</a>.  <a href="#name-loss-list" class="xref">Loss List</a><a href="#section-toc.1-1.4.2.7.2.6.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.8.2.6">
+                    <p id="section-toc.1-1.4.2.8.2.6.1"><a href="#section-4.8.6" class="xref">4.8.6</a>.  <a href="#name-loss-list" class="xref">Loss List</a><a href="#section-toc.1-1.4.2.8.2.6.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -1380,8 +1393,8 @@ The value, "0x7ffff", is reserved for user-defined type.<a href="#section-3.2-4"
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-handshake" class="section-name selfRef">Handshake</a>
           </h4>
 <p id="section-3.2.1-1">The handshake control packets are used to exchange peer configurations,
-agree on the connection parameters and establish the connection.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-2">The CIF of the handshake control packet is shown in <a href="#handshake-packet-structure" class="xref">Figure 5</a>.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
+agree on the and connection parameters and establish the connection.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-2">The CIF of handshake control packet is shown in <a href="#handshake-packet-structure" class="xref">Figure 5</a>.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
 <span id="name-handshake-packet-structure"></span><div id="handshake-packet-structure">
 <figure id="figure-5">
             <div class="artwork art-text alignLeft" id="section-3.2.1-3.1">
@@ -1434,7 +1447,7 @@ The value greater than 5 is reserved for future definition.<a href="#section-3.2
 <dt id="section-3.2.1-4.3">Encryption Field (16 bits):</dt>
 <dd id="section-3.2.1-4.4">
   Block cipher family and block size. The values of this field are
-described in <a href="#handshake-encr-fld" class="xref">Table 2</a>.<a href="#section-3.2.1-4.4" class="pilcrow">¶</a>
+described om <a href="#handshake-encr-fld" class="xref">Table 2</a>.<a href="#section-3.2.1-4.4" class="pilcrow">¶</a>
 </dd>
 </dl>
 <span id="name-handshake-encryption-field-"></span><div id="handshake-encr-fld">
@@ -1587,7 +1600,7 @@ and 2 for Handshake Extension Response.<a href="#section-3.2.1.1-1" class="pilcr
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           SRT Flags                           |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|      Receiver TsbPd Delay     |       Sender TsbPd Delay      |
+|      Receiver TSBPD Delay     |       Sender TSBPD Delay      |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
@@ -1654,11 +1667,11 @@ and 2 for Handshake Extension Response.<a href="#section-3.2.1.1-1" class="pilcr
             </table>
 </div>
 <dl class="dlParallel" id="section-3.2.1.1-6">
-              <dt id="section-3.2.1.1-6.1">Receiver TsbPd Delay (16 bits):</dt>
+              <dt id="section-3.2.1.1-6.1">Receiver TSBPD Delay (16 bits):</dt>
 <dd id="section-3.2.1.1-6.2">
   TSBPD delay of the receiver. Refer to <a href="#tsbpd" class="xref">Section 4.5</a>.<a href="#section-3.2.1.1-6.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.1-6.3">Sender TsbPd Delay (16 bits):</dt>
+<dt id="section-3.2.1.1-6.3">Sender TSBPD Delay (16 bits):</dt>
 <dd id="section-3.2.1.1-6.4">
   TSBPD delay of the sender. Refer to <a href="#tsbpd" class="xref">Section 4.5</a>.<a href="#section-3.2.1.1-6.4" class="pilcrow">¶</a>
 </dd>
@@ -2085,7 +2098,8 @@ preceding messages, that still have some packets missing.<a href="#section-4.2.1
           </h4>
 <p id="section-4.2.2-1">Live mode is a special case of the message mode where only data packets
 with PP field set to "11b" are allowed.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-2">Additionally TsbPd (<a href="#tsbpd" class="xref">Section 4.5</a>) and TL Packet drop (<a href="#tl-pkt-drop" class="xref">Section 4.6</a>) mechanisms are used in this mode.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-2">Additionally Timestamp Based Packet Delivery (TSBPD) (<a href="#tsbpd" class="xref">Section 4.5</a>) and
+Too-Late Packet Drop (<a href="#too-late-packet-drop" class="xref">Section 4.7</a>) mechanisms are used in this mode.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="transmission-mode-buffer">
@@ -2139,13 +2153,10 @@ Initiator and sends SRT extended handshake responses back.<a href="#section-4.3-
 <p id="section-4.3-8">There are two basic types of SRT handshake extensions that are exchanged
 in the handshake:<a href="#section-4.3-8" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-4.3-9.1">Handshake Extension Message exchanges the basic SRT information;<a href="#section-4.3-9.1" class="pilcrow">¶</a>
+<li id="section-4.3-9.1">Handhshake Extension Message exchanges the basic SRT information;<a href="#section-4.3-9.1" class="pilcrow">¶</a>
 </li>
 <li id="section-4.3-9.2">Key Material Exchange exchanges the wrapped stream encryption key (used only if
 encryption is requested).<a href="#section-4.3-9.2" class="pilcrow">¶</a>
-</li>
-<li id="section-4.3-9.3">Stream ID extension exchanges some stream-specific information that can be used
-by the application to identify the incoming stream connection.<a href="#section-4.3-9.3" class="pilcrow">¶</a>
 </li>
 </ul>
 <p id="section-4.3-10">The Initiator and Responder roles are assigned depending on the connection mode.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
@@ -2168,14 +2179,14 @@ indicates the handshake message type.<a href="#section-4.3-12" class="pilcrow">�
 </ol>
 <p id="section-4.3-15">Rendezvous handshake exchange has the following order of Handshake Types:<a href="#section-4.3-15" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.3-16">
-          <li id="section-4.3-16.1">After starting the connection: WAVEAHAND.<a href="#section-4.3-16.1" class="pilcrow">¶</a>
+          <li id="section-4.3-16.1">After starting the connection: <code>URQ_WAVEAHAND</code><a href="#section-4.3-16.1" class="pilcrow">¶</a>
 </li>
-<li id="section-4.3-16.2">After receiving the above message from the peer: CONCLUSION.<a href="#section-4.3-16.2" class="pilcrow">¶</a>
+<li id="section-4.3-16.2">After receiving the above message from the peer: <code>URQ_CONCLUSION</code><a href="#section-4.3-16.2" class="pilcrow">¶</a>
 </li>
-<li id="section-4.3-16.3">After receiving the above message from the peer: AGREEMENT.<a href="#section-4.3-16.3" class="pilcrow">¶</a>
+<li id="section-4.3-16.3">After receiving the above message from the peer: <code>URQ_AGREEMENT</code>.<a href="#section-4.3-16.3" class="pilcrow">¶</a>
 </li>
 </ol>
-<p id="section-4.3-17">In case the connection process has failed on the stage when the party was about to
+<p id="section-4.3-17">In case when the connection process has failed when the party was about to
 send the CONCLUSION handshake, the Handshake Type field will contain appropriate
 error value. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 6</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
 <span id="name-hs-rejection-reason-codes"></span><div id="hs-rej-reason">
@@ -2275,7 +2286,7 @@ error value. See the list of error codes in <a href="#hs-rej-reason" class="xref
           </tbody>
         </table>
 </div>
-<p id="section-4.3-19">The specification of the cipher family and block size is decided by the Sender. When the transmission 
+<p id="section-4.3-19">The specification of <code>PBKEYLEN</code> is decided by the Sender. When the transmission 
 is bidirectional, this value must be agreed upon at the outset because when both 
 are set, the Responder wins. For Caller-Listener connections it is reasonable to 
 set this value on the Listener only. In the case of Rendezvous the only reasonable 
@@ -2294,7 +2305,7 @@ The process has two phases: induction and conclusion.<a href="#section-4.3.1-1" 
             <h5 id="name-the-induction-phase">
 <a href="#section-4.3.1.1" class="section-number selfRef">4.3.1.1. </a><a href="#name-the-induction-phase" class="section-name selfRef">The Induction Phase</a>
             </h5>
-<p id="section-4.3.1.1-1">The Caller begins by sending the INDUCTION handshake, which contains the following
+<p id="section-4.3.1.1-1">The Caller begins by sending an "induction" message, which contains the following
 (significant) fields:<a href="#section-4.3.1.1-1" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-4.3.1.1-2.1">Version: must always be 4<a href="#section-4.3.1.1-2.1" class="pilcrow">¶</a>
@@ -2316,7 +2327,7 @@ interpreted as a connection request.<a href="#section-4.3.1.1-3" class="pilcrow"
 It is due to the initial design of SRT that was to be compliant with the UDT
 protocol (<span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>) it is based on.<a href="#section-4.3.1.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.3.1.1-5">NOTE: This phase serves only to set a cookie on the Listener so that it
-doesn't allocate resources, thus mitigating a potential DoS attack that might be
+doesn't allocate resources, thus mitigating a potential DOS attack that might be
 perpetrated by flooding the Listener with handshake commands.<a href="#section-4.3.1.1-5" class="pilcrow">¶</a></p>
 <p id="section-4.3.1.1-6">The Listener responds with the following:<a href="#section-4.3.1.1-6" class="pilcrow">¶</a></p>
 <ul>
@@ -2328,7 +2339,7 @@ perpetrated by flooding the Listener with handshake commands.<a href="#section-4
 </li>
 <li id="section-4.3.1.1-7.4">Handshake Type: INDUCTION<a href="#section-4.3.1.1-7.4" class="pilcrow">¶</a>
 </li>
-<li id="section-4.3.1.1-7.5">SRT Socket ID: Socket ID of the Listener<a href="#section-4.3.1.1-7.5" class="pilcrow">¶</a>
+<li id="section-4.3.1.1-7.5">ID: Socket ID of the HSv5 Listener<a href="#section-4.3.1.1-7.5" class="pilcrow">¶</a>
 </li>
 <li id="section-4.3.1.1-7.6">SYN Cookie: a cookie that is crafted based on host, port and current time
 with 1 minute accuracy<a href="#section-4.3.1.1-7.6" class="pilcrow">¶</a>
@@ -2337,7 +2348,7 @@ with 1 minute accuracy<a href="#section-4.3.1.1-7.6" class="pilcrow">¶</a>
 <p id="section-4.3.1.1-8">NOTE: At this point the Listener still doesn't know if the Caller is SRT or UDT,
 and it responds with the same set of values regardless of whether the Caller is
 SRT or UDT.<a href="#section-4.3.1.1-8" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.1-9">If the party is SRT, it does interpret the values in Version and Extension Field.
+<p id="section-4.3.1.1-9">If the party is SRT, it does interpret the values in Version and Type.
 If it receives the value 5 in Version, it understands that it comes from an SRT
 party, so it knows that it should prepare the proper handshake messages
 phase. It also checks the following:<a href="#section-4.3.1.1-9" class="pilcrow">¶</a></p>
@@ -2354,73 +2365,6 @@ value, which is interpreted as an advertised cipher family and block size.<a hre
 <p id="section-4.3.1.1-11">The legacy UDT party completely ignores the values reported in Version and
 Handshake Type.  It is, however, interested in the SYN Cookie value, as this must be
 passed to the next phase. It does interpret these fields, but only in the "conclusion" message.<a href="#section-4.3.1.1-11" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="the-conclusion-phase">
-<section id="section-4.3.1.2">
-            <h5 id="name-the-conclusion-phase">
-<a href="#section-4.3.1.2" class="section-number selfRef">4.3.1.2. </a><a href="#name-the-conclusion-phase" class="section-name selfRef">The Conclusion Phase</a>
-            </h5>
-<p id="section-4.3.1.2-1">Once the Caller gets the SYN cookie from the Listener, it sends the CONCLUSION handshake
-to the Listener.<a href="#section-4.3.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.2-2">The following values are set by the compliant caller:<a href="#section-4.3.1.2-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-4.3.1.2-3.1">Version: 5<a href="#section-4.3.1.2-3.1" class="pilcrow">¶</a>
-</li>
-<li id="section-4.3.1.2-3.2">Handshake Type: CONCLUSION<a href="#section-4.3.1.2-3.2" class="pilcrow">¶</a>
-</li>
-<li id="section-4.3.1.2-3.3">SRT Socket ID: Socket ID of the Caller<a href="#section-4.3.1.2-3.3" class="pilcrow">¶</a>
-</li>
-<li id="section-4.3.1.2-3.4">SYN Cookie: the cookie previously received in the induction phase<a href="#section-4.3.1.2-3.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-4.3.1.2-4">The Destination Socket ID in this message is the
-socket ID that was previously received in the induction phase in the SRT Socket ID field
-of the handshake structure.<a href="#section-4.3.1.2-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-4.3.1.2-5.1">Encryption Flags: advertised cipher family and block size.<a href="#section-4.3.1.2-5.1" class="pilcrow">¶</a>
-</li>
-<li id="section-4.3.1.2-5.2">Extension Flags: A set of flags that define the extensions provided in the handshake.<a href="#section-4.3.1.2-5.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<span id="name-hs-extension-flags"></span><div id="hs-ext-flags">
-<table class="center" id="table-7">
-              <caption>
-<a href="#table-7" class="selfRef">Table 7</a>:
-<a href="#name-hs-extension-flags" class="selfRef">HS Extension Flags</a>
-              </caption>
-<thead>
-                <tr>
-                  <th class="text-left" rowspan="1" colspan="1">Bitmask</th>
-                  <th class="text-center" rowspan="1" colspan="1">Flag</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">0x00000001</td>
-                  <td class="text-center" rowspan="1" colspan="1">HSREQ</td>
-                </tr>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">0x00000002</td>
-                  <td class="text-center" rowspan="1" colspan="1">KMREQ</td>
-                </tr>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">0x00000004</td>
-                  <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
-                </tr>
-              </tbody>
-            </table>
-</div>
-<p id="section-4.3.1.2-7">The Listener responds with the same values shown above, without the cookie (which
-isn't needed here), as well as the extensions for HSv5 (which will probably be
-exactly the same).<a href="#section-4.3.1.2-7" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.2-8">IMPORTANT: There isn't any "negotiation" here. If the values passed in the
-handshake are in any way not acceptable by the other side, the connection will
-be rejected. The only case when the Listener can have precedence over the Caller
-is the advertised Cipher Family and Block Size (<a href="#handshake-encr-fld" class="xref">Table 2</a>)
-in the Encryption Field of the Handshake.<a href="#section-4.3.1.2-8" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.2-9">The value for latency is always agreed to be the greater of those reported
-by each party.<a href="#section-4.3.1.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2458,11 +2402,11 @@ application from a buffer after latency time passed, to recover from a potential
 packet loss.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <p id="section-4.4-2">Latency is a value specified in milliseconds, which can cover hundreds or even thousands
 of packets at high bitrate. Latency can be thought of as a window that slides over time,
-during which a number of activities take place, such as report of ACKs(<a href="#packet-acks" class="xref">Section 4.7.1</a>)
-or NAKs(<a href="#packet-naks" class="xref">Section 4.7.2</a>).
+during which a number of activities take place, such as report of ACKs(<a href="#packet-acks" class="xref">Section 4.8.1</a>)
+or NAKs(<a href="#packet-naks" class="xref">Section 4.8.2</a>).
 Latency is configured through capability exchange during extended handshake process 
-between initiator and responder. The handshake extension(<a href="#handshake-extension-msg" class="xref">Section 3.2.1.1</a>) has 
-receiver and sender TsbPd Delay information in milliseconds. The maximum value of latencies
+between initiator and responder. The handshake extension (<a href="#handshake-extension-msg" class="xref">Section 3.2.1.1</a>) has 
+receiver and sender TSBPD delay information in milliseconds (<a href="#tsbpd" class="xref">Section 4.5</a>). The maximum value of latencies
 from initiator and responder will be established.<a href="#section-4.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2471,71 +2415,286 @@ from initiator and responder will be established.<a href="#section-4.4-2" class=
         <h3 id="name-timestamp-based-packet-deli">
 <a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-timestamp-based-packet-deli" class="section-name selfRef">Timestamp Based Packet Delivery</a>
         </h3>
-<p id="section-4.5-1">This feature uses the timestamp of the SRT data packet header.
-TsbPD allows a receiver to deliver packets to the decoder at the same pace they were
-provided to the SRT sender by an encoder. Basically, the sender timestamp
-in the received packet is adjusted to the receiver's local time
-(compensating for time drift or different time zone)
-before releasing the packet to the application.
-Packets can be withheld by SRT for a configured receiver delay in milliseconds.
-Higher delay can accommodate data traffic which could lead to a larger uniform packet drop
-rate or larger packet burst drop.
-Packets received after their "play time" are dropped.
-The packet timestamp (in microseconds) is relative to the SRT connection creation time.
-The origin time (in microseconds) of the packet is already sampled when a packet is first
-submitted by the application to the SRT sender.
-The TsbPD feature uses this time to stamp the packet for first transmission
-and any subsequent re-transmission. This timestamp and the configured latency
-control the recovery buffer size and the instant (aforementioned "play time"
-which is decided by adding timestamp to configured latency) that packets 
-are delivered at the destination.
-Latency is agreed during handshake process as maximum value of Receiver/Sender TsbPd Delay
-from initiator/responder (see section #ctrl-pkt-handshake).<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-1">The goal of the SRT Timestamp Based Packet Delivery (TSBPD) mechanism
+is to reproduce the output of the sending application (e.g., encoder)
+at the input of the receiving one (e.g., decoder) in live data
+transmission mode (see <a href="#data-transmission-mode" class="xref">Section 4.2</a>). In terms of SRT,
+it means to reproduce the timing of packets commited by the sending
+application to the SRT sender at the timing packets are scheduled
+for the delivery by the SRT receiver and ready to be read by the
+receiving application (see <a href="#fig-latency-points" class="xref">Figure 10</a>).<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-2">The SRT receiver, using the timestamp of the SRT data packet header,
+delivers packets to a receiving application with a fixed minimum
+delay from the time the packet was scheduled for sending on the SRT
+sender side. Basically, the sender timestamp in the received packet
+is adjusted to the receiver's local (compensating for the time drift
+or different time zone) before releasing the packet to the application.
+Packets can be withheld by the SRT receiver for a configured receiver
+delay. Higher delay can accommodate a larger uniform packet drop rate
+or larger packet burst drop. Packets received after their "play time"
+are dropped if Too-Late Packet Drop feature is enabled
+(see <a href="#too-late-packet-drop" class="xref">Section 4.7</a>).<a href="#section-4.5-2" class="pilcrow">¶</a></p>
+<p id="section-4.5-3">The packet timestamp (in microseconds) is relative to the SRT connection creation time.
+It is worth mentioning that the use of the packet sending time to stamp the packets is
+inappropriate for TSBPD feature since a new time (current sending time) is used for retransmitted packets,
+putting them out of order when inserted at their proper place in the stream. Packets are
+inserted based on the sequence number in the header field. The origin time (in microseconds)
+of the packet is already sampled when a packet is first submitted by the application to the SRT sender.
+The TSBPD feature uses this time to stamp the packet for first transmission and any subsequent retransmission.
+This timestamp and the configured SRT latency control the recovery buffer size and the instant that packets
+are delivered at the destination.<a href="#section-4.5-3" class="pilcrow">¶</a></p>
+<p id="section-4.5-4"><a href="#fig-latency-points" class="xref">Figure 10</a> illustrates the key latency points during the packet transmission with TSBPD feature enabled.<a href="#section-4.5-4" class="pilcrow">¶</a></p>
+<span id="name-key-latency-points-during-t"></span><div id="fig-latency-points">
+<figure id="figure-10">
+          <div class="artwork art-text alignLeft" id="section-4.5-5.1">
+<pre>
+              |  Sending  |              |                   |
+              |   Delay   |    ~RTT/2    |    SRT Latency    |
+              |&lt;---------&gt;|&lt;------------&gt;|&lt;-----------------&gt;|
+              |           |              |                   |
+              |           |              |                   |
+              |           |              |                   |
+    ___ Scheduled       Sent         Received           Scheduled
+   /    for sending       |              |              for delivery
+Packet        |           |              |                   |
+State         |           |              |                   |
+              |           |              |                   |
+              |           |              |                   |
+              -----------------------------------------------------&gt;
+                                                                Time
+</pre>
+</div>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-key-latency-points-during-t" class="selfRef">Key Latency Points during the Packet Transmission</a>
+          </figcaption></figure>
+</div>
+<p id="section-4.5-6">The main packet states shown at in <a href="#fig-latency-points" class="xref">Figure 10</a> are the following:<a href="#section-4.5-6" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.5-7.1">"Scheduled for sending": the packet is committed by the sending application, stamped and ready to be sent;<a href="#section-4.5-7.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.5-7.2">"Sent": the packet is passed to the UDP socket and sent;<a href="#section-4.5-7.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.5-7.3">"Received": the packet is received and read from the UDP socket;<a href="#section-4.5-7.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.5-7.4">"Scheduled for delivery": the packet is scheduled for the delivery
+and ready to be read by the receiving application.<a href="#section-4.5-7.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.5-8">It is worth noting that the round-trip time (RTT) of an SRT link may
+vary in time. However the actual end-to-end latency on the link becomes
+fixed and is approximately equal to (RTT_0/2 + SRT Latency) once the SRT handshake exchange happens,
+where RTT_0 is the actual value of the round-trip time during the SRT handshake
+exchange (the value of the round-trip time once the SRT connection has been established).<a href="#section-4.5-8" class="pilcrow">¶</a></p>
+<p id="section-4.5-9">The value of sending delay depends on the hardware performance. Usually
+it is relatively small (several microseconds) in contrast to RTT_0/2
+and SRT latency which are measured in milliseconds.<a href="#section-4.5-9" class="pilcrow">¶</a></p>
+<div id="packet-delivery-time">
+<section id="section-4.5.1">
+          <h4 id="name-packet-delivery-time">
+<a href="#section-4.5.1" class="section-number selfRef">4.5.1. </a><a href="#name-packet-delivery-time" class="section-name selfRef">Packet Delivery Time</a>
+          </h4>
+<p id="section-4.5.1-1">Packet delivery time is the moment, estimated by the receiver, when a packet should be delivered
+to the upstream application. The calculation of packet delivery time (PktTsbpdTime) is performed
+upon receiving a data packet according to the following formula:<a href="#section-4.5.1-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-4.5.1-2">
+<pre>
+PktTsbpdTime = TsbpdTimeBase + PKT_TIMESTAMP + TsbpdDelay + Drift
+</pre><a href="#section-4.5.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-4.5.1-3">where<a href="#section-4.5.1-3" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.5.1-4.1">TsbpdTimeBase is the time base that reflects the time difference between local clock of the receiver
+and the clock used by the sender to timestamp packets being sent (see <a href="#tsbpd-time-base" class="xref">Section 4.5.1.1</a>);<a href="#section-4.5.1-4.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.5.1-4.2">PKT_TIMESTAMP is the data packet timestamp, in microseconds;<a href="#section-4.5.1-4.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.5.1-4.3">TsbpdDelay is the receiver's buffer delay (or receiver's buffer latency, or SRT Latency).
+This is the time, in milliseconds, that SRT holds a packet from the moment it has been received till the time it
+should be delivered to the upstream application;<a href="#section-4.5.1-4.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.5.1-4.4">Drift is the time drift used to adjust the fluctuations between sender and receiver clock, in microseconds.<a href="#section-4.5.1-4.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.5.1-5">SRT Latency (TsbpdDelay) should be a buffer time large enough to cover the unexpectedly
+extended RTT time, and the time needed to retransmit the lost packet. The value of minimum TsbpdDelay
+is negotiated during the SRT handshake exchange and is equal to 120 milliseconds. The recommended
+value of TsbpdDelay is 3-4 times RTT.<a href="#section-4.5.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.5.1-6">It's worth noting that TsbpdDelay limits the number of packet retransmissions to a certain extent
+making impossible to retransmit packets endlessly. This is important for live data transmission.<a href="#section-4.5.1-6" class="pilcrow">¶</a></p>
+<div id="tsbpd-time-base">
+<section id="section-4.5.1.1">
+            <h5 id="name-tsbpd-time-base-calculation">
+<a href="#section-4.5.1.1" class="section-number selfRef">4.5.1.1. </a><a href="#name-tsbpd-time-base-calculation" class="section-name selfRef">TSBPD Time Base Calculation</a>
+            </h5>
+<p id="section-4.5.1.1-1">The initial value of TSBPD time base (TsbpdTimeBase) is calculated at the moment of
+the second handshake request is received as follows:<a href="#section-4.5.1.1-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-4.5.1.1-2">
+<pre>
+TsbpdTimeBase = T_NOW - HSREQ_TIMESTAMP
+</pre><a href="#section-4.5.1.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-4.5.1.1-3">where T_NOW is the current time according to the receiver clock;
+HSREQ_TIMESTAMP is the handshake packet timestamp, in microseconds.<a href="#section-4.5.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.5.1.1-4">The value of TsbpdTimeBase is approximately equal to the initial one-way delay of the link RTT_0/2,
+where RTT_0 is the actual value of the round-trip time during the SRT handshake
+exchange.<a href="#section-4.5.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.5.1.1-5">During the transmission process, the value of TSBPD time base may be adjusted in two cases:<a href="#section-4.5.1.1-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.5.1.1-6">
+              <li id="section-4.5.1.1-6.1">During the TSBPD wrapping period.<a href="#section-4.5.1.1-6.1" class="pilcrow">¶</a>
+</li>
+</ol>
+<p id="section-4.5.1.1-7">The TSBPD wrapping period happens every 01:11:35 hours. This time corresponds
+to the maximum timestamp value of a packet (MAX_TIMESTAMP). MAX_TIMESTAMP is equal
+to 0xFFFFFFFF, or the maximum value of 32-bit unsigned integer, in microseconds (<a href="#packet-structure" class="xref">Section 3</a>).
+The TSBPD wrapping period starts 30 seconds before reaching the maximum timestamp value
+of a packet and ends once the packet with timestamp within [30, 60] seconds interval
+is delivered (read from the buffer). The updated value of TsbpdTimeBase will be recalculated as follows:<a href="#section-4.5.1.1-7" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-4.5.1.1-8">
+<pre>
+TsbpdTimeBase = TsbpdTimeBase + MAX_TIMESTAMP + 1
+</pre><a href="#section-4.5.1.1-8" class="pilcrow">¶</a>
+</div>
+<ol start="1" type="1" class="normal type-1" id="section-4.5.1.1-9">
+              <li id="section-4.5.1.1-9.1">By drift tracer. See <a href="#drift-management" class="xref">Section 4.6</a> for details.<a href="#section-4.5.1.1-9.1" class="pilcrow">¶</a>
+</li>
+</ol>
 </section>
 </div>
-<div id="tl-pkt-drop">
+</section>
+</div>
+</section>
+</div>
+<div id="drift-management">
 <section id="section-4.6">
-        <h3 id="name-too-late-packet-drop">
-<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-too-late-packet-drop" class="section-name selfRef">Too-Late-Packet-Drop</a>
+        <h3 id="name-drift-management">
+<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-drift-management" class="section-name selfRef">Drift Management</a>
         </h3>
-<p id="section-4.6-1">Too-Late-Packet Drop allows the sender to drop packets that have no chance to be delivered in time.
-In the SRT sender, when Too-Late Packet Drop is enabled, and a packet timestamp
-is older than 125% of the SRT latency, it is considered too late to be delivered and may be dropped
-by the sender. Packets of an IFrame tail can then be dropped before being delivered.
-In the receiver, tail packets of a big I-Frame may be quite late and not held by the SRT receive buffer.
-They pass through to the application. The receiver buffer depletes and there is no time left
-for retransmission if missing packets are discovered. Missing packets are then skipped by the receiver.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
+<p id="section-4.6-1">When the sender enters "connected" status it tells the application
+there is a socket interface that is transmitter-ready. At this point
+the application can start sending data packets. It adds packets to
+the SRT sender's buffer at a certain input rate, from which they are
+transmitted to the receiver at scheduled times.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
+<p id="section-4.6-2">A synchronized time is required to keep proper sender/receiver buffer
+levels, taking into account the time zone and round-trip time (up to
+2 seconds for satellite links). Considering addition/subtraction
+round-off, and possibly unsynchronized system times, an agreed-upon
+time base drifts by a few microseconds every minute. The drift may
+accumulate over many days to a point where the sender or receiver
+buffers will overflow or deplete, seriously affecting the quality
+of the video. SRT has a time management mechanism to compensate
+for this drift.<a href="#section-4.6-2" class="pilcrow">¶</a></p>
+<p id="section-4.6-3">When a packet is received, SRT determines the difference between the
+time it was expected and its timestamp. The timestamp is calculated on
+the receiver side. The RTT tells the receiver how much time it was
+supposed to take. SRT maintains a reference between the time at the
+leading edge of the send buffer's latency window and the corresponding
+time on the receiver (the present time). This allows to convert packet
+timestamp to the local receiver time. Based on this time, various
+events (packet delivery, etc.) can be scheduled.<a href="#section-4.6-3" class="pilcrow">¶</a></p>
+<p id="section-4.6-4">The receiver samples time drift data and periodically calculates a
+packet timestamp correction factor, which is applied to each data
+packet received by adjusting the inter-packet interval. When a
+packet is received it isn't given right away to the application.
+As time advances, the receiver knows the expected time for any
+missing or dropped packet, and can use this information to fill
+any "holes" in the receive queue with another packet
+(see <a href="#tsbpd" class="xref">Section 4.5</a>).<a href="#section-4.6-4" class="pilcrow">¶</a></p>
+<p id="section-4.6-5">It is worth noting that the period of sampling time drift data is based
+on a number of packets rather than time duration to ensure enough
+samples, independently of the media stream packet rate. The effect of
+network jitter on the estimated time drift is attenuated by using a
+large number of samples. The actual time drift being very slow (affecting a
+stream only after many hours) does not require a fast reaction.<a href="#section-4.6-5" class="pilcrow">¶</a></p>
+<p id="section-4.6-6">The receiver uses local time to be able to schedule events -- to
+determine, for example, if it's time to deliver a certain packet
+right away. The timestamps in the packets themselves are just
+references to the beginning of the session. When a packet is received
+(with a timestamp from the sender), the receiver makes a reference to
+the beginning of the session to recalculate its timestamp. The start
+time is derived from the local time at the moment that the session is
+connected. A packet timestamp equals "now" minus "StartTime", where
+zthe latter is the point in time when the socket was created.<a href="#section-4.6-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="too-late-packet-drop">
+<section id="section-4.7">
+        <h3 id="name-too-late-packet-drop">
+<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-too-late-packet-drop" class="section-name selfRef">Too-Late Packet Drop</a>
+        </h3>
+<p id="section-4.7-1">Too-Late Packet Drop (TLPKTDROP) mechanism allows the sender to drop
+packets that have no chance to be delivered in time and the receiver
+to skip missing packets that have not been delivered in time. The
+timeout of dropping a packet is based on the TSBPD mechanism
+(see <a href="#tsbpd" class="xref">Section 4.5</a>).<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+<p id="section-4.7-2">In the SRT sender, when Too-Late Packet Drop is enabled, a packet is
+considered too late to be delivered and may be dropped by the sending
+application if its timestamp is older than 125% of the SRT latency.
+However, the sender keeps packets for at least 1 second in case the
+SRT latency is not enough for a large RTT (that is, if 125% of the
+SRT latency is less than 1 second).<a href="#section-4.7-2" class="pilcrow">¶</a></p>
+<p id="section-4.7-3">When enabled on the receiver, the receiver drops packets that have not
+been delivered or retransmitted in time and delivers the subsequent
+packets to the application when their time-to-play has come.<a href="#section-4.7-3" class="pilcrow">¶</a></p>
+<p id="section-4.7-4">In pseudo-code, the algorithm of reading from the receiver buffer is
+the following:<a href="#section-4.7-4" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-4.7-5">
+<pre>
+pos = 0;  /* Current receiver buffer position */
+i = 0;    /* Position of the next available in the receiver buffer
+             packet relatively to the current buffer position pos */
+
+while(True) {
+    Get the position of the next available in receiver buffer packet i;
+    Calculate packet delivery time for the next available packet PktTsbpdTime;
+
+    if T_NOW &lt; PktTsbpdTime:
+        continue;
+
+    Drop packets which buffer position number is less than i;
+
+    Deliver packet with the buffer position i;
+
+    pos = i + 1;
+}
+</pre><a href="#section-4.7-5" class="pilcrow">¶</a>
+</div>
+<p id="section-4.7-6">where T_NOW is the current time according to the receiver clock.<a href="#section-4.7-6" class="pilcrow">¶</a></p>
+<p id="section-4.7-7">The TLPKTDROP mechanism can be turned off to always ensure a clean
+delivery. However, a lost packet can simply pause a delivery for some
+longer, potentially undefined time, and cause even worse tearing
+for the player. Setting higher SRT latency will help much more in the
+case when TLPKTDROP causes packet drops too often.<a href="#section-4.7-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgement-and-lost-packet-handling">
-<section id="section-4.7">
+<section id="section-4.8">
         <h3 id="name-acknowledgement-and-lost-pa">
-<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-acknowledgement-and-lost-pa" class="section-name selfRef">Acknowledgement and Lost Packet Handling</a>
+<a href="#section-4.8" class="section-number selfRef">4.8. </a><a href="#name-acknowledgement-and-lost-pa" class="section-name selfRef">Acknowledgement and Lost Packet Handling</a>
         </h3>
-<p id="section-4.7-1">To enable the Automatic Repeat Request of data packet retransmissions, the sender stores
+<p id="section-4.8-1">To enable the Automatic Repeat Request of data packet retransmissions, the sender stores
 all sent data packets in its buffer.
 The data receiver sends acknowledgement (ACK) for the received data packets so that the sender can remove
 acknowledged packets from its buffer. After that retransmission of these acknowledged packets
-are no longer possible and presumably not needed.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
-<p id="section-4.7-2">The sender should acknowledge the reception of the Full ACK control packet (<a href="#ctrl-pkt-ack" class="xref">Section 3.2.3</a>)
+are no longer possible and presumably not needed.<a href="#section-4.8-1" class="pilcrow">¶</a></p>
+<p id="section-4.8-2">The sender should acknowledge the reception of the Full ACK control packet (<a href="#ctrl-pkt-ack" class="xref">Section 3.2.3</a>)
 by sending the ACKACK control packet (<a href="#ctrl-pkt-ackack" class="xref">Section 3.2.6</a>) with the sequence number
-of the Full ACK packet being acknowledged.<a href="#section-4.7-2" class="pilcrow">¶</a></p>
-<p id="section-4.7-3">The receiver sends NAK control packets to notify the sender about the missing packets.
+of the Full ACK packet being acknowledged.<a href="#section-4.8-2" class="pilcrow">¶</a></p>
+<p id="section-4.8-3">The receiver sends NAK control packets to notify the sender about the missing packets.
 The NAK packet sending can be triggered immediately after a gap in sequence numbers of
 DATA packets is detected.
 In addition to that, the Periodic NAK report mechanism can be used to send NAK reports periodically.
 The NAK packet in that case will have all the packets that the receiver considers being lost
-at the time of the Periodic NAK report.<a href="#section-4.7-3" class="pilcrow">¶</a></p>
-<p id="section-4.7-4">Upon reception of the NAK packet, the sender prioritizes retransmissions of lost packets over the regular DATA
-packets to be transmitted for the first time.<a href="#section-4.7-4" class="pilcrow">¶</a></p>
-<p id="section-4.7-5">The retransmission of the missing packet is repeated until the receiver acknowledges its receival,
-or if both peers agree to drop this packet (see <a href="#tl-pkt-drop" class="xref">Section 4.6</a>).<a href="#section-4.7-5" class="pilcrow">¶</a></p>
+at the time of the Periodic NAK report.<a href="#section-4.8-3" class="pilcrow">¶</a></p>
+<p id="section-4.8-4">Upon reception of the NAK packet, the sender prioritizes retransmissions of lost packets over the regular DATA
+packets to be transmitted for the first time.<a href="#section-4.8-4" class="pilcrow">¶</a></p>
+<p id="section-4.8-5">The retransmission of the missing packet is repeated until the receiver acknowledges its receival,
+or if both peers agree to drop this packet (see <a href="#too-late-packet-drop" class="xref">Section 4.7</a>).<a href="#section-4.8-5" class="pilcrow">¶</a></p>
 <div id="packet-acks">
-<section id="section-4.7.1">
+<section id="section-4.8.1">
           <h4 id="name-packet-acknowledgement-acks">
-<a href="#section-4.7.1" class="section-number selfRef">4.7.1. </a><a href="#name-packet-acknowledgement-acks" class="section-name selfRef">Packet Acknowledgement (ACKs)</a>
+<a href="#section-4.8.1" class="section-number selfRef">4.8.1. </a><a href="#name-packet-acknowledgement-acks" class="section-name selfRef">Packet Acknowledgement (ACKs)</a>
           </h4>
-<p id="section-4.7.1-1">At certain intervals (see ACKs, ACKACKs &amp; Round Trip Time), the receiver sends an ACK that
+<p id="section-4.8.1-1">At certain intervals (see ACKs, ACKACKs &amp; Round Trip Time), the receiver sends an ACK that
 causes the acknowledged packets to be removed from the sender's buffer.
 An ACK contains the sequence number of the packet immediately
 following the latest of the previous packets that have been received. Where no packet loss has
@@ -2549,38 +2708,38 @@ and received that the ACK position on the sender doesn't advance quickly enough.
 To mitigate this, after 64 packets (even if the ACK period has not fully elapsed) the receiver
 sends a light ACK. When a receiver encounters the situation where the next packet to be played was
 not successfully received from the sender, it will "skip" this packet and send a fake ACK. To the
-sender, this fake ACK is a real ACK, and so it just behaves as if the packet had been received.<a href="#section-4.7.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.7.1-2">This facilitates the synchronization between sender and receiver. The fact that a packet was
+sender, this fake ACK is a real ACK, and so it just behaves as if the packet had been received.<a href="#section-4.8.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.8.1-2">This facilitates the synchronization between sender and receiver. The fact that a packet was
 skipped remains unknown by the sender. Skipped packets are recorded in the statistics on the
-receiver.<a href="#section-4.7.1-2" class="pilcrow">¶</a></p>
+receiver.<a href="#section-4.8.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="packet-naks">
-<section id="section-4.7.2">
+<section id="section-4.8.2">
           <h4 id="name-packet-retransmission-naks">
-<a href="#section-4.7.2" class="section-number selfRef">4.7.2. </a><a href="#name-packet-retransmission-naks" class="section-name selfRef">Packet Retransmission (NAKs)</a>
+<a href="#section-4.8.2" class="section-number selfRef">4.8.2. </a><a href="#name-packet-retransmission-naks" class="section-name selfRef">Packet Retransmission (NAKs)</a>
           </h4>
-<p id="section-4.7.2-1">When a packet is received but the previous packets are not yet arrived in a receiver buffer,
+<p id="section-4.8.2-1">When a packet is received but the previous packets are not yet arrived in a receiver buffer,
 if a certain amount of time is passed, NAKs for previous packets are sent to the sender.
 If periodic NAK report is enabled in live mode, the lost packets list is sent periodically. 
 The period is 4 * RTT + RTTVar + SYN, but this could be reduced (e.g. by half)
-when a certain condition is met.<a href="#section-4.7.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.7.2-2">The sender maintains a list of lost packets (loss list) that is built from NAK reports. When
+when a certain condition is met.<a href="#section-4.8.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.8.2-2">The sender maintains a list of lost packets (loss list) that is built from NAK reports. When
 scheduling to transmit, it looks to see if a packet in the loss list has priority, and will send it.
 Otherwise, it will send the next packet in the sender buffer. Note that when a packet is transmitted,
 it stays in the buffer in case it is not received.
 NAK packets are processed to fill the loss list. As the latency window advances and packets are
 dropped from the sender buffer, a check is performed to see if any of the dropped or resent
 packets are in the loss list, to determine if they can be removed from there as well so that they
-are not retransmitted unnecessarily.<a href="#section-4.7.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.7.2-3">What the sender sees is the NAKs that it has received. There is a counter for the packets that
+are not retransmitted unnecessarily.<a href="#section-4.8.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.8.2-3">What the sender sees is the NAKs that it has received. There is a counter for the packets that
 are resent. If there is no ACK for a packet, it will stay in the loss list and can be resent more than
 once. Packets in the loss list are prioritized.
 If packets in the loss list continue to block the send queue, at some point this will cause the
 send queue to fill. When the send queue is full, the sender will begin to drop packets without
 even sending them the first time. An encoder (or other application) may continue to provide
-packets, but there's no place for them, so they will end up being thrown away.<a href="#section-4.7.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.7.2-4">This condition where packets are unsent doesn't happen often. There is a maximum number of
+packets, but there's no place for them, so they will end up being thrown away.<a href="#section-4.8.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.8.2-4">This condition where packets are unsent doesn't happen often. There is a maximum number of
 packets held in the send buffer based on the configured latency. Older packets that have no
 chance to be retransmitted and played in time are dropped, making room for newer real-time
 packets produced by the sending application. A minimum of one second is applied before
@@ -2589,15 +2748,15 @@ behavior of MPEG I-frames with SRT used as transport. I-frames are very large (t
 larger than other packets), and consequently take more time to transmit. They can be too large
 to keep in the latency window, and can cause packets to be dropped from the queue. To
 prevent this, SRT imposes a minimum of one second (or the latency value) before dropping a
-packet. This allows for large I-frames when using small latency values.<a href="#section-4.7.2-4" class="pilcrow">¶</a></p>
+packet. This allows for large I-frames when using small latency values.<a href="#section-4.8.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="packet-acknowledgment-in-srt">
-<section id="section-4.7.3">
+<section id="section-4.8.3">
           <h4 id="name-packet-acknowledgment-in-sr">
-<a href="#section-4.7.3" class="section-number selfRef">4.7.3. </a><a href="#name-packet-acknowledgment-in-sr" class="section-name selfRef">Packet Acknowledgment in SRT</a>
+<a href="#section-4.8.3" class="section-number selfRef">4.8.3. </a><a href="#name-packet-acknowledgment-in-sr" class="section-name selfRef">Packet Acknowledgment in SRT</a>
           </h4>
-<p id="section-4.7.3-1">The ACKACK tells the receiver to stop sending the ACK position because the sender already
+<p id="section-4.8.3-1">The ACKACK tells the receiver to stop sending the ACK position because the sender already
 knows it. Otherwise, ACKs (with outdated information) would continue to be sent regularly.
 An ACK serves as a ping, with a corresponding ACKACK pong, to measure RTT.
 The time it takes for an ACK to be sent and an ACKACK to be received is the RTT.
@@ -2606,31 +2765,31 @@ The receiver keeps a list of all ACKs in a queue to match them. Unlike a full AC
 which contains the current RTT and several other values in the CIF,
 a light ACK just contains the sequence number. All control messages are sent directly and
 processed upon reception, but ACKACK processing time is negligible (the time this takes
-is included in the round-trip time).<a href="#section-4.7.3-1" class="pilcrow">¶</a></p>
+is included in the round-trip time).<a href="#section-4.8.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="bidirectional-transmission-queues">
-<section id="section-4.7.4">
+<section id="section-4.8.4">
           <h4 id="name-bidirectional-transmission-">
-<a href="#section-4.7.4" class="section-number selfRef">4.7.4. </a><a href="#name-bidirectional-transmission-" class="section-name selfRef">Bidirectional Transmission Queues</a>
+<a href="#section-4.8.4" class="section-number selfRef">4.8.4. </a><a href="#name-bidirectional-transmission-" class="section-name selfRef">Bidirectional Transmission Queues</a>
           </h4>
-<p id="section-4.7.4-1">Once an SRT connection is established, both peers can send data packets simultaneously.<a href="#section-4.7.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.8.4-1">Once an SRT connection is established, both peers can send data packets simultaneously.<a href="#section-4.8.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="round-trip-time-estimation">
-<section id="section-4.7.5">
+<section id="section-4.8.5">
           <h4 id="name-round-trip-time-estimation">
-<a href="#section-4.7.5" class="section-number selfRef">4.7.5. </a><a href="#name-round-trip-time-estimation" class="section-name selfRef">Round Trip Time Estimation</a>
+<a href="#section-4.8.5" class="section-number selfRef">4.8.5. </a><a href="#name-round-trip-time-estimation" class="section-name selfRef">Round Trip Time Estimation</a>
           </h4>
-<p id="section-4.7.5-1">The round-trip time is estimated during the transmission of SRT data packets
+<p id="section-4.8.5-1">The round-trip time is estimated during the transmission of SRT data packets
 based on the time difference between the ACK packet is sent and the
-corresponding ACKACK is received by the data receiver.<a href="#section-4.7.5-1" class="pilcrow">¶</a></p>
+corresponding ACKACK is received by the data receiver.<a href="#section-4.8.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="loss-list">
-<section id="section-4.7.6">
+<section id="section-4.8.6">
           <h4 id="name-loss-list">
-<a href="#section-4.7.6" class="section-number selfRef">4.7.6. </a><a href="#name-loss-list" class="section-name selfRef">Loss List</a>
+<a href="#section-4.8.6" class="section-number selfRef">4.8.6. </a><a href="#name-loss-list" class="section-name selfRef">Loss List</a>
         </h4>
 </section>
 </div>
@@ -2773,7 +2932,7 @@ are described in <a href="#encryption" class="xref">Section 5</a>.<a href="#sect
 it uses the original sequence number in the field. The first bit 
 must start with "0".<a href="#section-appendix.a-1" class="pilcrow">¶</a></p>
 <span id="name-single-sequence-numbers-cod"></span><div id="single-sequence-number">
-<figure id="figure-10">
+<figure id="figure-11">
         <div class="artwork art-text alignLeft" id="section-appendix.a-2.1">
 <pre>
  0                   1                   2                   3
@@ -2783,7 +2942,7 @@ must start with "0".<a href="#section-appendix.a-1" class="pilcrow">¶</a></p>
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-single-sequence-numbers-cod" class="selfRef">single sequence numbers coding</a>
         </figcaption></figure>
 </div>
@@ -2792,7 +2951,7 @@ the last and first is more than 1, only record the first (a) and the
 the last (b) sequence numbers in the list field, and modify the
 the first bit of a to "1".<a href="#section-appendix.a-3" class="pilcrow">¶</a></p>
 <span id="name-list-of-sequence-numbers-co"></span><div id="list-sequence-numbers">
-<figure id="figure-11">
+<figure id="figure-12">
         <div class="artwork art-text alignLeft" id="section-appendix.a-4.1">
 <pre>
  0                   1                   2                   3
@@ -2804,7 +2963,7 @@ the first bit of a to "1".<a href="#section-appendix.a-3" class="pilcrow">¶</a>
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-list-of-sequence-numbers-co" class="selfRef">list of sequence numbers coding</a>
         </figcaption></figure>
 </div>
@@ -2821,6 +2980,14 @@ the first bit of a to "1".<a href="#section-appendix.a-3" class="pilcrow">¶</a>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:maxsharabayko@haivision.com" class="email">maxsharabayko@haivision.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Maria Sharabayko</span></div>
+<div dir="auto" class="left"><span class="org">Haivision Network Video, GmbH</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:msharabayko@haivision.com" class="email">msharabayko@haivision.com</a>
 </div>
 </address>
 <address class="vcard">
