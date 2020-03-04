@@ -2,7 +2,7 @@
 
 
 
-mops                                                     M.P. Sharabayko
+MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
 Intended status: Standards Track           Haivision Network Video, GmbH
 Expires: 5 September 2020                                         J. Kim
@@ -75,37 +75,37 @@ Table of Contents
      3.1.  Data Packets  . . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  Control Packets . . . . . . . . . . . . . . . . . . . . .   6
        3.2.1.  Handshake . . . . . . . . . . . . . . . . . . . . . .   7
-       3.2.2.  Keep Alive  . . . . . . . . . . . . . . . . . . . . .  14
-       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  14
-       3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  16
-       3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  16
-       3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  16
-   4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  17
-     4.1.  Stream Multiplexing . . . . . . . . . . . . . . . . . . .  17
-     4.2.  Data Transmission Modes . . . . . . . . . . . . . . . . .  17
-       4.2.1.  Message Mode  . . . . . . . . . . . . . . . . . . . .  17
-       4.2.2.  Live Mode . . . . . . . . . . . . . . . . . . . . . .  18
-       4.2.3.  Buffer Mode . . . . . . . . . . . . . . . . . . . . .  18
-     4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  18
-       4.3.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  22
-       4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  24
-     4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  24
-     4.5.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  25
-       4.5.1.  Packet Delivery Time  . . . . . . . . . . . . . . . .  27
-     4.6.  Too-Late Packet Drop  . . . . . . . . . . . . . . . . . .  28
-     4.7.  Drift Management  . . . . . . . . . . . . . . . . . . . .  29
-     4.8.  Acknowledgement and Lost Packet Handling  . . . . . . . .  30
-       4.8.1.  Packet Acknowledgement (ACKs, ACKACKs)  . . . . . . .  31
-       4.8.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  32
-     4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  33
-     4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  33
-   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  33
-     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  33
-     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  33
-     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  33
-     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  33
-     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  33
-     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  33
+       3.2.2.  Keep Alive  . . . . . . . . . . . . . . . . . . . . .  15
+       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  15
+       3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  17
+       3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  17
+       3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  17
+   4.  SRT Data Transmission and Control . . . . . . . . . . . . . .  18
+     4.1.  Stream Multiplexing . . . . . . . . . . . . . . . . . . .  18
+     4.2.  Data Transmission Modes . . . . . . . . . . . . . . . . .  18
+       4.2.1.  Message Mode  . . . . . . . . . . . . . . . . . . . .  18
+       4.2.2.  Live Mode . . . . . . . . . . . . . . . . . . . . . .  19
+       4.2.3.  Buffer Mode . . . . . . . . . . . . . . . . . . . . .  19
+     4.3.  Handshake Messages  . . . . . . . . . . . . . . . . . . .  19
+       4.3.1.  Caller-Listener Handshake . . . . . . . . . . . . . .  23
+       4.3.2.  Rendezvous Handshake  . . . . . . . . . . . . . . . .  25
+     4.4.  SRT Buffer Latency  . . . . . . . . . . . . . . . . . . .  31
+     4.5.  Timestamp Based Packet Delivery . . . . . . . . . . . . .  32
+       4.5.1.  Packet Delivery Time  . . . . . . . . . . . . . . . .  33
+     4.6.  Too-Late Packet Drop  . . . . . . . . . . . . . . . . . .  35
+     4.7.  Drift Management  . . . . . . . . . . . . . . . . . . . .  36
+     4.8.  Acknowledgement and Lost Packet Handling  . . . . . . . .  37
+       4.8.1.  Packet Acknowledgement (ACKs, ACKACKs)  . . . . . . .  38
+       4.8.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  39
+     4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  40
+     4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  40
+   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  40
+     5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  40
+     5.2.  Definitions . . . . . . . . . . . . . . . . . . . . . . .  40
+     5.3.  Encryption Process Walkthrough  . . . . . . . . . . . . .  40
+     5.4.  Messages  . . . . . . . . . . . . . . . . . . . . . . . .  40
+     5.5.  Parameters  . . . . . . . . . . . . . . . . . . . . . . .  40
+     5.6.  Security Issues . . . . . . . . . . . . . . . . . . . . .  40
 
 
 
@@ -114,15 +114,15 @@ Sharabayko, et al.      Expires 5 September 2020                [Page 2]
 Internet-Draft                     SRT                        March 2020
 
 
-     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  33
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  33
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  34
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  34
-   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  34
-     Normative References  . . . . . . . . . . . . . . . . . . . . .  34
-     Informative References  . . . . . . . . . . . . . . . . . . . .  34
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  34
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  35
+     5.7.  Implementation Notes  . . . . . . . . . . . . . . . . . .  40
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  40
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  41
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  41
+   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  41
+     Normative References  . . . . . . . . . . . . . . . . . . . . .  41
+     Informative References  . . . . . . . . . . . . . . . . . . . .  41
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  41
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  42
 
 1.  Introduction
 
@@ -467,11 +467,25 @@ Internet-Draft                     SRT                        March 2020
 
    Extension Field (16 bits):  This field is message specific extension
       related to Handshake Type field.  The value must be set to 0
-      except for the following cases.  If the handshake control packet
-      is the INDUCTION message, this field is sent back by the Listener.
-      In case of the CONCLUSION message, this field value should contain
-      a combination of Extension Type value.  For more details, see
-      Section 4.3.1.
+      except for the following cases.  If the Handshake Type is
+      INDUCTION, this field is copied by the Listener from the received
+      INDUCTION from the caller and used in the INDUCTION handshake
+      response of the Listener.  If the Handshake Type is CONCLUSION,
+      this field value should contain a combination of the HS Extension
+      Flags shown in Table 3.  For more details, see Section 4.3.1.
+
+                          +------------+--------+
+                          | Bitmask    |  Flag  |
+                          +============+========+
+                          | 0x00000001 | HSREQ  |
+                          +------------+--------+
+                          | 0x00000002 | KMREQ  |
+                          +------------+--------+
+                          | 0x00000004 | CONFIG |
+                          +------------+--------+
+
+                           Table 3: HS Extension
+                                   Flags
 
    Initial Packet Sequence Number (32 bits):  The sequence number for
       the very first data packet to be sent.
@@ -485,26 +499,16 @@ Internet-Draft                     SRT                        March 2020
       means the number of sent packets without receiving ACK control
       packet.
 
-   Handshake Type (32 bits):  This field indicates the handshake packet
-      types.  The possible values are described in Table 3.  For more
-      details refer to Section 4.3.
-
-
-
-
-
-
-
-
-
-
-
 
 
 Sharabayko, et al.      Expires 5 September 2020                [Page 9]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   Handshake Type (32 bits):  This field indicates the handshake packet
+      types.  The possible values are described in Table 4.  For more
+      details refer to Section 4.3.
 
                       +------------+----------------+
                       | Value      | Handshake type |
@@ -520,7 +524,7 @@ Internet-Draft                     SRT                        March 2020
                       | 0x00000001 |   INDUCTION    |
                       +------------+----------------+
 
-                          Table 3: Handshake Type
+                          Table 4: Handshake Type
 
    SRT Socket ID (32 bits):  The field holds the source SRT socket ID
       from which the handshake packet is issued.
@@ -538,17 +542,13 @@ Internet-Draft                     SRT                        March 2020
       (Section 3.2.1.2).  Each extension can have a pair of request and
       response types.
 
-   Extension Length (16 bits):  The length of Extension Contents.
 
-   Extension Contents (variable length):  The payload of the extension.
 
-3.2.1.1.  Handshake Extension Message
 
-   In Handshake Extension, the value of the Extension Field of the
-   handshake control packet is defined as 1 for Handshake Extension
-   Request, and 2 for Handshake Extension Response.
 
-   The Extension Contents of the Extension Message is the following.
+
+
+
 
 
 
@@ -561,6 +561,40 @@ Sharabayko, et al.      Expires 5 September 2020               [Page 10]
 
 Internet-Draft                     SRT                        March 2020
 
+
+            +-------+--------------------+-------------------+
+            | Value |   Extension Type   | HS Extension Flag |
+            +=======+====================+===================+
+            | 1     |   SRT_CMD_HSREQ    |       HSREQ       |
+            +-------+--------------------+-------------------+
+            | 2     |   SRT_CMD_HSRSP    |       HSREQ       |
+            +-------+--------------------+-------------------+
+            | 3     |   SRT_CMD_KMREQ    |       KMREQ       |
+            +-------+--------------------+-------------------+
+            | 4     |   SRT_CMD_KMRSP    |       KMREQ       |
+            +-------+--------------------+-------------------+
+            | 5     |    SRT_CMD_SID     |       CONFIG      |
+            +-------+--------------------+-------------------+
+            | 6     | SRT_CMD_CONGESTION |       CONFIG      |
+            +-------+--------------------+-------------------+
+            | 7     |   SRT_CMD_FILTER   |       CONFIG      |
+            +-------+--------------------+-------------------+
+            | 8     |   SRT_CMD_GROUP    |       CONFIG      |
+            +-------+--------------------+-------------------+
+
+                 Table 5: Handshake Extension Type values
+
+   Extension Length (16 bits):  The length of Extension Contents.
+
+   Extension Contents (variable length):  The payload of the extension.
+
+3.2.1.1.  Handshake Extension Message
+
+   In Handshake Extension, the value of the Extension Field of the
+   handshake control packet is defined as 1 for Handshake Extension
+   Request, and 2 for Handshake Extension Response.
+
+   The Extension Contents of the Extension Message is the following.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -575,6 +609,14 @@ Internet-Draft                     SRT                        March 2020
               Figure 6: Handshake Extension Message structure
 
    SRT Version (32 bits):  SRT library version.
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 11]
+
+Internet-Draft                     SRT                        March 2020
+
 
    SRT Flags (32 bits):  SRT configuration flags.
 
@@ -598,7 +640,7 @@ Internet-Draft                     SRT                        March 2020
                       | 0x00000080 | PACKET_FILTER |
                       +------------+---------------+
 
-                          Table 4: HS Extension
+                          Table 6: HS Extension
                               Message Flags
 
    Receiver TSBPD Delay (16 bits):  TSBPD delay of the receiver.  Refer
@@ -607,21 +649,30 @@ Internet-Draft                     SRT                        March 2020
    Sender TSBPD Delay (16 bits):  TSBPD delay of the sender.  Refer to
       Section 4.5.
 
-
-
-
-
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 11]
-
-Internet-Draft                     SRT                        March 2020
-
-
 3.2.1.2.  Key Material Exchange
 
    The Key Material Exchange has both request and response type
    extensions.  The value of request is 3, and the response value is 4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 12]
+
+Internet-Draft                     SRT                        March 2020
+
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -669,7 +720,12 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 12]
+
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 13]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -684,7 +740,7 @@ Internet-Draft                     SRT                        March 2020
      | 0x02    |                AES-CTR ([SP800-38A])                |
      +---------+-----------------------------------------------------+
 
-               Table 5: HS Key Material Exchange Cipher mode
+               Table 7: HS Key Material Exchange Cipher mode
 
    Auth (8 bits):  Message authentication code algorithm.  The default
       value of this field sets to 0 which means None or KEK indexed
@@ -725,7 +781,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 13]
+Sharabayko, et al.      Expires 5 September 2020               [Page 14]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -781,7 +837,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 14]
+Sharabayko, et al.      Expires 5 September 2020               [Page 15]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -837,7 +893,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 15]
+Sharabayko, et al.      Expires 5 September 2020               [Page 16]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -893,7 +949,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 16]
+Sharabayko, et al.      Expires 5 September 2020               [Page 17]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -949,7 +1005,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 17]
+Sharabayko, et al.      Expires 5 September 2020               [Page 18]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1005,7 +1061,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 18]
+Sharabayko, et al.      Expires 5 September 2020               [Page 19]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1061,7 +1117,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 19]
+Sharabayko, et al.      Expires 5 September 2020               [Page 20]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1084,7 +1140,7 @@ Internet-Draft                     SRT                        March 2020
    In case the connection process has failed on the stage when the party
    was about to send the CONCLUSION handshake, the Handshake Type field
    will contain appropriate error value.  See the list of error codes in
-   Table 6.
+   Table 8.
 
 
 
@@ -1117,7 +1173,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 20]
+Sharabayko, et al.      Expires 5 September 2020               [Page 21]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1161,7 +1217,7 @@ Internet-Draft                     SRT                        March 2020
          | 1015 |    REJ_GROUP     |      incompatible group     |
          +------+------------------+-----------------------------+
 
-                     Table 6: HS Rejection Reason Codes
+                     Table 8: HS Rejection Reason Codes
 
    The specification of the cipher family and block size is decided by
    the Sender.  When the transmission is bidirectional, this value must
@@ -1173,7 +1229,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 21]
+Sharabayko, et al.      Expires 5 September 2020               [Page 22]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1229,7 +1285,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 22]
+Sharabayko, et al.      Expires 5 September 2020               [Page 23]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1285,7 +1341,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 23]
+Sharabayko, et al.      Expires 5 September 2020               [Page 24]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1294,19 +1350,6 @@ Internet-Draft                     SRT                        March 2020
 
    *  Extension Flags: A set of flags that define the extensions
       provided in the handshake.
-
-                          +------------+--------+
-                          | Bitmask    |  Flag  |
-                          +============+========+
-                          | 0x00000001 | HSREQ  |
-                          +------------+--------+
-                          | 0x00000002 | KMREQ  |
-                          +------------+--------+
-                          | 0x00000004 | CONFIG |
-                          +------------+--------+
-
-                           Table 7: HS Extension
-                                   Flags
 
    The Listener responds with the same values shown above, without the
    cookie (which isn't needed here), as well as the extensions for HSv5
@@ -1323,14 +1366,346 @@ Internet-Draft                     SRT                        March 2020
 
 4.3.2.  Rendezvous Handshake
 
-   Rendezvous handshake exchange has the following order of Handshake
-   Types:
+   The Rendezvous process uses a state machine.  It is slightly
+   different from UDT Rendezvous handshake [GHG04b], although it is
+   still based on the same message request types.
 
-   1.  After starting the connection: "URQ_WAVEAHAND"
+   Both parties start with WAVEAHAND and use the Version value of 5.
+   Legacy Version 4 clients do not look at the Version value, whereas
+   Version 5 clients can detect version 5.  The parties only continue
+   with the Version 5 Rendezvous process when Version is set to 5 for
+   both.  Otherwise the process continues exclusively according to
+   Version 4 rules [GHG04b].
 
-   2.  After receiving the above message from the peer: "URQ_CONCLUSION"
+   With Version 5 Rendezvous, both parties create a cookie for a process
+   called the "cookie contest".  This is necessary for the assignment of
+   Initiator and Responder roles.  Each party generates a cookie value
+   (a 32-bit number) based on the host, port, and current time with 1
+   minute accuracy.  This value is scrambled using an MD5 sum
+   calculation.  The cookie values are then compared with one another.
 
-   3.  After receiving the above message from the peer: "URQ_AGREEMENT".
+   Since it is impossible to have two sockets on the same machine bound
+   to the same NIC and port and operating independently, it's virtually
+   impossible that the parties will generate identical cookies.
+   However, this situation may occur if an application tries to "connect
+   to itself" - that is, either connects to a local IP address, when the
+   socket is bound to INADDR_ANY, or to the same IP address to which the
+   socket was bound.  If the cookies are identical (for any reason), the
+   connection will not be made until new, unique cookies are generated
+   (after a delay of up to one minute).  In the case of an application
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 25]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   "connecting to itself", the cookies will always be identical, and so
+   the connection will never be established.
+
+   When one party's cookie value is greater than its peer's, it wins the
+   cookie contest and becomes Initiator (the other party becomes the
+   Responder).
+
+   At this point there are two possible "handshake flows": _serial_ and
+   _parallel_.
+
+4.3.2.1.  Serial Handshake Flow
+
+   In the serial handshake flow, one party is always first, and the
+   other follows.  That is, while both parties are repeatedly sending
+   WAVEAHAND messages, at some point one party - let's say Alice - will
+   find she has received a WAVEAHAND message before she can send her
+   next one, so she sends a CONCLUSION message in response.  Meantime,
+   Bob (Alice's peer) has missed Alice's WAVEAHAND messages, so that
+   Alice's CONCLUSION is the first message Bob has received from her.
+
+   This process can be described easily as a series of exchanges between
+   the first and following parties (Alice and Bob, respectively):
+
+   1.  Initially, both parties are in the _waving_ state.  Alice sends a
+       handshake message to Bob:
+
+       *  Version: 5
+
+       *  Type: Extension field: 0, Encryption field: advertised
+          "PBKEYLEN".
+
+       *  Handshake Type: WAVEAHAND
+
+       *  SRT Socket ID: Alice's socket ID
+
+       *  SYN Cookie: Created based on host/port and current time.
+
+   While Alice doesn't yet know if she is sending this message to a
+   Version 4 or Version 5 peer, the values from these fields would not
+   be interpreted by the Version 4 peer when the Handshake Type is
+   WAVEAHAND.
+
+   1.  Bob receives Alice's WAVEAHAND message, switches to the
+       "attention" state.  Since Bob now knows Alice's cookie, he
+       performs a "cookie contest" (compares both cookie values).  If
+       Bob's cookie is greater than Alice's, he will become the
+       Initiator.  Otherwise, he will become the Responder.
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 26]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   IMPORTANT: The resolution of the Handshake Role (Initiator or
+   Responder) is essential for further processing.
+
+   Then Bob responds:
+
+   *  Version: 5
+
+   *  Extension field: appropriate flags if Initiator, otherwise 0
+
+   *  Encryption field: advertised PBKEYLEN
+
+   *  Handshake Type: CONCLUSION
+
+   NOTE: If Bob is the Initiator and encryption is on, he will use
+   either his own cipher family and block size or the one received from
+   Alice (if she has advertised those values).
+
+   1.  Alice receives Bob's CONCLUSION message.  While at this point she
+       also performs the "cookie contest", the outcome will be the same.
+       She switches to the "fine" state, and sends:
+
+       *  Version: 5
+
+       *  Appropriate extension flags and encryption flags
+
+       *  Handshake Type: CONCLUSION
+
+   NOTE: Both parties always send extension flags at this point, which
+   will contain HSREQ if the message comes from an Initiator, or HSRSP
+   if it comes from a Responder.  If the Initiator has received a
+   previous message from the Responder containing an advertised cipher
+   family and block size in the encryption flags field, it will be used
+   as the key length for key generation sent next in the KMREQ
+   extension.
+
+   1.  Bob receives Alice's CONCLUSION message, and then does one of the
+       following (depending on Bob's role):
+
+       *  If Bob is the Initiator (Alice's message contains HSRSP), he:
+
+          -  switches to the "*connected" state
+
+          -  sends Alice a message with Handshake Type AGREEMENT, but
+             containing no SRT extensions (Extension Flags field should
+             be 0)
+
+       *  If Bob is the Responder (Alice's message contains HSREQ), he:
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 27]
+
+Internet-Draft                     SRT                        March 2020
+
+
+          -  switches to "initiated" state
+
+          -  sends Alice a message with Handshake Type CONCLUSION that
+             also contains extensions with HSRSP
+
+             o  awaits a confirmation from Alice that she is also
+                connected (preferably by AGREEMENT message)
+
+   2.  Alice receives the above message, enters into the "connected"
+       state, and then does one of the following (depending on Alice's
+       role):
+
+       *  If Alice is the Initiator (received CONCLUSION with HSRSP),
+          she sends Bob a message with Handshake Type = URQ_AGREEMENT.
+
+       *  If Alice is the Responder, the received message has Handshake
+          Type AGREEMENT and in response she does nothing.
+
+   3.  At this point, if Bob was Initiator, he is connected already.  If
+       he was a Responder, he should receive the above AGREEMENT
+       message, after which he switches to the "connected" state.  In
+       the case where the UDP packet with the agreement message gets
+       lost, Bob will still enter the _connected_ state once he receives
+       anything else from Alice.  If Bob is going to send, however, he
+       has to continue sending the same CONCLUSION until he gets the
+       confirmation from Alice.
+
+4.3.2.2.  Parallel Handshake Flow
+
+   The chances of the parallel handshake flow are very low, but still it
+   may occur if the handshake messages with WAVEAHAND are sent and
+   received by both peers at precisely the same time.
+
+   The resulting flow is very much like Bob's behavior in the serial
+   handshake flow, but for both parties.  Alice and Bob will go through
+   the same state transitions:
+
+   Waving -> Attention -> Initiated -> Connected
+
+   In the Attention state they know each other's cookies, so they can
+   assign roles.  In contrast to serial flows, which are mostly based on
+   request-response cycles, here everything happens completely
+   asynchronously: the state switches upon reception of a particular
+   handshake message with appropriate contents (the Initiator must
+   attach the HSREQ extension, and Responder must attach the "HSRSP"
+   extension).
+
+   Here's how the parallel handshake flow works, based on roles:
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 28]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   Initiator:
+
+   1.  Waving
+
+       *  Receives WAVEAHAND message
+
+       *  Switches to Attention
+
+       *  Sends CONCLUSION + HSREQ
+
+   2.  Attention
+
+       *  Receives CONCLUSION message, which:
+
+          -  contains no extensions:
+
+             o  switches to Initiated, still sends URQ_CONCLUSION +
+                HSREQ
+
+          -  contains "HSRSP" extension:
+
+             o  switches to Connected, sends AGREEMENT
+
+   3.  Initiated
+
+       *  Receives CONCLUSION message, which:
+
+          -  Contains no extensions:
+
+             o  REMAINS IN THIS STATE, still sends URQ_CONCLUSION +
+                HSREQ
+
+          -  contains "HSRSP" extension:
+
+             o  switches to Connected, sends AGREEMENT
+
+   4.  Connected
+
+       *  May receive CONCLUSION and respond with AGREEMENT, but
+          normally by now it should already have received payload
+          packets.
+
+   Responder:
+
+   1.  Waving
+
+       *  Receives WAVEAHAND message
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 29]
+
+Internet-Draft                     SRT                        March 2020
+
+
+       *  Switches to Attention
+
+       *  Sends CONCLUSION message (with no extensions)
+
+   2.  Attention
+
+       *  Receives CONCLUSION message with HSREQ NOTE: This message
+          might contain no extensions, in which case the party shall
+          simply send the empty CONCLUSION message, as before, and
+          remain in this state.
+
+       *  Switches to Initiated and sends CONCLUSION message with HSRSP
+
+   3.  Initiated
+
+       *  Receives:
+
+          -  CONCLUSION message with HSREQ
+
+             o  responds with CONCLUSION with HSRSP and remains in this
+                state
+
+          -  AGREEMENT message
+
+             o  responds with AGREEMENT and switches to Connected
+
+          -  Payload packet
+
+             o  responds with AGREEMENT and switches to Connected
+
+   4.  Connected
+
+       *  Is not expecting to receive any handshake messages anymore.
+          The AGREEMENT message is always sent only once or per every
+          final CONCLUSION message.
+
+   Note that any of these packets may be missing, and the sending party
+   will never become aware.  The missing packet problem is resolved this
+   way:
+
+   1.  If the Responder misses the CONCLUSION + HSREQ message, it simply
+       continues sending empty CONCLUSION messages.  Only upon reception
+       of CONCLUSION + HSREQ does it respond with CONCLUSION + HSRSP.
+
+   2.  If the Initiator misses the CONCLUSION + HSRSP response from the
+       Responder, it continues sending CONCLUSION + HSREQ.  The
+       Responder must always respond with CONCLUSION + HSRSP when the
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 30]
+
+Internet-Draft                     SRT                        March 2020
+
+
+       Initiator sends CONCLUSION + HSREQ, even if it has already
+       received and interpreted it.
+
+   3.  When the Initiator switches to the Connected state it responds
+       with a AGREEMENT message, which may be missed by the Responder.
+       Nonetheless, the Initiator may start sending data packets because
+       it considers itself connected
+
+   *  it doesn't know that the Responder has not yet switched to the
+      Connected state.  Therefore it is exceptionally allowed that when
+      the Responder is in the Initiated state and receives a data packet
+      (or any control packet that is normally sent only between
+      connected parties) over this connection, it may switch to the
+      Connected state just as if it had received a AGREEMENT message.
+
+   1.  If the the Initiator has already switched to the Connected state
+       it will not bother the Responder with any more handshake
+       messages.  But the Responder may be completely unaware of that
+       (having missed the AGREEMENT message from the Initiator).
+       Therefore it doesn't exit the connecting state, which means that
+       it continues sending CONCLUSION + HSRSP messages until it
+       receives any packet that will make it switch to the Connected
+       state (normally AGREEMENT).  Only then does it exit the
+       connecting state and the application can start transmission.
 
 4.4.  SRT Buffer Latency
 
@@ -1338,14 +1713,6 @@ Internet-Draft                     SRT                        March 2020
 
    On the sender, latency is the time that SRT holds a packet to give it
    a chance to be delivered successfully while maintaining the rate of
-
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 24]
-
-Internet-Draft                     SRT                        March 2020
-
-
    the sender at the receiver.  If an acknowledgement (ACK) is missing
    or late for the configured latency, the packet is dropped from the
    sender buffer.  The packet can be retransmitted, while the packet
@@ -1363,6 +1730,14 @@ Internet-Draft                     SRT                        March 2020
    Latency is configured through the capability exchange during the
    extended handshake process between initiator and responder.  The
    Handshake Extension Message (Section 3.2.1.1) has SRT receiver and
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 31]
+
+Internet-Draft                     SRT                        March 2020
+
+
    sender TSBPD delay information in milliseconds.  The maximum value of
    latencies from initiator and responder will be established.
 
@@ -1372,7 +1747,7 @@ Internet-Draft                     SRT                        March 2020
    is to reproduce the output of the sending application (e.g., encoder)
    at the input of the receiving one (e.g., decoder) in live data
    transmission mode (see Section 4.2).  In terms of SRT, it means to
-   reproduce the timing of packets commited by the sending application
+   reproduce the timing of packets committed by the sending application
    to the SRT sender at the timing packets are scheduled for the
    delivery by the SRT receiver and ready to be read by the receiving
    application (see Figure 10).
@@ -1394,14 +1769,6 @@ Internet-Draft                     SRT                        March 2020
    packet sending time to stamp the packets is inappropriate for TSBPD
    feature since a new time (current sending time) is used for
    retransmitted packets, putting them out of order when inserted at
-
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 25]
-
-Internet-Draft                     SRT                        March 2020
-
-
    their proper place in the stream.  Packets are inserted based on the
    sequence number in the header field.  The origin time (in
    microseconds) of the packet is already sampled when a packet is first
@@ -1413,6 +1780,19 @@ Internet-Draft                     SRT                        March 2020
 
    Figure 10 illustrates the key latency points during the packet
    transmission with TSBPD feature enabled.
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 32]
+
+Internet-Draft                     SRT                        March 2020
+
 
                  |  Sending  |              |                   |
                  |   Delay   |    ~RTT/2    |    SRT Latency    |
@@ -1451,13 +1831,6 @@ Internet-Draft                     SRT                        March 2020
    value of the round-trip time once the SRT connection has been
    established).
 
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 26]
-
-Internet-Draft                     SRT                        March 2020
-
-
    The value of sending delay depends on the hardware performance.
    Usually it is relatively small (several microseconds) in contrast to
    RTT_0/2 and SRT latency which are measured in milliseconds.
@@ -1468,6 +1841,14 @@ Internet-Draft                     SRT                        March 2020
    packet should be delivered to the upstream application.  The
    calculation of packet delivery time (PktTsbpdTime) is performed upon
    receiving a data packet according to the following formula:
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 33]
+
+Internet-Draft                     SRT                        March 2020
+
 
    PktTsbpdTime = TsbpdTimeBase + PKT_TIMESTAMP + TsbpdDelay + Drift
 
@@ -1507,13 +1888,6 @@ Internet-Draft                     SRT                        March 2020
    where T_NOW is the current time according to the receiver clock;
    HSREQ_TIMESTAMP is the handshake packet timestamp, in microseconds.
 
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 27]
-
-Internet-Draft                     SRT                        March 2020
-
-
    The value of TsbpdTimeBase is approximately equal to the initial one-
    way delay of the link RTT_0/2, where RTT_0 is the actual value of the
    round-trip time during the SRT handshake exchange.
@@ -1522,6 +1896,15 @@ Internet-Draft                     SRT                        March 2020
    adjusted in two cases:
 
    1.  During the TSBPD wrapping period.
+
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 34]
+
+Internet-Draft                     SRT                        March 2020
+
 
    The TSBPD wrapping period happens every 01:11:35 hours.  This time
    corresponds to the maximum timestamp value of a packet
@@ -1565,7 +1948,16 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 28]
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 5 September 2020               [Page 35]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1621,7 +2013,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 29]
+Sharabayko, et al.      Expires 5 September 2020               [Page 36]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1677,7 +2069,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 30]
+Sharabayko, et al.      Expires 5 September 2020               [Page 37]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1733,7 +2125,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 31]
+Sharabayko, et al.      Expires 5 September 2020               [Page 38]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1789,7 +2181,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 32]
+Sharabayko, et al.      Expires 5 September 2020               [Page 39]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1845,7 +2237,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 33]
+Sharabayko, et al.      Expires 5 September 2020               [Page 40]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1901,7 +2293,7 @@ Appendix A.  Packet Sequence List coding
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 34]
+Sharabayko, et al.      Expires 5 September 2020               [Page 41]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1957,4 +2349,4 @@ Authors' Addresses
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 35]
+Sharabayko, et al.      Expires 5 September 2020               [Page 42]

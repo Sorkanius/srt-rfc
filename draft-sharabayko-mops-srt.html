@@ -838,7 +838,7 @@ table.left {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">mops</dd>
+<dd class="workgroup">MOPS</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-sharabayko-mops-srt</dd>
 <dt class="label-published">Published:</dt>
@@ -1481,37 +1481,69 @@ described in <a href="#handshake-encr-fld" class="xref">Table 2</a>.<a href="#se
 <dd id="section-3.2.1-6.2">
   This field is message specific extension related to Handshake Type field.
 The value must be set to 0 except for the following cases.
-If the handshake control packet is the INDUCTION message, this field is 
-sent back by the Listener. In case of the CONCLUSION message, this field value 
-should contain a combination of Extension Type value. For more details, see
-<a href="#caller-listener-handshake" class="xref">Section 4.3.1</a>.<a href="#section-3.2.1-6.2" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1-6.3">Initial Packet Sequence Number (32 bits):</dt>
-<dd id="section-3.2.1-6.4">
-  The sequence number for the very first data packet to be sent.<a href="#section-3.2.1-6.4" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1-6.5">Maximum Transmission Unit Size (32 bits):</dt>
-<dd id="section-3.2.1-6.6">
-  The value is typically 1500 to follow the default size of MTU (Maximum Transmission Unit)
-in Ethernet, but can be less.<a href="#section-3.2.1-6.6" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1-6.7">Maximum Flow Window Size (32 bits):</dt>
-<dd id="section-3.2.1-6.8">
-  The value of this field is the maximum number of data packets allowed
-to be "in flight" which means the number of sent packets
-without receiving ACK control packet.<a href="#section-3.2.1-6.8" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1-6.9">Handshake Type (32 bits):</dt>
-<dd id="section-3.2.1-6.10">
-  This field indicates the handshake packet types.
-The possible values are described in <a href="#handshake-type" class="xref">Table 3</a>.
-For more details refer to <a href="#handshake-messages" class="xref">Section 4.3</a>.<a href="#section-3.2.1-6.10" class="pilcrow">¶</a>
+If the Handshake Type is INDUCTION, this field is
+copied by the Listener from the received INDUCTION from the caller and used in the
+INDUCTION handshake response of the Listener.
+If the Handshake Type is CONCLUSION, this field value
+should contain a combination of the HS Extension Flags shown in <a href="#hs-ext-flags" class="xref">Table 3</a>.
+For more details, see <a href="#caller-listener-handshake" class="xref">Section 4.3.1</a>.<a href="#section-3.2.1-6.2" class="pilcrow">¶</a>
 </dd>
 </dl>
-<span id="name-handshake-type"></span><div id="handshake-type">
+<span id="name-hs-extension-flags"></span><div id="hs-ext-flags">
 <table class="center" id="table-3">
             <caption>
 <a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-hs-extension-flags" class="selfRef">HS Extension Flags</a>
+            </caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Bitmask</th>
+                <th class="text-center" rowspan="1" colspan="1">Flag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">0x00000001</td>
+                <td class="text-center" rowspan="1" colspan="1">HSREQ</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">0x00000002</td>
+                <td class="text-center" rowspan="1" colspan="1">KMREQ</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">0x00000004</td>
+                <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+<dl class="dlParallel" id="section-3.2.1-8">
+            <dt id="section-3.2.1-8.1">Initial Packet Sequence Number (32 bits):</dt>
+<dd id="section-3.2.1-8.2">
+  The sequence number for the very first data packet to be sent.<a href="#section-3.2.1-8.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1-8.3">Maximum Transmission Unit Size (32 bits):</dt>
+<dd id="section-3.2.1-8.4">
+  The value is typically 1500 to follow the default size of MTU (Maximum Transmission Unit)
+in Ethernet, but can be less.<a href="#section-3.2.1-8.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1-8.5">Maximum Flow Window Size (32 bits):</dt>
+<dd id="section-3.2.1-8.6">
+  The value of this field is the maximum number of data packets allowed
+to be "in flight" which means the number of sent packets
+without receiving ACK control packet.<a href="#section-3.2.1-8.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1-8.7">Handshake Type (32 bits):</dt>
+<dd id="section-3.2.1-8.8">
+  This field indicates the handshake packet types.
+The possible values are described in <a href="#handshake-type" class="xref">Table 4</a>.
+For more details refer to <a href="#handshake-messages" class="xref">Section 4.3</a>.<a href="#section-3.2.1-8.8" class="pilcrow">¶</a>
+</dd>
+</dl>
+<span id="name-handshake-type"></span><div id="handshake-type">
+<table class="center" id="table-4">
+            <caption>
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-handshake-type" class="selfRef">Handshake Type</a>
             </caption>
 <thead>
@@ -1544,34 +1576,93 @@ For more details refer to <a href="#handshake-messages" class="xref">Section 4.3
             </tbody>
           </table>
 </div>
-<dl class="dlParallel" id="section-3.2.1-8">
-            <dt id="section-3.2.1-8.1">SRT Socket ID (32 bits):</dt>
-<dd id="section-3.2.1-8.2">
-  The field holds the source SRT socket ID from which the handshake packet is issued.<a href="#section-3.2.1-8.2" class="pilcrow">¶</a>
+<dl class="dlParallel" id="section-3.2.1-10">
+            <dt id="section-3.2.1-10.1">SRT Socket ID (32 bits):</dt>
+<dd id="section-3.2.1-10.2">
+  The field holds the source SRT socket ID from which the handshake packet is issued.<a href="#section-3.2.1-10.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1-8.3">SYN Cookie (32 bits):</dt>
-<dd id="section-3.2.1-8.4">
+<dt id="section-3.2.1-10.3">SYN Cookie (32 bits):</dt>
+<dd id="section-3.2.1-10.4">
   Randomized value for processing handshake. The value of this field is specified
-by handshake message type. See <a href="#handshake-messages" class="xref">Section 4.3</a>.<a href="#section-3.2.1-8.4" class="pilcrow">¶</a>
+by handshake message type. See <a href="#handshake-messages" class="xref">Section 4.3</a>.<a href="#section-3.2.1-10.4" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1-8.5">Peer IP Address (128 bits):</dt>
-<dd id="section-3.2.1-8.6">
-  The sender's IPv4 or IPv6 IP address. The value consists of four 32-bit fields.<a href="#section-3.2.1-8.6" class="pilcrow">¶</a>
+<dt id="section-3.2.1-10.5">Peer IP Address (128 bits):</dt>
+<dd id="section-3.2.1-10.6">
+  The sender's IPv4 or IPv6 IP address. The value consists of four 32-bit fields.<a href="#section-3.2.1-10.6" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1-8.7">Extension Type (16 bits):</dt>
-<dd id="section-3.2.1-8.8">
+<dt id="section-3.2.1-10.7">Extension Type (16 bits):</dt>
+<dd id="section-3.2.1-10.8">
   The value of this field is used to process integrated handshake.
 There are two basic extensions: Handshake Extension Message (<a href="#handshake-extension-msg" class="xref">Section 3.2.1.1</a>)
 and Key Material Exchange (<a href="#key-material-exchange" class="xref">Section 3.2.1.2</a>).
-Each extension can have a pair of request and response types.<a href="#section-3.2.1-8.8" class="pilcrow">¶</a>
+Each extension can have a pair of request and response types.<a href="#section-3.2.1-10.8" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1-8.9">Extension Length (16 bits):</dt>
-<dd id="section-3.2.1-8.10">
-  The length of Extension Contents.<a href="#section-3.2.1-8.10" class="pilcrow">¶</a>
+</dl>
+<span id="name-handshake-extension-type-va"></span><div id="handshake-ext-type">
+<table class="center" id="table-5">
+            <caption>
+<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#name-handshake-extension-type-va" class="selfRef">Handshake Extension Type values</a>
+            </caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Value</th>
+                <th class="text-center" rowspan="1" colspan="1">Extension Type</th>
+                <th class="text-center" rowspan="1" colspan="1">HS Extension Flag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_HSREQ</td>
+                <td class="text-center" rowspan="1" colspan="1">HSREQ</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_HSRSP</td>
+                <td class="text-center" rowspan="1" colspan="1">HSREQ</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_KMREQ</td>
+                <td class="text-center" rowspan="1" colspan="1">KMREQ</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_KMRSP</td>
+                <td class="text-center" rowspan="1" colspan="1">KMREQ</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">5</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_SID</td>
+                <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">6</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_CONGESTION</td>
+                <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">7</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_FILTER</td>
+                <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">8</td>
+                <td class="text-center" rowspan="1" colspan="1">SRT_CMD_GROUP</td>
+                <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+<dl class="dlParallel" id="section-3.2.1-12">
+            <dt id="section-3.2.1-12.1">Extension Length (16 bits):</dt>
+<dd id="section-3.2.1-12.2">
+  The length of Extension Contents.<a href="#section-3.2.1-12.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1-8.11">Extension Contents (variable length):</dt>
-<dd id="section-3.2.1-8.12">
-  The payload of the extension.<a href="#section-3.2.1-8.12" class="pilcrow">¶</a>
+<dt id="section-3.2.1-12.3">Extension Contents (variable length):</dt>
+<dd id="section-3.2.1-12.4">
+  The payload of the extension.<a href="#section-3.2.1-12.4" class="pilcrow">¶</a>
 </dd>
 </dl>
 <div id="handshake-extension-msg">
@@ -1613,9 +1704,9 @@ and 2 for Handshake Extension Response.<a href="#section-3.2.1.1-1" class="pilcr
 </dd>
 </dl>
 <span id="name-hs-extension-message-flags"></span><div id="hs-ext-msg-flags">
-<table class="center" id="table-4">
+<table class="center" id="table-6">
               <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-hs-extension-message-flags" class="selfRef">HS Extension Message Flags</a>
               </caption>
 <thead>
@@ -1741,9 +1832,9 @@ key set to 0. The values from 1 to 255 are reserved for manually indexed keys.<a
 </dd>
 </dl>
 <span id="name-hs-key-material-exchange-ci"></span><div id="hs-km-msg-flags">
-<table class="center" id="table-5">
+<table class="center" id="table-7">
               <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-hs-key-material-exchange-ci" class="selfRef">HS Key Material Exchange Cipher mode</a>
               </caption>
 <thead>
@@ -2186,11 +2277,11 @@ indicates the handshake message type.<a href="#section-4.3-12" class="pilcrow">�
 </ol>
 <p id="section-4.3-17">In case the connection process has failed on the stage when the party was about to
 send the CONCLUSION handshake, the Handshake Type field will contain appropriate
-error value. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 6</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
+error value. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 8</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
 <span id="name-hs-rejection-reason-codes"></span><div id="hs-rej-reason">
-<table class="center" id="table-6">
+<table class="center" id="table-8">
           <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-hs-rejection-reason-codes" class="selfRef">HS Rejection Reason Codes</a>
           </caption>
 <thead>
@@ -2392,44 +2483,16 @@ of the handshake structure.<a href="#section-4.3.1.2-4" class="pilcrow">¶</a></
 <li id="section-4.3.1.2-5.2">Extension Flags: A set of flags that define the extensions provided in the handshake.<a href="#section-4.3.1.2-5.2" class="pilcrow">¶</a>
 </li>
 </ul>
-<span id="name-hs-extension-flags"></span><div id="hs-ext-flags">
-<table class="center" id="table-7">
-              <caption>
-<a href="#table-7" class="selfRef">Table 7</a>:
-<a href="#name-hs-extension-flags" class="selfRef">HS Extension Flags</a>
-              </caption>
-<thead>
-                <tr>
-                  <th class="text-left" rowspan="1" colspan="1">Bitmask</th>
-                  <th class="text-center" rowspan="1" colspan="1">Flag</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">0x00000001</td>
-                  <td class="text-center" rowspan="1" colspan="1">HSREQ</td>
-                </tr>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">0x00000002</td>
-                  <td class="text-center" rowspan="1" colspan="1">KMREQ</td>
-                </tr>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">0x00000004</td>
-                  <td class="text-center" rowspan="1" colspan="1">CONFIG</td>
-                </tr>
-              </tbody>
-            </table>
-</div>
-<p id="section-4.3.1.2-7">The Listener responds with the same values shown above, without the cookie (which
+<p id="section-4.3.1.2-6">The Listener responds with the same values shown above, without the cookie (which
 isn't needed here), as well as the extensions for HSv5 (which will probably be
-exactly the same).<a href="#section-4.3.1.2-7" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.2-8">IMPORTANT: There isn't any "negotiation" here. If the values passed in the
+exactly the same).<a href="#section-4.3.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2-7">IMPORTANT: There isn't any "negotiation" here. If the values passed in the
 handshake are in any way not acceptable by the other side, the connection will
 be rejected. The only case when the Listener can have precedence over the Caller
 is the advertised Cipher Family and Block Size (<a href="#handshake-encr-fld" class="xref">Table 2</a>)
-in the Encryption Field of the Handshake.<a href="#section-4.3.1.2-8" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.2-9">The value for latency is always agreed to be the greater of those reported
-by each party.<a href="#section-4.3.1.2-9" class="pilcrow">¶</a></p>
+in the Encryption Field of the Handshake.<a href="#section-4.3.1.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.3.1.2-8">The value for latency is always agreed to be the greater of those reported
+by each party.<a href="#section-4.3.1.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2439,15 +2502,364 @@ by each party.<a href="#section-4.3.1.2-9" class="pilcrow">¶</a></p>
           <h4 id="name-rendezvous-handshake">
 <a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-rendezvous-handshake" class="section-name selfRef">Rendezvous Handshake</a>
           </h4>
-<p id="section-4.3.2-1">Rendezvous handshake exchange has the following order of Handshake Types:<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-4.3.2-2">
-            <li id="section-4.3.2-2.1">After starting the connection: <code>URQ_WAVEAHAND</code><a href="#section-4.3.2-2.1" class="pilcrow">¶</a>
+<p id="section-4.3.2-1">The Rendezvous process uses a state machine. It is slightly
+different from UDT Rendezvous handshake <span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>,
+although it is still based on the same message request types.<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-2">Both parties start with WAVEAHAND and use the Version value of 5.
+Legacy Version 4 clients do not look at the Version value,
+whereas Version 5 clients can detect version 5.
+The parties only continue with the Version 5 Rendezvous process when Version is set to 5
+for both. Otherwise the process continues exclusively according to Version 4 rules <span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>.<a href="#section-4.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-3">With Version 5 Rendezvous, both parties create a cookie for a process called the
+"cookie contest". This is necessary for the assignment of Initiator and Responder
+roles. Each party generates a cookie value (a 32-bit number) based on the host,
+port, and current time with 1 minute accuracy. This value is scrambled using
+an MD5 sum calculation. The cookie values are then compared with one another.<a href="#section-4.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-4">Since it is impossible to have two sockets on the same machine bound to the same NIC
+and port and operating independently, it's virtually impossible that the
+parties will generate identical cookies. However, this situation may occur if an
+application tries to "connect to itself" - that is, either connects to a local
+IP address, when the socket is bound to INADDR_ANY, or to the same IP address to
+which the socket was bound. If the cookies are identical (for any reason), the
+connection will not be made until new, unique cookies are generated (after a
+delay of up to one minute). In the case of an application "connecting to itself",
+the cookies will always be identical, and so the connection will never be established.<a href="#section-4.3.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-5">When one party's cookie value is greater than its peer's, it wins the cookie
+contest and becomes Initiator (the other party becomes the Responder).<a href="#section-4.3.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-6">At this point there are two possible "handshake flows":
+<em>serial</em>  and <em>parallel</em>.<a href="#section-4.3.2-6" class="pilcrow">¶</a></p>
+<div id="serial-handshake-flow">
+<section id="section-4.3.2.1">
+            <h5 id="name-serial-handshake-flow">
+<a href="#section-4.3.2.1" class="section-number selfRef">4.3.2.1. </a><a href="#name-serial-handshake-flow" class="section-name selfRef">Serial Handshake Flow</a>
+            </h5>
+<p id="section-4.3.2.1-1">In the serial handshake flow, one party is always first, and the other follows.
+That is, while both parties are repeatedly sending WAVEAHAND messages, at
+some point one party - let's say Alice - will find she has received a
+WAVEAHAND message before she can send her next one, so she sends a
+CONCLUSION message in response. Meantime, Bob (Alice's peer) has missed
+Alice's WAVEAHAND messages, so that Alice's CONCLUSION is the first message
+Bob has received from her.<a href="#section-4.3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.2.1-2">This process can be described easily as a series of exchanges between the first
+and following parties (Alice and Bob, respectively):<a href="#section-4.3.2.1-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.1-3">
+              <li id="section-4.3.2.1-3.1">
+                <p id="section-4.3.2.1-3.1.1">Initially, both parties are in the <em>waving</em> state. Alice sends a handshake
+message to Bob:<a href="#section-4.3.2.1-3.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-3.1.2.1">Version: 5<a href="#section-4.3.2.1-3.1.2.1" class="pilcrow">¶</a>
 </li>
-<li id="section-4.3.2-2.2">After receiving the above message from the peer: <code>URQ_CONCLUSION</code><a href="#section-4.3.2-2.2" class="pilcrow">¶</a>
+<li id="section-4.3.2.1-3.1.2.2">Type: Extension field: 0, Encryption field: advertised <code>PBKEYLEN</code>.<a href="#section-4.3.2.1-3.1.2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-4.3.2-2.3">After receiving the above message from the peer: <code>URQ_AGREEMENT</code>.<a href="#section-4.3.2-2.3" class="pilcrow">¶</a>
+<li id="section-4.3.2.1-3.1.2.3">Handshake Type: WAVEAHAND<a href="#section-4.3.2.1-3.1.2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-3.1.2.4">SRT Socket ID: Alice's socket ID<a href="#section-4.3.2.1-3.1.2.4" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-3.1.2.5">SYN Cookie: Created based on host/port and current time.<a href="#section-4.3.2.1-3.1.2.5" class="pilcrow">¶</a>
+</li>
+</ul>
 </li>
 </ol>
+<p id="section-4.3.2.1-4">While Alice doesn't yet know if she is sending this message to
+a Version 4 or Version 5 peer, the values from these fields would not be interpreted by
+the Version 4 peer when the Handshake Type is WAVEAHAND.<a href="#section-4.3.2.1-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.1-5">
+              <li id="section-4.3.2.1-5.1">Bob receives Alice's WAVEAHAND message, switches to the "attention"
+state. Since Bob now knows Alice's cookie, he performs a "cookie contest"
+(compares both cookie values). If Bob's cookie is greater than Alice's, he will
+become the Initiator. Otherwise, he will become the Responder.<a href="#section-4.3.2.1-5.1" class="pilcrow">¶</a>
+</li>
+</ol>
+<p id="section-4.3.2.1-6">IMPORTANT: The resolution of the Handshake Role
+(Initiator or Responder) is essential for further processing.<a href="#section-4.3.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.3.2.1-7">Then Bob responds:<a href="#section-4.3.2.1-7" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-8.1">Version: 5<a href="#section-4.3.2.1-8.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-8.2">Extension field: appropriate flags if Initiator, otherwise 0<a href="#section-4.3.2.1-8.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-8.3">Encryption field: advertised PBKEYLEN<a href="#section-4.3.2.1-8.3" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-8.4">Handshake Type: CONCLUSION<a href="#section-4.3.2.1-8.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-4.3.2.1-9">NOTE: If Bob is the Initiator and encryption is on, he will use either his
+own cipher family and block size or the one received from Alice (if she has advertised
+those values).<a href="#section-4.3.2.1-9" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.1-10">
+              <li id="section-4.3.2.1-10.1">
+                <p id="section-4.3.2.1-10.1.1">Alice receives Bob's CONCLUSION message. While at this point she also
+performs the "cookie contest", the outcome will be the same. She switches to the
+"fine" state, and sends:<a href="#section-4.3.2.1-10.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-10.1.2.1">Version: 5<a href="#section-4.3.2.1-10.1.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-10.1.2.2">Appropriate extension flags and encryption flags<a href="#section-4.3.2.1-10.1.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-10.1.2.3">Handshake Type: CONCLUSION<a href="#section-4.3.2.1-10.1.2.3" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ol>
+<p id="section-4.3.2.1-11">NOTE: Both parties always send extension flags at this point, which will
+contain HSREQ if the message comes from an Initiator, or
+HSRSP if it comes from a Responder. If the Initiator has received a
+previous message from the Responder containing an advertised cipher family and block size in the
+encryption flags field, it will be used as the key length
+for key generation sent next in the KMREQ extension.<a href="#section-4.3.2.1-11" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.1-12">
+              <li id="section-4.3.2.1-12.1">
+                <p id="section-4.3.2.1-12.1.1">Bob receives Alice's CONCLUSION message, and then does one of the
+following (depending on Bob's role):<a href="#section-4.3.2.1-12.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-12.1.2.1">
+                    <p id="section-4.3.2.1-12.1.2.1.1">If Bob is the Initiator (Alice's message contains HSRSP), he:<a href="#section-4.3.2.1-12.1.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-12.1.2.1.2.1">switches to the "*connected" state<a href="#section-4.3.2.1-12.1.2.1.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-12.1.2.1.2.2">sends Alice a message with Handshake Type AGREEMENT, but containing
+no SRT extensions (Extension Flags field should be 0)<a href="#section-4.3.2.1-12.1.2.1.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.1-12.1.2.2">
+                    <p id="section-4.3.2.1-12.1.2.2.1">If Bob is the Responder (Alice's message contains HSREQ), he:<a href="#section-4.3.2.1-12.1.2.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-12.1.2.2.2.1">switches to "initiated" state<a href="#section-4.3.2.1-12.1.2.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-12.1.2.2.2.2">
+                        <p id="section-4.3.2.1-12.1.2.2.2.2.1">sends Alice a message with Handshake Type CONCLUSION that also contains
+extensions with HSRSP<a href="#section-4.3.2.1-12.1.2.2.2.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-12.1.2.2.2.2.2.1">awaits a confirmation from Alice that she is also connected (preferably
+by AGREEMENT message)<a href="#section-4.3.2.1-12.1.2.2.2.2.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.1-12.2">
+                <p id="section-4.3.2.1-12.2.1">Alice receives the above message, enters into the "connected" state, and
+then does one of the following (depending on Alice's role):<a href="#section-4.3.2.1-12.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.1-12.2.2.1">If Alice is the Initiator (received CONCLUSION with HSRSP),
+she sends Bob a message with Handshake Type = URQ_AGREEMENT.<a href="#section-4.3.2.1-12.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.1-12.2.2.2">If Alice is the Responder, the received message has Handshake Type AGREEMENT
+and in response she does nothing.<a href="#section-4.3.2.1-12.2.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.1-12.3">At this point, if Bob was Initiator, he is connected already. If he was a
+Responder, he should receive the above AGREEMENT message, after which he
+switches to the "connected" state. In the case where the UDP packet with the
+agreement message gets lost, Bob will still enter the <em>connected</em> state once
+he receives anything else from Alice. If Bob is going to send, however, he
+has to continue sending the same CONCLUSION until he gets the confirmation
+from Alice.<a href="#section-4.3.2.1-12.3" class="pilcrow">¶</a>
+</li>
+</ol>
+</section>
+</div>
+<div id="parallel-handshake-flow">
+<section id="section-4.3.2.2">
+            <h5 id="name-parallel-handshake-flow">
+<a href="#section-4.3.2.2" class="section-number selfRef">4.3.2.2. </a><a href="#name-parallel-handshake-flow" class="section-name selfRef">Parallel Handshake Flow</a>
+            </h5>
+<p id="section-4.3.2.2-1">The chances of the parallel handshake flow are very low, but still it may
+occur if the handshake messages with WAVEAHAND are sent and received by both peers
+at precisely the same time.<a href="#section-4.3.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.2.2-2">The resulting flow is very much like Bob's behavior in the serial handshake flow,
+but for both parties. Alice and Bob will go through the same state transitions:<a href="#section-4.3.2.2-2" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-4.3.2.2-3">
+<pre>
+Waving -&gt; Attention -&gt; Initiated -&gt; Connected
+</pre><a href="#section-4.3.2.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-4.3.2.2-4">In the Attention state they know each other's cookies, so they can assign
+roles. In contrast to serial flows,
+which are mostly based on request-response cycles, here everything
+happens completely asynchronously: the state switches upon reception
+of a particular handshake message with appropriate contents (the
+Initiator must attach the HSREQ extension, and Responder must attach the
+<code>HSRSP</code> extension).<a href="#section-4.3.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.3.2.2-5">Here's how the parallel handshake flow works, based on roles:<a href="#section-4.3.2.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.3.2.2-6">Initiator:<a href="#section-4.3.2.2-6" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.2-7">
+              <li id="section-4.3.2.2-7.1">
+                <p id="section-4.3.2.2-7.1.1">Waving<a href="#section-4.3.2.2-7.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.1.2.1">Receives WAVEAHAND message<a href="#section-4.3.2.2-7.1.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-7.1.2.2">Switches to Attention<a href="#section-4.3.2.2-7.1.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-7.1.2.3">Sends CONCLUSION + HSREQ<a href="#section-4.3.2.2-7.1.2.3" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-7.2">
+                <p id="section-4.3.2.2-7.2.1">Attention<a href="#section-4.3.2.2-7.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.2.2.1">
+                    <p id="section-4.3.2.2-7.2.2.1.1">Receives CONCLUSION message, which:<a href="#section-4.3.2.2-7.2.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.2.2.1.2.1">
+                        <p id="section-4.3.2.2-7.2.2.1.2.1.1">contains no extensions:<a href="#section-4.3.2.2-7.2.2.1.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.2.2.1.2.1.2.1">switches to Initiated, still sends URQ_CONCLUSION + HSREQ<a href="#section-4.3.2.2-7.2.2.1.2.1.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-7.2.2.1.2.2">
+                        <p id="section-4.3.2.2-7.2.2.1.2.2.1">contains <code>HSRSP</code> extension:<a href="#section-4.3.2.2-7.2.2.1.2.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.2.2.1.2.2.2.1">switches to Connected, sends AGREEMENT<a href="#section-4.3.2.2-7.2.2.1.2.2.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-7.3">
+                <p id="section-4.3.2.2-7.3.1">Initiated<a href="#section-4.3.2.2-7.3.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.3.2.1">
+                    <p id="section-4.3.2.2-7.3.2.1.1">Receives CONCLUSION message, which:<a href="#section-4.3.2.2-7.3.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.3.2.1.2.1">
+                        <p id="section-4.3.2.2-7.3.2.1.2.1.1">Contains no extensions:<a href="#section-4.3.2.2-7.3.2.1.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.3.2.1.2.1.2.1">REMAINS IN THIS STATE, still sends URQ_CONCLUSION + HSREQ<a href="#section-4.3.2.2-7.3.2.1.2.1.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-7.3.2.1.2.2">
+                        <p id="section-4.3.2.2-7.3.2.1.2.2.1">contains <code>HSRSP</code> extension:<a href="#section-4.3.2.2-7.3.2.1.2.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.3.2.1.2.2.2.1">switches to Connected, sends AGREEMENT<a href="#section-4.3.2.2-7.3.2.1.2.2.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-7.4">
+                <p id="section-4.3.2.2-7.4.1">Connected<a href="#section-4.3.2.2-7.4.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-7.4.2.1">May receive CONCLUSION and respond with AGREEMENT, but normally
+by now it should already have received payload packets.<a href="#section-4.3.2.2-7.4.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ol>
+<p id="section-4.3.2.2-8">Responder:<a href="#section-4.3.2.2-8" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.2-9">
+              <li id="section-4.3.2.2-9.1">
+                <p id="section-4.3.2.2-9.1.1">Waving<a href="#section-4.3.2.2-9.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.1.2.1">Receives WAVEAHAND message<a href="#section-4.3.2.2-9.1.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-9.1.2.2">Switches to Attention<a href="#section-4.3.2.2-9.1.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-9.1.2.3">Sends CONCLUSION message (with no extensions)<a href="#section-4.3.2.2-9.1.2.3" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-9.2">
+                <p id="section-4.3.2.2-9.2.1">Attention<a href="#section-4.3.2.2-9.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.2.2.1">Receives CONCLUSION message with HSREQ
+NOTE: This message might contain no extensions, in which case the party 
+shall simply send the empty CONCLUSION message, as before, and remain 
+in this state.<a href="#section-4.3.2.2-9.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-9.2.2.2">Switches to Initiated and sends CONCLUSION message with HSRSP<a href="#section-4.3.2.2-9.2.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-9.3">
+                <p id="section-4.3.2.2-9.3.1">Initiated<a href="#section-4.3.2.2-9.3.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.3.2.1">
+                    <p id="section-4.3.2.2-9.3.2.1.1">Receives:<a href="#section-4.3.2.2-9.3.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.3.2.1.2.1">
+                        <p id="section-4.3.2.2-9.3.2.1.2.1.1">CONCLUSION message with HSREQ<a href="#section-4.3.2.2-9.3.2.1.2.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.3.2.1.2.1.2.1">responds with CONCLUSION with HSRSP and remains in this state<a href="#section-4.3.2.2-9.3.2.1.2.1.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-9.3.2.1.2.2">
+                        <p id="section-4.3.2.2-9.3.2.1.2.2.1">AGREEMENT message<a href="#section-4.3.2.2-9.3.2.1.2.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.3.2.1.2.2.2.1">responds with AGREEMENT and switches to Connected<a href="#section-4.3.2.2-9.3.2.1.2.2.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-9.3.2.1.2.3">
+                        <p id="section-4.3.2.2-9.3.2.1.2.3.1">Payload packet<a href="#section-4.3.2.2-9.3.2.1.2.3.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.3.2.1.2.3.2.1">responds with AGREEMENT and switches to Connected<a href="#section-4.3.2.2-9.3.2.1.2.3.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="section-4.3.2.2-9.4">
+                <p id="section-4.3.2.2-9.4.1">Connected<a href="#section-4.3.2.2-9.4.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-4.3.2.2-9.4.2.1">Is not expecting to receive any handshake messages anymore. The
+AGREEMENT message is always sent only once or per every final
+CONCLUSION message.<a href="#section-4.3.2.2-9.4.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+</ol>
+<p id="section-4.3.2.2-10">Note that any of these packets may be missing, and the sending party will
+never become aware. The missing packet problem is resolved this way:<a href="#section-4.3.2.2-10" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.2-11">
+              <li id="section-4.3.2.2-11.1">If the Responder misses the CONCLUSION + HSREQ message, it simply
+continues sending empty CONCLUSION messages. Only upon reception of
+CONCLUSION + HSREQ does it respond with CONCLUSION + HSRSP.<a href="#section-4.3.2.2-11.1" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-11.2">If the Initiator misses the CONCLUSION + HSRSP response from the
+Responder, it continues sending CONCLUSION + HSREQ. The Responder must
+always respond with CONCLUSION + HSRSP when the Initiator sends
+CONCLUSION + HSREQ, even if it has already received and interpreted it.<a href="#section-4.3.2.2-11.2" class="pilcrow">¶</a>
+</li>
+<li id="section-4.3.2.2-11.3">When the Initiator switches to the Connected state it responds with a
+AGREEMENT message, which may be missed by the Responder. Nonetheless, the
+Initiator may start sending data packets because it considers itself connected<a href="#section-4.3.2.2-11.3" class="pilcrow">¶</a>
+</li>
+</ol>
+<ul>
+<li id="section-4.3.2.2-12.1">it doesn't know that the Responder has not yet switched to the Connected state.
+Therefore it is exceptionally allowed that when the Responder is in the Initiated
+state and receives a data packet (or any control packet that is normally sent only
+between connected parties) over this connection, it may switch to the Connected
+state just as if it had received a AGREEMENT message.<a href="#section-4.3.2.2-12.1" class="pilcrow">¶</a>
+</li>
+</ul>
+<ol start="1" type="1" class="normal type-1" id="section-4.3.2.2-13">
+              <li id="section-4.3.2.2-13.1">If the the Initiator has already switched to the Connected state it will not
+bother the Responder with any more handshake messages. But the Responder may be
+completely unaware of that (having missed the AGREEMENT message from the
+Initiator). Therefore it doesn't exit the connecting state, which means that it
+continues sending CONCLUSION + HSRSP messages until it receives any
+packet that will make it switch to the Connected state (normally
+AGREEMENT). Only then does it exit the connecting state and the
+application can start transmission.<a href="#section-4.3.2.2-13.1" class="pilcrow">¶</a>
+</li>
+</ol>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -2484,7 +2896,7 @@ from initiator and responder will be established.<a href="#section-4.4-4" class=
 is to reproduce the output of the sending application (e.g., encoder)
 at the input of the receiving one (e.g., decoder) in live data
 transmission mode (see <a href="#data-transmission-mode" class="xref">Section 4.2</a>). In terms of SRT,
-it means to reproduce the timing of packets commited by the sending
+it means to reproduce the timing of packets committed by the sending
 application to the SRT sender at the timing packets are scheduled
 for the delivery by the SRT receiver and ready to be read by the
 receiving application (see <a href="#fig-latency-points" class="xref">Figure 10</a>).<a href="#section-4.5-1" class="pilcrow">¶</a></p>
