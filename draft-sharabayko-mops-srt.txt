@@ -5,10 +5,10 @@
 MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
 Intended status: Standards Track           Haivision Network Video, GmbH
-Expires: 5 September 2020                                        JS. Kim
+Expires: 6 September 2020                                        JS. Kim
                                                                  JW. Kim
                                                     SK Telecom Co., Ltd.
-                                                            4 March 2020
+                                                            5 March 2020
 
 
                             The SRT Protocol
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2020.
+   This Internet-Draft will expire on 6 September 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 1]
+Sharabayko, et al.      Expires 6 September 2020                [Page 1]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -99,22 +99,23 @@ Table of Contents
        4.8.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  39
      4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  40
      4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  40
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  40
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  40
-   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  40
-     Normative References  . . . . . . . . . . . . . . . . . . . . .  40
-     Informative References  . . . . . . . . . . . . . . . . . . . .  40
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  41
+   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  40
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  40
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  41
+   References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  41
+     Normative References  . . . . . . . . . . . . . . . . . . . . .  41
+     Informative References  . . . . . . . . . . . . . . . . . . . .  41
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 2]
+Sharabayko, et al.      Expires 6 September 2020                [Page 2]
 
 Internet-Draft                     SRT                        March 2020
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  41
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  41
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  42
 
 1.  Introduction
 
@@ -164,8 +165,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-
-Sharabayko, et al.      Expires 5 September 2020                [Page 3]
+Sharabayko, et al.      Expires 6 September 2020                [Page 3]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 4]
+Sharabayko, et al.      Expires 6 September 2020                [Page 4]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -277,7 +277,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 5]
+Sharabayko, et al.      Expires 6 September 2020                [Page 5]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 6]
+Sharabayko, et al.      Expires 6 September 2020                [Page 6]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 7]
+Sharabayko, et al.      Expires 6 September 2020                [Page 7]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 8]
+Sharabayko, et al.      Expires 6 September 2020                [Page 8]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020                [Page 9]
+Sharabayko, et al.      Expires 6 September 2020                [Page 9]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 10]
+Sharabayko, et al.      Expires 6 September 2020               [Page 10]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 11]
+Sharabayko, et al.      Expires 6 September 2020               [Page 11]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -669,7 +669,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 12]
+Sharabayko, et al.      Expires 6 September 2020               [Page 12]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 13]
+Sharabayko, et al.      Expires 6 September 2020               [Page 13]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 14]
+Sharabayko, et al.      Expires 6 September 2020               [Page 14]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 15]
+Sharabayko, et al.      Expires 6 September 2020               [Page 15]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 16]
+Sharabayko, et al.      Expires 6 September 2020               [Page 16]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 17]
+Sharabayko, et al.      Expires 6 September 2020               [Page 17]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 18]
+Sharabayko, et al.      Expires 6 September 2020               [Page 18]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 19]
+Sharabayko, et al.      Expires 6 September 2020               [Page 19]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 20]
+Sharabayko, et al.      Expires 6 September 2020               [Page 20]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 21]
+Sharabayko, et al.      Expires 6 September 2020               [Page 21]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 22]
+Sharabayko, et al.      Expires 6 September 2020               [Page 22]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 23]
+Sharabayko, et al.      Expires 6 September 2020               [Page 23]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1341,7 +1341,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 24]
+Sharabayko, et al.      Expires 6 September 2020               [Page 24]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1397,7 +1397,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 25]
+Sharabayko, et al.      Expires 6 September 2020               [Page 25]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1453,7 +1453,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 26]
+Sharabayko, et al.      Expires 6 September 2020               [Page 26]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1509,7 +1509,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 27]
+Sharabayko, et al.      Expires 6 September 2020               [Page 27]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1565,7 +1565,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 28]
+Sharabayko, et al.      Expires 6 September 2020               [Page 28]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1621,7 +1621,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 29]
+Sharabayko, et al.      Expires 6 September 2020               [Page 29]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1677,7 +1677,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 30]
+Sharabayko, et al.      Expires 6 September 2020               [Page 30]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1733,7 +1733,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 31]
+Sharabayko, et al.      Expires 6 September 2020               [Page 31]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1789,7 +1789,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 32]
+Sharabayko, et al.      Expires 6 September 2020               [Page 32]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1845,7 +1845,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 33]
+Sharabayko, et al.      Expires 6 September 2020               [Page 33]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1901,7 +1901,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 34]
+Sharabayko, et al.      Expires 6 September 2020               [Page 34]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1957,7 +1957,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 35]
+Sharabayko, et al.      Expires 6 September 2020               [Page 35]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2013,7 +2013,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 36]
+Sharabayko, et al.      Expires 6 September 2020               [Page 36]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2069,7 +2069,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 37]
+Sharabayko, et al.      Expires 6 September 2020               [Page 37]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2125,7 +2125,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 38]
+Sharabayko, et al.      Expires 6 September 2020               [Page 38]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2181,7 +2181,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 5 September 2020               [Page 39]
+Sharabayko, et al.      Expires 6 September 2020               [Page 39]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2202,19 +2202,45 @@ Internet-Draft                     SRT                        March 2020
    packets based on the time difference between the ACK packet is sent
    and the corresponding ACKACK is received by the data receiver.
 
-5.  Security Considerations
+5.  Encryption
+
+   SRT supports encryption based on the exchange of private keys.
+
+6.  Security Considerations
+
+   SRT supports confidentiality of user data using stream ciphering
+   based on AES.  Session keys for ciphering are delivered through
+   control packets during handshake, with the protection by Key
+   Encryption Key, which is generated by a sender and receiver with pre-
+   shared secret such as passphrase.  As in UDT, careful uses of SYN
+   Cookies may help to deter denial of service attacks.  Appropriate
+   security policy including key size, key refresh period, as well as
+   passphrase should be managed by security officers, which is out of
+   scope of the present document.
 
    SRT support confidentiality of user data using stream ciphering based
-   on AES.  Session key for ciphering is delivered control packet during
-   handshake, with the protection by Key Encryption Key, which is
-   generated by a sender and receiver with pre-shared secret such as
-   passphrase.  Appropriate security policy including key size, key
-   refresh period, as well as passphrase should be managed by security
-   officers, which is out of scope of the present document.
+   on AES, as specified in Section 5.  Session key for ciphering is
+   delivered control packet during handshake, with the protection by Key
+   encryption key, which is generated by a sender and receiver with pre-
+   shared secret such as passphrase.  Appropriate security policy
+   including key size, key refresh period, as well as passphrase should
+   be managed by security officers, which is out of scope of the present
+   document.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document makes no requests of the IANA.
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 6 September 2020               [Page 40]
+
+Internet-Draft                     SRT                        March 2020
+
 
 Acknowledgments
 
@@ -2234,13 +2260,6 @@ Normative References
               <https://www.rfc-editor.org/info/rfc2119>.
 
 Informative References
-
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 40]
-
-Internet-Draft                     SRT                        March 2020
-
 
    [GHG04b]   Gu, Y., Hong, X., and R.L. Grossman,, "Experiences in
               Design and Implementation of a High Performance Transport
@@ -2271,6 +2290,14 @@ Appendix A.  Packet Sequence List coding
 
                  Figure 11: single sequence numbers coding
 
+
+
+
+Sharabayko, et al.      Expires 6 September 2020               [Page 41]
+
+Internet-Draft                     SRT                        March 2020
+
+
    For any consectutive packet seqeunce numbers that the differnece
    between the last and first is more than 1, only record the first (a)
    and the the last (b) sequence numbers in the list field, and modify
@@ -2289,15 +2316,6 @@ Appendix A.  Packet Sequence List coding
 Authors' Addresses
 
    Maxim Sharabayko
-
-
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 41]
-
-Internet-Draft                     SRT                        March 2020
-
-
    Haivision Network Video, GmbH
 
    Email: maxsharabayko@haivision.com
@@ -2331,22 +2349,4 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Sharabayko, et al.      Expires 5 September 2020               [Page 42]
+Sharabayko, et al.      Expires 6 September 2020               [Page 42]
