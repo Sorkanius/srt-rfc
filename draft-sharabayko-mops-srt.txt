@@ -126,7 +126,7 @@ Internet-Draft                     SRT                        March 2020
 
 1.  Introduction
 
-   TODO Introduction
+   TODO Introduction [SRTTO]
 
 2.  Conventions and Definitions
 
@@ -2273,7 +2273,7 @@ Internet-Draft                     SRT                        March 2020
 Contributors
 
    This specification is heavily based on the SRT Protocol Technical
-   Overview written by Jean Dube and Steve Matthews.
+   Overview [SRTTO] written by Jean Dube and Steve Matthews.
 
    In alphabetical order, the contributors to the pre-IETF SRT project
    and specification at Haivision are: Marc Cymontkowski, Roman
@@ -2338,13 +2338,13 @@ Informative References
               Dworkin, M., "Recommendation for Block Cipher Modes of
               Operation", December 2001.
 
+   [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
+              Overview", December 2019.
+
 Appendix A.  Packet Sequence List coding
 
    For any single packet sequence number, it uses the original sequence
    number in the field.  The first bit must start with "0".
-
-
-
 
 
 
