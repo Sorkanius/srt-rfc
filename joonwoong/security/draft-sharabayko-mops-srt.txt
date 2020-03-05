@@ -100,12 +100,12 @@ Table of Contents
      4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  40
      4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  40
    5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  40
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  40
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
+     5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  40
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  41
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  41
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  41
    References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  41
      Normative References  . . . . . . . . . . . . . . . . . . . . .  41
-     Informative References  . . . . . . . . . . . . . . . . . . . .  41
 
 
 
@@ -114,7 +114,8 @@ Sharabayko, et al.      Expires 6 September 2020                [Page 2]
 Internet-Draft                     SRT                        March 2020
 
 
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  41
+     Informative References  . . . . . . . . . . . . . . . . . . . .  41
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  42
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  42
 
 1.  Introduction
@@ -152,7 +153,6 @@ Internet-Draft                     SRT                        March 2020
    SRT has two types of packets distinguished by the Packet Type Flag:
    data packet and control packet.  The structure of the SRT packet is
    shown in Figure 2.
-
 
 
 
@@ -2206,6 +2206,45 @@ Internet-Draft                     SRT                        March 2020
 
    SRT supports encryption based on the exchange of private keys.
 
+5.1.  Congestion Control
+
+   SRT provides certain mechanisms for the sender to get some feedback
+   from the receiving side through the ACK packets (Section 3.2.3).
+   Every 10 ms the sender receives the latest values of RTT and RTT
+   variance, Available Buffer Size, Packets Receiving Rate and Estimated
+   Link Capacity.  Upon reception of the NAK packet (Section 3.2.4) the
+   sender can detect packet losses during the transmission.  These
+   mechanisms provide a solid backgroud for various congestion control
+   algorithms.
+
+   Given that SRT can operate in live and file transfer modes, there are
+   two groups of congestion control algorithms possible.
+
+   For live transmission mode (Section 4.2.2) the congestion control
+   algorithm does not need to control the sending pace of the data
+   packets, as the sending timing is provided by the live input.
+   Although certain limitations on the minimal inter-sending time of
+   consecutive packets can be applied in order to avoid congestion
+   during fluctuations of the source bitrate.  Also it is allowed to
+   drop those packets that can not be delivered in time.
+
+   For file transfer, any known File Congestion Control algorithms like
+   CUBIC and BBR can apply, including the congestion control mechanism
+   proposed in UDT [GHG04b].  The UDT congestion control relies on the
+   available link capacity, packet loss reports (NAK) and packet
+   acknowledgements (ACKs).  It then slows down the output of packets as
+   needed by adjusting the packet sending pace.  In periods of
+
+
+
+Sharabayko, et al.      Expires 6 September 2020               [Page 40]
+
+Internet-Draft                     SRT                        March 2020
+
+
+   congestion, it can block the main stream and focus on the lost
+   packets.
+
 6.  Security Considerations
 
    SRT supports confidentiality of user data using stream ciphering
@@ -2231,17 +2270,6 @@ Internet-Draft                     SRT                        March 2020
 
    This document makes no requests of the IANA.
 
-
-
-
-
-
-
-Sharabayko, et al.      Expires 6 September 2020               [Page 40]
-
-Internet-Draft                     SRT                        March 2020
-
-
 Acknowledgments
 
    TODO acknowledge.
@@ -2260,6 +2288,15 @@ Normative References
               <https://www.rfc-editor.org/info/rfc2119>.
 
 Informative References
+
+
+
+
+
+Sharabayko, et al.      Expires 6 September 2020               [Page 41]
+
+Internet-Draft                     SRT                        March 2020
+
 
    [GHG04b]   Gu, Y., Hong, X., and R.L. Grossman,, "Experiences in
               Design and Implementation of a High Performance Transport
@@ -2290,14 +2327,6 @@ Appendix A.  Packet Sequence List coding
 
                  Figure 11: single sequence numbers coding
 
-
-
-
-Sharabayko, et al.      Expires 6 September 2020               [Page 41]
-
-Internet-Draft                     SRT                        March 2020
-
-
    For any consectutive packet seqeunce numbers that the differnece
    between the last and first is more than 1, only record the first (a)
    and the the last (b) sequence numbers in the list field, and modify
@@ -2316,6 +2345,15 @@ Internet-Draft                     SRT                        March 2020
 Authors' Addresses
 
    Maxim Sharabayko
+
+
+
+
+Sharabayko, et al.      Expires 6 September 2020               [Page 42]
+
+Internet-Draft                     SRT                        March 2020
+
+
    Haivision Network Video, GmbH
 
    Email: maxsharabayko@haivision.com
@@ -2349,4 +2387,22 @@ Authors' Addresses
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 42]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 6 September 2020               [Page 43]
