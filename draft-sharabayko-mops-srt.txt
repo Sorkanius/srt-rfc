@@ -5,7 +5,7 @@
 MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
 Intended status: Standards Track           Haivision Network Video, GmbH
-Expires: 7 September 2020                                        J. Dubé
+Expires: 7 September 2020                                        J. Dube
                                                                Haivision
                                                                  JS. Kim
                                                                  JW. Kim
@@ -2541,7 +2541,8 @@ Internet-Draft                     SRT                        March 2020
 
 5.  Encryption
 
-   SRT supports encryption based on the exchange of private keys.
+   SRT supports encryption based on a pre-shared secret.  Please refer
+   to [SRTTO] for more information.
 
 6.  Security Considerations
 
@@ -2568,7 +2569,6 @@ Contributors
    and specification at Haivision are: Marc Cymontkowski, Roman
    Diouskine, Jean Dube, Mikolaj Malecki, Steve Matthews, Maria
    Sharabayko, Maxim Sharabayko, Adam Yellen.
-
 
 
 
@@ -2679,7 +2679,7 @@ Authors' Addresses
    Email: msharabayko@haivision.com
 
 
-   Jean Dubé
+   Jean Dube
    Haivision
 
 
