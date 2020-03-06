@@ -4,8 +4,9 @@
 
 MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
-Intended status: Standards Track                                 J. Dube
-Expires: 7 September 2020                  Haivision Network Video, GmbH
+Intended status: Standards Track           Haivision Network Video, GmbH
+Expires: 7 September 2020                                        J. Dubé
+                                                               Haivision
                                                                  JS. Kim
                                                                  JW. Kim
                                                     SK Telecom Co., Ltd.
@@ -46,7 +47,6 @@ Status of This Memo
    material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on 7 September 2020.
-
 
 
 
@@ -400,8 +400,8 @@ Internet-Draft                     SRT                        March 2020
    KK (2 bits):  Key-based Encryption Flag.  The flag bits indicate
       whether or not data is encrypted.  The value "00b" (binary) means
       data is not encrypted. "01b" indicates that data is encrypted with
-      even key, and "11b" is used for odd key encryption.  Refer to
-      Section 5.
+      an even key, and "10b" is used for odd key encryption.  Refer to
+      Section 5.  The value "11b" is only used in control packets.
 
    R (1 bit):  Retransmitted Packet Flag.  This flag is clear when a
       packet is transmitted the first time.  The flag is set to "1" when
@@ -455,7 +455,13 @@ Internet-Draft                     SRT                        March 2020
       use this field.
 
    Control Information Field (variable length):  The use of this field
-      is defined by the Control Type field of a control packet.
+      is defined by the Control Type field of the control packet.
+
+   KK (2 bits):  Encryption Flag.  The flag bits indicate whether or not
+      data is encrypted.  The value "00b" means data is not encrypted,
+      "01b" indicates that data is encrypted with an even key, and "10b"
+      is used for odd key encryption.  The value "11b" is used to carry
+      both keys in single message.
 
    The types of SRT control packets are shown in Table 1.  The value
    "0x7ffff" is reserved for a user-defined type.
@@ -488,12 +494,6 @@ Internet-Draft                     SRT                        March 2020
 
    The Control Information Field (CIF) of a handshake control packet is
    shown in Figure 5.
-
-
-
-
-
-
 
 
 
@@ -2699,8 +2699,8 @@ Internet-Draft                     SRT                        March 2020
    Email: msharabayko@haivision.com
 
 
-   Jean Dube
-   Haivision Network Video, GmbH
+   Jean Dubé
+   Haivision
 
    Email: jdube@haivision.com
 
