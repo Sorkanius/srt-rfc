@@ -20,7 +20,7 @@ and a mechanism for data encryption.
     " name="description">
 <meta content="xml2rfc 2.40.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
-<meta content="draft-sharabayko-mops-srt" name="ietf.draft">
+<meta content="draft-sharabayko-mops-srt-00" name="ietf.draft">
 <link href="draft-sharabayko-mops-srt.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
@@ -848,7 +848,7 @@ table.left {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">MOPS</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-sharabayko-mops-srt</dd>
+<dd class="internet-draft">draft-sharabayko-mops-srt-00</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2020-03-06" class="published">6 March 2020</time>
@@ -1060,15 +1060,13 @@ and a mechanism for data encryption.<a href="#section-abstract-1" class="pilcrow
 <li class="toc ulEmpty" id="section-toc.1-1.4.2.10">
                 <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="xref">4.10</a>. <a href="#name-round-trip-time-estimation" class="xref">Round Trip Time Estimation</a><a href="#section-toc.1-1.4.2.10.1" class="pilcrow">¶</a></p>
 </li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.11">
+                <p id="section-toc.1-1.4.2.11.1"><a href="#section-4.11" class="xref">4.11</a>. <a href="#name-congestion-control" class="xref">Congestion Control</a><a href="#section-toc.1-1.4.2.11.1" class="pilcrow">¶</a></p>
+</li>
 </ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-encryption" class="xref">Encryption</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
-<ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-congestion-control" class="xref">Congestion Control</a><a href="#section-toc.1-1.5.2.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
@@ -1394,11 +1392,11 @@ the UDP packet.<a href="#section-3.1-3.14" class="pilcrow">¶</a>
 |                           Timestamp                           |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                     Destination Socket ID                     |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+- CIF -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                                                               |
-+                   Control Information Field                   + CIF
++                   Control Information Field                   +
 |                                                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
@@ -1424,13 +1422,6 @@ packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" c
 <dt id="section-3.2-3.7">Control Information Field (variable length):</dt>
 <dd id="section-3.2-3.8">
   The use of this field is defined by the Control Type field of the control packet.<a href="#section-3.2-3.8" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2-3.9">KK (2 bits):</dt>
-<dd id="section-3.2-3.10">
-  Encryption Flag. The flag bits indicate whether or not data is encrypted.
-The value "00b" means data is not encrypted, "01b" indicates that data is
-encrypted with an even key, and "10b" is used for odd key encryption.
-The value "11b" is used to carry both keys in single message.<a href="#section-3.2-3.10" class="pilcrow">¶</a>
 </dd>
 </dl>
 <p id="section-3.2-4">The types of SRT control packets are shown in <a href="#srt-ctrl-pkt-type-table" class="xref">Table 1</a>.
@@ -1616,11 +1607,11 @@ of Extension Type values.
 For more details, see <a href="#caller-listener-handshake" class="xref">Section 4.3.1</a>.<a href="#section-3.2.1-6.2" class="pilcrow">¶</a>
 </dd>
 </dl>
-<span id="name-hs-extension-flags"></span><div id="hs-ext-flags">
+<span id="name-handshake-extension-flags"></span><div id="hs-ext-flags">
 <table class="center" id="table-3">
             <caption>
 <a href="#table-3" class="selfRef">Table 3</a>:
-<a href="#name-hs-extension-flags" class="selfRef">HS Extension Flags</a>
+<a href="#name-handshake-extension-flags" class="selfRef">Handshake Extension Flags</a>
             </caption>
 <thead>
               <tr>
@@ -1832,11 +1823,11 @@ and 2 for a Handshake Extension response.<a href="#section-3.2.1.1-1" class="pil
   SRT configuration flags:<a href="#section-3.2.1.1-4.4" class="pilcrow">¶</a>
 </dd>
 </dl>
-<span id="name-hs-extension-message-flags"></span><div id="hs-ext-msg-flags">
+<span id="name-handshake-extension-message-f"></span><div id="hs-ext-msg-flags">
 <table class="center" id="table-6">
               <caption>
 <a href="#table-6" class="selfRef">Table 6</a>:
-<a href="#name-hs-extension-message-flags" class="selfRef">HS Extension Message Flags</a>
+<a href="#name-handshake-extension-message-f" class="selfRef">Handshake Extension Message Flags</a>
               </caption>
 <thead>
                 <tr>
@@ -1883,7 +1874,7 @@ and 2 for a Handshake Extension response.<a href="#section-3.2.1.1-1" class="pil
 <dl class="dlParallel" id="section-3.2.1.1-6">
               <dt id="section-3.2.1.1-6.1">Receiver TSBPD Delay (16 bits):</dt>
 <dd id="section-3.2.1.1-6.2">
-  TimeStamp-Based Packet Delay (TSBPD) of the receiver. Refer to <a href="#tsbpd" class="xref">Section 4.5</a>.<a href="#section-3.2.1.1-6.2" class="pilcrow">¶</a>
+  TimeStamp-Based Packet Delivery (TSBPD) Delay of the receiver. Refer to <a href="#tsbpd" class="xref">Section 4.5</a>.<a href="#section-3.2.1.1-6.2" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.1.1-6.3">Sender TSBPD Delay (16 bits):</dt>
 <dd id="section-3.2.1.1-6.4">
@@ -1925,147 +1916,141 @@ extensions. The value of a request is 3, and the response value is 4.<a href="#s
               </figcaption></figure>
 </div>
 <dl class="dlParallel" id="section-3.2.1.2-3">
-              <dt id="section-3.2.1.2-3.1">0 ( ): 1 bit. Value: {0}</dt>
+              <dt id="section-3.2.1.2-3.1">S ( ): 1 bit. Value: {0}</dt>
 <dd id="section-3.2.1.2-3.2">
-  This is a fixed-width field that is a remnant from the header of a previous design (VF).<a href="#section-3.2.1.2-3.2" class="pilcrow">¶</a>
+  This is a fixed-width field that is a remnant from the header of a previous design.<a href="#section-3.2.1.2-3.2" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.1.2-3.3">Version (V): 3 bits. Value: {1}</dt>
 <dd id="section-3.2.1.2-3.4">
-  This is a fixed-width field that indicates the SRT version:<a href="#section-3.2.1.2-3.4" class="pilcrow">¶</a>
+                <p id="section-3.2.1.2-3.4.1">
+  This is a fixed-width field that indicates the SRT version:<a href="#section-3.2.1.2-3.4.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-3.2.1.2-3.4.2.1">1: initial version<a href="#section-3.2.1.2-3.4.2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</dd>
+<dt id="section-3.2.1.2-3.5">Packet Type (PT): 4 bits. Value: {2}</dt>
+<dd id="section-3.2.1.2-3.6">
+                <p id="section-3.2.1.2-3.6.1">
+  This is a fixed-width field that indicates the Packet Type:<a href="#section-3.2.1.2-3.6.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-3.2.1.2-3.6.2.1">0: Reserved<a href="#section-3.2.1.2-3.6.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-3.6.2.2">1: MSmsg<a href="#section-3.2.1.2-3.6.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-3.6.2.3">2: KMmsg<a href="#section-3.2.1.2-3.6.2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-3.6.2.4">7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)<a href="#section-3.2.1.2-3.6.2.4" class="pilcrow">¶</a>
+</li>
+</ul>
+</dd>
+<dt id="section-3.2.1.2-3.7">Signature (Sign): 16 bits. Value: {0x2029}</dt>
+<dd id="section-3.2.1.2-3.8">
+  This is a fixed-width field that contains the signature 'HAI' encoded as a 
+PnP Vendor ID (<span>[<a href="#PNPID" class="xref">PNPID</a>]</span>) (in big endian order)<a href="#section-3.2.1.2-3.8" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.9">Reserved (Resv): 6 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-3.10">
+  This is a fixed-width field reserved for flag extension or other usage.<a href="#section-3.2.1.2-3.10" class="pilcrow">¶</a>
+</dd>
+<dt id="section-3.2.1.2-3.11">Key-based Data Encryption (KK): 2 bits.  Value: ???</dt>
+<dd id="section-3.2.1.2-3.12">
+                <p id="section-3.2.1.2-3.12.1">
+  This is a fixed-width field that indicates whether or not data is encrypted:<a href="#section-3.2.1.2-3.12.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-3.2.1.2-3.12.2.1">00b: not encrypted (data packets only)<a href="#section-3.2.1.2-3.12.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-3.12.2.2">01b: even key<a href="#section-3.2.1.2-3.12.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-3.12.2.3">10b: odd key<a href="#section-3.2.1.2-3.12.2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-3.12.2.4">11b: even and odd keys<a href="#section-3.2.1.2-3.12.2.4" class="pilcrow">¶</a>
+</li>
+</ul>
+</dd>
+<dt id="section-3.2.1.2-3.13">Key Encryption Key Index (KEKI): 32 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-3.14">
+  This is a fixed-width field for specifying the KEK index (big endian order)<a href="#section-3.2.1.2-3.14" class="pilcrow">¶</a>
 </dd>
 </dl>
 <ul>
-<li id="section-3.2.1.2-4.1">1: initial version<a href="#section-3.2.1.2-4.1" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-4.1">0: Default stream associated key (stream/system default)<a href="#section-3.2.1.2-4.1" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-4.2">1..255: Reserved for manually indexed keys<a href="#section-3.2.1.2-4.2" class="pilcrow">¶</a>
 </li>
 </ul>
 <dl class="dlParallel" id="section-3.2.1.2-5">
-              <dt id="section-3.2.1.2-5.1">Packet Type (PT): 4 bits. Value: {2}</dt>
+              <dt id="section-3.2.1.2-5.1">Cipher ( ): 8 bits. Value: {2}</dt>
 <dd id="section-3.2.1.2-5.2">
-  This is a fixed-width field that indicates the Packet Type:<a href="#section-3.2.1.2-5.2" class="pilcrow">¶</a>
-</dd>
-</dl>
+                <p id="section-3.2.1.2-5.2.1">
+  This is a fixed-width field for specifying encryption cipher and mode:<a href="#section-3.2.1.2-5.2.1" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-3.2.1.2-6.1">0: Reserved<a href="#section-3.2.1.2-6.1" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.2.2.1">0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-5.2.2.1" class="pilcrow">¶</a>
 </li>
-<li id="section-3.2.1.2-6.2">1: MSmsg<a href="#section-3.2.1.2-6.2" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.2.2.2">1: AES-ECB (not supported in SRT)<a href="#section-3.2.1.2-5.2.2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-3.2.1.2-6.3">2: KMmsg<a href="#section-3.2.1.2-6.3" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.2.2.3">2: AES-CTR <span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span><a href="#section-3.2.1.2-5.2.2.3" class="pilcrow">¶</a>
 </li>
-<li id="section-3.2.1.2-6.4">7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)<a href="#section-3.2.1.2-6.4" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.2.2.4">x: AES-CCM <span>[<a href="#RFC3610" class="xref">RFC3610</a>]</span> if message integrity required (FIPS 140-2 approved)<a href="#section-3.2.1.2-5.2.2.4" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-5.2.2.5">x: AES-GCM if message integrity required (FIPS 140-3 &amp; NSA Suite B)<a href="#section-3.2.1.2-5.2.2.5" class="pilcrow">¶</a>
 </li>
 </ul>
-<dl class="dlParallel" id="section-3.2.1.2-7">
-              <dt id="section-3.2.1.2-7.1">Signature (Sign): 16 bits. Value: {0x2029}</dt>
-<dd id="section-3.2.1.2-7.2">
-  This is a fixed-width field that contains the signature 'HAI' encoded as a 
-PnP Vendor ID (<span>[<a href="#PNPID" class="xref">PNPID</a>]</span>) (in big endian order)<a href="#section-3.2.1.2-7.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-7.3">Reserved (Resv): 6 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-7.4">
-  This is a fixed-width field reserved for flag extension or other usage.<a href="#section-3.2.1.2-7.4" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1.2-7.5">Key-based Data Encryption (KK): 2 bits.  Value: ???</dt>
-<dd id="section-3.2.1.2-7.6">
-  This is a fixed-width field that indicates whether or not data is encrypted:<a href="#section-3.2.1.2-7.6" class="pilcrow">¶</a>
-</dd>
-</dl>
+<dt id="section-3.2.1.2-5.3">Authentication (Auth): 8 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-5.4">
+                <p id="section-3.2.1.2-5.4.1">
+  This is a fixed-width field for specifying a message authentication code algorithm:<a href="#section-3.2.1.2-5.4.1" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-3.2.1.2-8.1">00b: not encrypted (data packets only)<a href="#section-3.2.1.2-8.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-8.2">01b: even key<a href="#section-3.2.1.2-8.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-8.3">10b: odd key<a href="#section-3.2.1.2-8.3" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-8.4">11b: even and odd keys<a href="#section-3.2.1.2-8.4" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.4.2.1">0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-5.4.2.1" class="pilcrow">¶</a>
 </li>
 </ul>
-<dl class="dlParallel" id="section-3.2.1.2-9">
-              <dt id="section-3.2.1.2-9.1">Key Encryption Key Index (KEKI): 32 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-9.2">
-  This is a fixed-width field for specifying the KEK index (big endian order)<a href="#section-3.2.1.2-9.2" class="pilcrow">¶</a>
 </dd>
-</dl>
+<dt id="section-3.2.1.2-5.5">Stream Encapsulation (SE): 8 bits. Value: {2}</dt>
+<dd id="section-3.2.1.2-5.6">
+                <p id="section-3.2.1.2-5.6.1">
+  This is a fixed-width field for describing the stream encapsulation:<a href="#section-3.2.1.2-5.6.1" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-3.2.1.2-10.1">0: Default stream associated key (stream/system default)<a href="#section-3.2.1.2-10.1" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.6.2.1">0: Unspecified or KEKI indexed crypto context<a href="#section-3.2.1.2-5.6.2.1" class="pilcrow">¶</a>
 </li>
-<li id="section-3.2.1.2-10.2">1..255: Reserved for manually indexed keys<a href="#section-3.2.1.2-10.2" class="pilcrow">¶</a>
+<li id="section-3.2.1.2-5.6.2.2">1: MPEG-TS/UDP<a href="#section-3.2.1.2-5.6.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-3.2.1.2-5.6.2.3">:MPEG-TS/SRT<a href="#section-3.2.1.2-5.6.2.3" class="pilcrow">¶</a>
 </li>
 </ul>
-<dl class="dlParallel" id="section-3.2.1.2-11">
-              <dt id="section-3.2.1.2-11.1">Cipher ( ): 8 bits. Value: {2}</dt>
-<dd id="section-3.2.1.2-11.2">
-  This is a fixed-width field for specifying encryption cipher and mode:<a href="#section-3.2.1.2-11.2" class="pilcrow">¶</a>
 </dd>
-</dl>
-<ul>
-<li id="section-3.2.1.2-12.1">0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-12.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-12.2">1: AES-ECB (not supported in SRT)<a href="#section-3.2.1.2-12.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-12.3">2: AES-CTR <span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span><a href="#section-3.2.1.2-12.3" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-12.4">x: AES-CCM <span>[<a href="#RFC3610" class="xref">RFC3610</a>]</span> if message integrity required (FIPS 140-2 approved)<a href="#section-3.2.1.2-12.4" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-12.5">x: AES-GCM if message integrity required (FIPS 140-3 &amp; NSA Suite B)<a href="#section-3.2.1.2-12.5" class="pilcrow">¶</a>
-</li>
-</ul>
-<dl class="dlParallel" id="section-3.2.1.2-13">
-              <dt id="section-3.2.1.2-13.1">Authentication (Auth): 8 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-13.2">
-  This is a fixed-width field for specifying a message authentication code algorithm:<a href="#section-3.2.1.2-13.2" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-5.7">Reserved (Resv1): 8 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-5.8">
+  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-5.8" class="pilcrow">¶</a>
 </dd>
-</dl>
-<ul>
-<li id="section-3.2.1.2-14.1">0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-14.1" class="pilcrow">¶</a>
-</li>
-</ul>
-<dl class="dlParallel" id="section-3.2.1.2-15">
-              <dt id="section-3.2.1.2-15.1">Stream Encapsulation (SE): 8 bits. Value: {2}</dt>
-<dd id="section-3.2.1.2-15.2">
-  This is a fixed-width field for describing the stream encapsulation:<a href="#section-3.2.1.2-15.2" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-5.9">Reserved (Resv2): 16 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-5.10">
+  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-5.10" class="pilcrow">¶</a>
 </dd>
-</dl>
-<ul>
-<li id="section-3.2.1.2-16.1">0: Unspecified or KEKI indexed crypto context<a href="#section-3.2.1.2-16.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-16.2">1: MPEG-TS/UDP<a href="#section-3.2.1.2-16.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-16.3">:MPEG-TS/SRT<a href="#section-3.2.1.2-16.3" class="pilcrow">¶</a>
-</li>
-</ul>
-<dl class="dlParallel" id="section-3.2.1.2-17">
-              <dt id="section-3.2.1.2-17.1">Reserved (Resv1): 8 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-17.2">
-  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-17.2" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1.2-17.3">Reserved (Resv2): 16 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-17.4">
-  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-17.4" class="pilcrow">¶</a>
-</dd>
-<dt id="section-3.2.1.2-17.5">Slen/4 ( ): 4 bits. Value: {0..255}</dt>
-<dd id="section-3.2.1.2-17.6">
+<dt id="section-3.2.1.2-5.11">Slen/4 ( ): 4 bits. Value: {0..255}</dt>
+<dd id="section-3.2.1.2-5.12">
   This is a fixed-width field for specifying salt length in bytes divided by 4. 
-Can be zero if no salt/IV present<a href="#section-3.2.1.2-17.6" class="pilcrow">¶</a>
+Can be zero if no salt/IV present<a href="#section-3.2.1.2-5.12" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-17.7">Klen/4 ( ): 8 bits. Value: {4,6,8}</dt>
-<dd id="section-3.2.1.2-17.8">
+<dt id="section-3.2.1.2-5.13">Klen/4 ( ): 8 bits. Value: {4,6,8}</dt>
+<dd id="section-3.2.1.2-5.14">
   This is a fixed-width field for specifying SEK length in bytes divided by 4. 
-Size of one key even if two keys present.<a href="#section-3.2.1.2-17.8" class="pilcrow">¶</a>
+Size of one key even if two keys present.<a href="#section-3.2.1.2-5.14" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-17.9">Salt (Slen): Slen*8 bits. Value: { }</dt>
-<dd id="section-3.2.1.2-17.10">
-  This is a variable-width field for specifying a salt key<a href="#section-3.2.1.2-17.10" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-5.15">Salt (Slen): Slen*8 bits. Value: { }</dt>
+<dd id="section-3.2.1.2-5.16">
+  This is a variable-width field for specifying a salt key<a href="#section-3.2.1.2-5.16" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-17.11">Wrap ( ): (64+n * Klen * 8) bits. Value: { }</dt>
-<dd id="section-3.2.1.2-17.12">
+<dt id="section-3.2.1.2-5.17">Wrap ( ): (64+n * Klen * 8) bits. Value: { }</dt>
+<dd id="section-3.2.1.2-5.18">
   This is a variable-width field for specifying Wrapped key(s), where n = 1 or 2
 NOTE 1: n = (KK + 1)/2
-NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-17.12" class="pilcrow">¶</a>
+NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-5.18" class="pilcrow">¶</a>
 </dd>
 </dl>
 <span id="name-unwrapped-key-structure"></span><div id="unwrapped-key-structure">
 <figure id="figure-8">
-              <div class="artwork art-text alignLeft" id="section-3.2.1.2-18.1">
+              <div class="artwork art-text alignLeft" id="section-3.2.1.2-6.1">
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -2084,20 +2069,20 @@ NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-17.12" 
 <a href="#name-unwrapped-key-structure" class="selfRef">Unwrapped key structure</a>
               </figcaption></figure>
 </div>
-<dl class="dlParallel" id="section-3.2.1.2-19">
-              <dt id="section-3.2.1.2-19.1">ICV (64 bits):</dt>
-<dd id="section-3.2.1.2-19.2">
-  64-bit Integrity Check Vector(AES key wrap integrity).<a href="#section-3.2.1.2-19.2" class="pilcrow">¶</a>
+<dl class="dlParallel" id="section-3.2.1.2-7">
+              <dt id="section-3.2.1.2-7.1">ICV (64 bits):</dt>
+<dd id="section-3.2.1.2-7.2">
+  64-bit Integrity Check Vector(AES key wrap integrity).<a href="#section-3.2.1.2-7.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-19.3">xSEK (variable length):</dt>
-<dd id="section-3.2.1.2-19.4">
+<dt id="section-3.2.1.2-7.3">xSEK (variable length):</dt>
+<dd id="section-3.2.1.2-7.4">
   This field identifies an odd or even SEK. If both keys are present,
 then this field is eSEK (even key) and the next one is the odd key.
-The length of this field is calculated by KLen * 4 * 8.<a href="#section-3.2.1.2-19.4" class="pilcrow">¶</a>
+The length of this field is calculated by KLen * 4 * 8.<a href="#section-3.2.1.2-7.4" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-19.5">oSEK (variable length):</dt>
-<dd id="section-3.2.1.2-19.6">
-  This field is present only when the message carries the two SEKs.<a href="#section-3.2.1.2-19.6" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-7.5">oSEK (variable length):</dt>
+<dd id="section-3.2.1.2-7.6">
+  This field is present only when the message carries the two SEKs.<a href="#section-3.2.1.2-7.6" class="pilcrow">¶</a>
 </dd>
 </dl>
 </section>
@@ -2590,11 +2575,11 @@ indicates the handshake message type.<a href="#section-4.3-12" class="pilcrow">�
 <p id="section-4.3-17">When a connection process has failed before either party can send the CONCLUSION handshake, 
 the Handshake Type field will contain the appropriate error value for the rejected 
 connection. See the list of error codes in <a href="#hs-rej-reason" class="xref">Table 7</a>.<a href="#section-4.3-17" class="pilcrow">¶</a></p>
-<span id="name-hs-rejection-reason-codes"></span><div id="hs-rej-reason">
+<span id="name-handshake-rejection-reason-"></span><div id="hs-rej-reason">
 <table class="center" id="table-7">
           <caption>
 <a href="#table-7" class="selfRef">Table 7</a>:
-<a href="#name-hs-rejection-reason-codes" class="selfRef">HS Rejection Reason Codes</a>
+<a href="#name-handshake-rejection-reason-" class="selfRef">Handshake Rejection Reason Codes</a>
           </caption>
 <thead>
             <tr>
@@ -3566,6 +3551,35 @@ based on the time difference between the ACK packet is sent and the
 corresponding ACKACK is received by the data receiver.<a href="#section-4.10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="congestion-control">
+<section id="section-4.11">
+        <h3 id="name-congestion-control">
+<a href="#section-4.11" class="section-number selfRef">4.11. </a><a href="#name-congestion-control" class="section-name selfRef">Congestion Control</a>
+        </h3>
+<p id="section-4.11-1">SRT provides certain mechanisms for the sender to get some feedback
+from the receiving side through the ACK packets (<a href="#ctrl-pkt-ack" class="xref">Section 3.2.3</a>).
+Every 10 ms the sender receives the latest values of RTT and RTT variance,
+Available Buffer Size, Packets Receiving Rate and Estimated Link Capacity.
+Upon reception of the NAK packet (<a href="#ctrl-pkt-nak" class="xref">Section 3.2.4</a>) the sender can detect
+packet losses during the transmission.
+These mechanisms provide a solid backgroud for various congestion control
+algorithms.<a href="#section-4.11-1" class="pilcrow">¶</a></p>
+<p id="section-4.11-2">Given that SRT can operate in live and file transfer modes, there are two groups
+of congestion control algorithms possible.<a href="#section-4.11-2" class="pilcrow">¶</a></p>
+<p id="section-4.11-3">For live transmission mode (<a href="#transmission-mode-live" class="xref">Section 4.2.2</a>) the congestion control algorithm
+does not need to control the sending pace of the data packets, as the sending timing
+is provided by the live input. Although certain limitations on the minimal
+inter-sending time of consecutive packets can be applied in order to avoid congestion
+during fluctuations of the source bitrate. Also it is allowed to drop those packets
+that can not be delivered in time.<a href="#section-4.11-3" class="pilcrow">¶</a></p>
+<p id="section-4.11-4">For file transfer, any known File Congestion Control algorithms like CUBIC and BBR can apply,
+including the congestion control mechanism proposed in UDT <span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>.
+The UDT congestion control relies on the available link capacity, packet loss reports (NAK)
+and packet acknowledgements (ACKs).
+It then slows down the output of packets as needed by adjusting the packet sending pace.
+In periods of congestion, it can block the main stream and focus on the lost packets.<a href="#section-4.11-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="encryption">
@@ -3574,35 +3588,6 @@ corresponding ACKACK is received by the data receiver.<a href="#section-4.10-1" 
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-encryption" class="section-name selfRef">Encryption</a>
       </h2>
 <p id="section-5-1">SRT supports encryption based on the exchange of private keys.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<div id="congestion-control">
-<section id="section-5.1">
-        <h3 id="name-congestion-control">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-congestion-control" class="section-name selfRef">Congestion Control</a>
-        </h3>
-<p id="section-5.1-1">SRT provides certain mechanisms for the sender to get some feedback
-from the receiving side through the ACK packets (<a href="#ctrl-pkt-ack" class="xref">Section 3.2.3</a>).
-Every 10 ms the sender receives the latest values of RTT and RTT variance,
-Available Buffer Size, Packets Receiving Rate and Estimated Link Capacity.
-Upon reception of the NAK packet (<a href="#ctrl-pkt-nak" class="xref">Section 3.2.4</a>) the sender can detect
-packet losses during the transmission.
-These mechanisms provide a solid backgroud for various congestion control
-algorithms.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">Given that SRT can operate in live and file transfer modes, there are two groups
-of congestion control algorithms possible.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.1-3">For live transmission mode (<a href="#transmission-mode-live" class="xref">Section 4.2.2</a>) the congestion control algorithm
-does not need to control the sending pace of the data packets, as the sending timing
-is provided by the live input. Although certain limitations on the minimal
-inter-sending time of consecutive packets can be applied in order to avoid congestion
-during fluctuations of the source bitrate. Also it is allowed to drop those packets
-that can not be delivered in time.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">For file transfer, any known File Congestion Control algorithms like CUBIC and BBR can apply,
-including the congestion control mechanism proposed in UDT <span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>.
-The UDT congestion control relies on the available link capacity, packet loss reports (NAK)
-and packet acknowledgements (ACKs).
-It then slows down the output of packets as needed by adjusting the packet sending pace.
-In periods of congestion, it can block the main stream and focus on the lost packets.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
-</section>
-</div>
 </section>
 </div>
 <div id="security-considerations">
@@ -3645,7 +3630,7 @@ written by Jean Dube and Steve Matthews.<a href="#section-8-1" class="pilcrow">�
 specification at Haivision are: Marc Cymontkowski, Roman Diouskine,
 Jean Dube, Mikolaj Malecki, Steve Matthews, Maria Sharabayko,
 Maxim Sharabayko, Adam Yellen.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">The contributors to this specification at South Korea Telekom
+<p id="section-8-3">The contributors to this specification at SK Telecom
 are Jeongseok Kim and Joonwoong Kim.<a href="#section-8-3" class="pilcrow">¶</a></p>
 <p id="section-8-4">We can't list all the contributors to the open-sourced implementation of SRT on GitHub.
 But we appreciate the help, contribution, integrations and feedback of the 

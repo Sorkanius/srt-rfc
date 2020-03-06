@@ -14,7 +14,7 @@ Expires: 7 September 2020                                        J. Dubé
 
 
                             The SRT Protocol
-                       draft-sharabayko-mops-srt
+                      draft-sharabayko-mops-srt-00
 
 Abstract
 
@@ -115,8 +115,8 @@ Internet-Draft                     SRT                        March 2020
 
 
      4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  45
-   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  45
-     5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  45
+     4.11. Congestion Control  . . . . . . . . . . . . . . . . . . .  45
+   5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  46
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  46
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  46
    Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  47
@@ -427,11 +427,11 @@ Internet-Draft                     SRT                        March 2020
    |                           Timestamp                           |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                     Destination Socket ID                     |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+- CIF -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                                                               |
-   +                   Control Information Field                   + CIF
+   +                   Control Information Field                   +
    |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                      Figure 4: control packet structure
 
@@ -456,12 +456,6 @@ Internet-Draft                     SRT                        March 2020
 
    Control Information Field (variable length):  The use of this field
       is defined by the Control Type field of the control packet.
-
-   KK (2 bits):  Encryption Flag.  The flag bits indicate whether or not
-      data is encrypted.  The value "00b" means data is not encrypted,
-      "01b" indicates that data is encrypted with an even key, and "10b"
-      is used for odd key encryption.  The value "11b" is used to carry
-      both keys in single message.
 
    The types of SRT control packets are shown in Table 1.  The value
    "0x7ffff" is reserved for a user-defined type.
@@ -494,6 +488,12 @@ Internet-Draft                     SRT                        March 2020
 
    The Control Information Field (CIF) of a handshake control packet is
    shown in Figure 5.
+
+
+
+
+
+
 
 
 
@@ -595,8 +595,8 @@ Internet-Draft                     SRT                        March 2020
                           | 0x00000004 | CONFIG |
                           +------------+--------+
 
-                           Table 3: HS Extension
-                                   Flags
+                             Table 3: Handshake
+                              Extension Flags
 
    Initial Packet Sequence Number (32 bits):  The sequence number of the
       very first data packet to be sent.
@@ -754,11 +754,11 @@ Internet-Draft                     SRT                        March 2020
                       | 0x00000080 | PACKET_FILTER |
                       +------------+---------------+
 
-                          Table 6: HS Extension
-                              Message Flags
+                            Table 6: Handshake
+                         Extension Message Flags
 
-   Receiver TSBPD Delay (16 bits):  TimeStamp-Based Packet Delay (TSBPD)
-      of the receiver.  Refer to Section 4.5.
+   Receiver TSBPD Delay (16 bits):  TimeStamp-Based Packet Delivery
+      (TSBPD) Delay of the receiver.  Refer to Section 4.5.
 
    Sender TSBPD Delay (16 bits):  TSBPD of the sender.  Refer to
       Section 4.5.
@@ -804,24 +804,24 @@ Internet-Draft                     SRT                        March 2020
 
                  Figure 7: Key Material Extension structure
 
-   0 ( ): 1 bit.  Value: {0}  This is a fixed-width field that is a
-      remnant from the header of a previous design (VF).
+   S ( ): 1 bit.  Value: {0}  This is a fixed-width field that is a
+      remnant from the header of a previous design.
 
    Version (V): 3 bits.  Value: {1}  This is a fixed-width field that
       indicates the SRT version:
 
-   *  1: initial version
+      *  1: initial version
 
    Packet Type (PT): 4 bits.  Value: {2}  This is a fixed-width field
       that indicates the Packet Type:
 
-   *  0: Reserved
+      *  0: Reserved
 
-   *  1: MSmsg
+      *  1: MSmsg
 
-   *  2: KMmsg
+      *  2: KMmsg
 
-   *  7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)
+      *  7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)
 
    Signature (Sign): 16 bits.  Value: {0x2029}  This is a fixed-width
       field that contains the signature 'HAI' encoded as a PnP Vendor ID
@@ -833,7 +833,7 @@ Internet-Draft                     SRT                        March 2020
    Key-based Data Encryption (KK): 2 bits.  Value: ???  This is a fixed-
       width field that indicates whether or not data is encrypted:
 
-   *  00b: not encrypted (data packets only)
+      *  00b: not encrypted (data packets only)
 
 
 
@@ -842,11 +842,11 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 15]
 Internet-Draft                     SRT                        March 2020
 
 
-   *  01b: even key
+      *  01b: even key
 
-   *  10b: odd key
+      *  10b: odd key
 
-   *  11b: even and odd keys
+      *  11b: even and odd keys
 
    Key Encryption Key Index (KEKI): 32 bits.  Value: {0}  This is a
       fixed-width field for specifying the KEK index (big endian order)
@@ -858,31 +858,31 @@ Internet-Draft                     SRT                        March 2020
    Cipher ( ): 8 bits.  Value: {2}  This is a fixed-width field for
       specifying encryption cipher and mode:
 
-   *  0: None or KEKI indexed crypto context
+      *  0: None or KEKI indexed crypto context
 
-   *  1: AES-ECB (not supported in SRT)
+      *  1: AES-ECB (not supported in SRT)
 
-   *  2: AES-CTR [SP800-38A]
+      *  2: AES-CTR [SP800-38A]
 
-   *  x: AES-CCM [RFC3610] if message integrity required (FIPS 140-2
-      approved)
+      *  x: AES-CCM [RFC3610] if message integrity required (FIPS 140-2
+         approved)
 
-   *  x: AES-GCM if message integrity required (FIPS 140-3 & NSA Suite
-      B)
+      *  x: AES-GCM if message integrity required (FIPS 140-3 & NSA
+         Suite B)
 
    Authentication (Auth): 8 bits.  Value: {0}  This is a fixed-width
       field for specifying a message authentication code algorithm:
 
-   *  0: None or KEKI indexed crypto context
+      *  0: None or KEKI indexed crypto context
 
    Stream Encapsulation (SE): 8 bits.  Value: {2}  This is a fixed-width
       field for describing the stream encapsulation:
 
-   *  0: Unspecified or KEKI indexed crypto context
+      *  0: Unspecified or KEKI indexed crypto context
 
-   *  1: MPEG-TS/UDP
+      *  1: MPEG-TS/UDP
 
-   *  :MPEG-TS/SRT
+      *  :MPEG-TS/SRT
 
    Reserved (Resv1): 8 bits.  Value: {0}  This is a fixed-width field
       reserved for future use.
@@ -1497,7 +1497,7 @@ Internet-Draft                     SRT                        March 2020
           | 1015 | REJ_GROUP      | incompatible group          |
           +------+----------------+-----------------------------+
 
-                     Table 7: HS Rejection Reason Codes
+                 Table 7: Handshake Rejection Reason Codes
 
    The specification of the cipher family and block size is decided by
    the Sender.  When the transmission is bidirectional, this value must
@@ -2499,11 +2499,7 @@ Internet-Draft                     SRT                        March 2020
    packets based on the time difference between the ACK packet is sent
    and the corresponding ACKACK is received by the data receiver.
 
-5.  Encryption
-
-   SRT supports encryption based on the exchange of private keys.
-
-5.1.  Congestion Control
+4.11.  Congestion Control
 
    SRT provides certain mechanisms for the sender to get some feedback
    from the receiving side through the ACK packets (Section 3.2.3).
@@ -2514,6 +2510,10 @@ Internet-Draft                     SRT                        March 2020
    mechanisms provide a solid backgroud for various congestion control
    algorithms.
 
+   Given that SRT can operate in live and file transfer modes, there are
+   two groups of congestion control algorithms possible.
+
+
 
 
 
@@ -2521,9 +2521,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 45]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   Given that SRT can operate in live and file transfer modes, there are
-   two groups of congestion control algorithms possible.
 
    For live transmission mode (Section 4.2.2) the congestion control
    algorithm does not need to control the sending pace of the data
@@ -2541,6 +2538,10 @@ Internet-Draft                     SRT                        March 2020
    needed by adjusting the packet sending pace.  In periods of
    congestion, it can block the main stream and focus on the lost
    packets.
+
+5.  Encryption
+
+   SRT supports encryption based on the exchange of private keys.
 
 6.  Security Considerations
 
@@ -2572,7 +2573,6 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-
 Sharabayko, et al.      Expires 7 September 2020               [Page 46]
 
 Internet-Draft                     SRT                        March 2020
@@ -2588,8 +2588,8 @@ Contributors
    Diouskine, Jean Dube, Mikolaj Malecki, Steve Matthews, Maria
    Sharabayko, Maxim Sharabayko, Adam Yellen.
 
-   The contributors to this specification at South Korea Telekom are
-   Jeongseok Kim and Joonwoong Kim.
+   The contributors to this specification at SK Telecom are Jeongseok
+   Kim and Joonwoong Kim.
 
    We can't list all the contributors to the open-sourced implementation
    of SRT on GitHub.  But we appreciate the help, contribution,
