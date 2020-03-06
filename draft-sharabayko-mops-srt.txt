@@ -84,7 +84,7 @@ Table of Contents
      3.2.  Control Packets . . . . . . . . . . . . . . . . . . . . .   8
        3.2.1.  Handshake . . . . . . . . . . . . . . . . . . . . . .   9
        3.2.2.  Keep-Alive  . . . . . . . . . . . . . . . . . . . . .  17
-       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  19
+       3.2.3.  ACK (Acknowledgement) . . . . . . . . . . . . . . . .  18
        3.2.4.  NAK (Loss Report) . . . . . . . . . . . . . . . . . .  20
        3.2.5.  Shutdown  . . . . . . . . . . . . . . . . . . . . . .  21
        3.2.6.  ACKACK  . . . . . . . . . . . . . . . . . . . . . . .  22
@@ -119,7 +119,7 @@ Internet-Draft                     SRT                        March 2020
    5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  46
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  46
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  46
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  47
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  46
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  47
    References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  47
      Normative References  . . . . . . . . . . . . . . . . . . . . .  47
@@ -451,7 +451,7 @@ Internet-Draft                     SRT                        March 2020
 
 
    Type-specific Information (32 bits):  The use of this field depends
-      on the particular control packet type.  Handshake packets don't
+      on the particular control packet type.  Handshake packets do not
       use this field.
 
    Control Information Field (variable length):  The use of this field
@@ -647,14 +647,14 @@ Internet-Draft                     SRT                        March 2020
 
    Peer IP Address (128 bits):  The sender's IPv4 or IPv6 address.  The
       value consists of four 32-bit fields.  In the case of IPv4
-      adresses, fields 2, 3 and 4 are padded with zeroes.  <- *TO BE
-      CONFIRMED*
+      addresses, fields 2, 3 and 4 are padded with zeroes.
 
    Extension Type (16 bits):  The value of this field is used to process
       an integrated handshake.  There are two extensions: Handshake
       Extension Message (Section 3.2.1.1) and Key Material Exchange
       (Section 3.2.1.2).  Each extension can have a pair of request and
       response types.
+
 
 
 
@@ -808,20 +808,12 @@ Internet-Draft                     SRT                        March 2020
       remnant from the header of a previous design.
 
    Version (V): 3 bits.  Value: {1}  This is a fixed-width field that
-      indicates the SRT version:
-
-      *  1: initial version
+      indicates the SRT version: - 1: initial version
 
    Packet Type (PT): 4 bits.  Value: {2}  This is a fixed-width field
-      that indicates the Packet Type:
-
-      *  0: Reserved
-
-      *  1: MSmsg
-
-      *  2: KMmsg
-
-      *  7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)
+      that indicates the Packet Type: - 0: Reserved - 1: MSmsg - 2:
+      KMmsg - 7: Reserved to discriminate MPEG-TS packet (0x47=sync
+      byte)
 
    Signature (Sign): 16 bits.  Value: {0x2029}  This is a fixed-width
       field that contains the signature 'HAI' encoded as a PnP Vendor ID
@@ -830,10 +822,18 @@ Internet-Draft                     SRT                        March 2020
    Reserved (Resv): 6 bits.  Value: {0}  This is a fixed-width field
       reserved for flag extension or other usage.
 
-   Key-based Data Encryption (KK): 2 bits.  Value: ???  This is a fixed-
-      width field that indicates whether or not data is encrypted:
+   Key-based Data Encryption (KK): 2 bits.  This is a fixed-width field
+      that indicates whether or not data is encrypted: - 00b: not
+      encrypted (data packets only) - 01b: even key - 10b: odd key
 
-      *  00b: not encrypted (data packets only)
+      - 11b: even and odd keys
+
+   Key Encryption Key Index (KEKI): 32 bits.  Value: {0}  This is a
+      fixed-width field for specifying the KEK index (big endian order)
+      - 0: Default stream associated key (stream/system default) -
+      1..255: Reserved for manually indexed keys
+
+
 
 
 
@@ -842,61 +842,26 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 15]
 Internet-Draft                     SRT                        March 2020
 
 
-      *  01b: even key
-
-      *  10b: odd key
-
-      *  11b: even and odd keys
-
-   Key Encryption Key Index (KEKI): 32 bits.  Value: {0}  This is a
-      fixed-width field for specifying the KEK index (big endian order)
-
-   *  0: Default stream associated key (stream/system default)
-
-   *  1..255: Reserved for manually indexed keys
-
-   Cipher ( ): 8 bits.  Value: {2}  This is a fixed-width field for
-      specifying encryption cipher and mode:
-
-      *  0: None or KEKI indexed crypto context
-
-      *  1: AES-ECB (not supported in SRT)
-
-      *  2: AES-CTR [SP800-38A]
-
-      *  x: AES-CCM [RFC3610] if message integrity required (FIPS 140-2
-         approved)
-
-      *  x: AES-GCM if message integrity required (FIPS 140-3 & NSA
-         Suite B)
+   Cipher ( ): 8 bits.  Value: {0..2}  This is a fixed-width field for
+      specifying encryption cipher and mode: - 0: None or KEKI indexed
+      crypto context - 1: AES-ECB (not supported in SRT) - 2: AES-CTR
+      [SP800-38A] - x: AES-CCM [RFC3610] if message integrity required
+      (FIPS 140-2 approved) - x: AES-GCM if message integrity required
+      (FIPS 140-3 & NSA Suite B)
 
    Authentication (Auth): 8 bits.  Value: {0}  This is a fixed-width
-      field for specifying a message authentication code algorithm:
-
-      *  0: None or KEKI indexed crypto context
+      field for specifying a message authentication code algorithm: - 0:
+      None or KEKI indexed crypto context
 
    Stream Encapsulation (SE): 8 bits.  Value: {2}  This is a fixed-width
-      field for describing the stream encapsulation:
-
-      *  0: Unspecified or KEKI indexed crypto context
-
-      *  1: MPEG-TS/UDP
-
-      *  :MPEG-TS/SRT
+      field for describing the stream encapsulation: - 0: Unspecified or
+      KEKI indexed crypto context - 1: MPEG-TS/UDP - 2: MPEG-TS/SRT
 
    Reserved (Resv1): 8 bits.  Value: {0}  This is a fixed-width field
       reserved for future use.
 
    Reserved (Resv2): 16 bits.  Value: {0}  This is a fixed-width field
       reserved for future use.
-
-
-
-
-Sharabayko, et al.      Expires 7 September 2020               [Page 16]
-
-Internet-Draft                     SRT                        March 2020
-
 
    Slen/4 ( ): 4 bits.  Value: {0..255}  This is a fixed-width field for
       specifying salt length in bytes divided by 4.  Can be zero if no
@@ -925,6 +890,14 @@ Internet-Draft                     SRT                        March 2020
    |                              oSEK                             |
    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
+
+
+
+Sharabayko, et al.      Expires 7 September 2020               [Page 16]
+
+Internet-Draft                     SRT                        March 2020
+
+
                      Figure 8: Unwrapped key structure
 
    ICV (64 bits):  64-bit Integrity Check Vector(AES key wrap
@@ -946,13 +919,6 @@ Internet-Draft                     SRT                        March 2020
    no data exchange is taking place.
 
    The default timeout for a Keep-Alive packet to be sent is 1 second.
-
-
-
-Sharabayko, et al.      Expires 7 September 2020               [Page 17]
-
-Internet-Draft                     SRT                        March 2020
-
 
    An SRT Keep-Alive packet is formatted as follows:
 
@@ -981,6 +947,13 @@ Internet-Draft                     SRT                        March 2020
    Reserved ( ): 16 bits.  Value: ???  This is a fixed-width field
       reserved for future use.
 
+
+
+Sharabayko, et al.      Expires 7 September 2020               [Page 17]
+
+Internet-Draft                     SRT                        March 2020
+
+
    Type-specific Information:  This field is reserved for future
       definition.
 
@@ -997,6 +970,33 @@ Internet-Draft                     SRT                        March 2020
    Control Information Field (CIF): n bits.  Value: {none}  This field
       must not appear in Keep-Alive control packets.
 
+3.2.3.  ACK (Acknowledgement)
+
+   Acknowledgement control packets are used to provide delivery status
+   of data packets.  These packets may also carry some additional
+   information from the receiver like RTT, bandwidth, receiving speed,
+   etc.  The CIF portion of the ACK control packet is expanded as
+   follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1009,14 +1009,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 18]
 
 Internet-Draft                     SRT                        March 2020
 
-
-3.2.3.  ACK (Acknowledgement)
-
-   Acknowledgement control packets are used to provide delivery status
-   of data packets.  These packets may also carry some additional
-   information from the receiver like RTT, bandwidth, receiving speed,
-   etc.  The CIF portion of the ACK control packet is expanded as
-   follows:
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1059,18 +1051,20 @@ Internet-Draft                     SRT                        March 2020
    RTT variance (32 bits):  The variance of the RTT estimation (in
       microseconds).
 
+   Available Buffer Size (32 bits):  Available size of the receiver's
+      buffer (in packets).
+
+   Packets Receiving Rate (32 bits):  The rate at which packets are
+      being received (in packets per second).
+
+
+
 
 
 Sharabayko, et al.      Expires 7 September 2020               [Page 19]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   Available Buffer Size (32 bits):  Available size of the receiver's
-      buffer (in packets).
-
-   Packets Receiving Rate (32 bits):  The rate at which packets are
-      being received (in packets per second).
 
    Estimated Link Capacity (32 bits):  Estimated bandwidth of the link
       (in packets per second).
@@ -1109,6 +1103,12 @@ Internet-Draft                     SRT                        March 2020
    of sequence numbers for those lost packets.
 
    An SRT NAK packet is formatted as follows:
+
+
+
+
+
+
 
 
 
@@ -1263,12 +1263,15 @@ Internet-Draft                     SRT                        March 2020
 
 4.2.  Data Transmission Modes
 
-   In Live Transmission Mode the only valid value is "1".
+   SRT has been mainly created for Live Streaming and therefore its main
+   and default transmission mode is "live".  SRT supports, however, the
+   modes that the original UDT library supported, that is, buffer and
+   message transmission.
 
 4.2.1.  Message Mode
 
-   When the STREAM flag of the handshake Extension Message {#handshake-
-   extension-msg} is set to 0, the protocol operates in Message mode,
+   When the STREAM flag of the handshake Extension Message
+   Section 3.2.1.1 is set to 0, the protocol operates in Message mode,
    characterized as follows:
 
    *  Every packet has its own Packet Sequence Number.
@@ -1278,10 +1281,7 @@ Internet-Draft                     SRT                        March 2020
    *  All the packets belonging to the same message have a similar
       message number set in the Message Number field.
 
-   The first packet of a message has the first bit of the Packet
-   Position Flags (Section 3.1) set to 1.  The last packet of the
-   message has the second bit of the Packet Position Flags set to 1.
-   Thus, a PP equal to "11b" indicates a packet that forms the whole
+
 
 
 
@@ -1290,6 +1290,10 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 23]
 Internet-Draft                     SRT                        March 2020
 
 
+   The first packet of a message has the first bit of the Packet
+   Position Flags (Section 3.1) set to 1.  The last packet of the
+   message has the second bit of the Packet Position Flags set to 1.
+   Thus, a PP equal to "11b" indicates a packet that forms the whole
    message.  A PP equal to "00b" indicates a packet that belongs to the
    inner part of the message.
 
@@ -1314,9 +1318,6 @@ Internet-Draft                     SRT                        March 2020
    Live mode is a special type of message mode where only data packets
    with their PP field set to "11b" are allowed.
 
-   Additionally, TsbPd (Section 4.5) and TL Packet drop (Section 4.6)
-   mechanisms are used in this mode.
-
    Additionally Timestamp Based Packet Delivery (TSBPD) (Section 4.5)
    and Too-Late Packet Drop (Section 4.6) mechanisms are used in this
    mode.
@@ -1337,7 +1338,6 @@ Internet-Draft                     SRT                        March 2020
 
    An SRT connection is characterized by the fact that it is:
 
-   *  first engaged by a handshake process;
 
 
 
@@ -1345,6 +1345,8 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 24]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   *  first engaged by a handshake process;
 
    *  maintained as long as any packets are being exchanged in a timely
       manner;
@@ -1392,8 +1394,6 @@ Internet-Draft                     SRT                        March 2020
 
    The Handshake Type field in the Handshake Structure (see Figure 5)
    indicates the handshake message type.
-
-
 
 
 
@@ -1543,12 +1543,12 @@ Internet-Draft                     SRT                        March 2020
    The Destination Socket ID of the SRT packet header in this message is
    0, which is interpreted as a connection request.
 
-   NOTE: The handshake version number is set to 4 in this initial
-   handshake.  This is due to the initial design of SRT that was to be
-   compliant with the UDT protocol ([GHG04b]) on which it is based.
+   The handshake version number is set to 4 in this initial handshake.
+   This is due to the initial design of SRT that was to be compliant
+   with the UDT protocol ([GHG04b]) on which it is based.
 
-   NOTE: This phase serves only to set a cookie on the Listener so that
-   it doesn't allocate resources, thus mitigating a potential DoS attack
+   This phase serves only to set a cookie on the Listener so that it
+   doesn't allocate resources, thus mitigating a potential DoS attack
    that might be perpetrated by flooding the Listener with handshake
    commands.
 
@@ -1575,8 +1575,8 @@ Internet-Draft                     SRT                        March 2020
    *  SYN Cookie: a cookie that is crafted based on host, port and
       current time with 1 minute accuracy
 
-   NOTE: At this point the Listener still doesn't know if the Caller is
-   SRT or UDT, and it responds with the same set of values regardless of
+   At this point the Listener still doesn't know if the Caller is SRT or
+   UDT, and it responds with the same set of values regardless of
    whether the Caller is SRT or UDT.
 
    If the party is SRT, it does interpret the values in Version and
@@ -1632,11 +1632,11 @@ Internet-Draft                     SRT                        March 2020
       provided in the handshake.
 
    The Listener responds with the same values shown above, without the
-   cookie (which isn't needed here), as well as the extensions for HSv5
-   (which will probably be exactly the same).
+   cookie (which is not needed here), as well as the extensions for HS
+   Version 5 (which will probably be exactly the same).
 
-   IMPORTANT: There isn't any "negotiation" here.  If the values passed
-   in the handshake are in any way not acceptable by the other side, the
+   There is not any "negotiation" here.  If the values passed in the
+   handshake are in any way not acceptable by the other side, the
    connection will be rejected.  The only case when the Listener can
    have precedence over the Caller is the advertised Cipher Family and
    Block Size (Table 2) in the Encryption Field of the Handshake.
@@ -1665,7 +1665,7 @@ Internet-Draft                     SRT                        March 2020
    calculation.  The cookie values are then compared with one another.
 
    Since it is impossible to have two sockets on the same machine bound
-   to the same NIC and port and operating independently, it's virtually
+   to the same NIC and port and operating independently, it is virtually
    impossible that the parties will generate identical cookies.
    However, this situation may occur if an application tries to "connect
    to itself" - that is, either connects to a local IP address, when the
@@ -1738,8 +1738,8 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 31]
 Internet-Draft                     SRT                        March 2020
 
 
-   IMPORTANT: The resolution of the Handshake Role (Initiator or
-   Responder) is essential for further processing.
+   The resolution of the Handshake Role (Initiator or Responder) is
+   essential for further processing.
 
    Then Bob responds:
 
@@ -1751,9 +1751,9 @@ Internet-Draft                     SRT                        March 2020
 
    *  Handshake Type: CONCLUSION
 
-   NOTE: If Bob is the Initiator and encryption is on, he will use
-   either his own cipher family and block size or the one received from
-   Alice (if she has advertised those values).
+   If Bob is the Initiator and encryption is on, he will use either his
+   own cipher family and block size or the one received from Alice (if
+   she has advertised those values).
 
    1.  Alice receives Bob's CONCLUSION message.  While at this point she
        also performs the "cookie contest", the outcome will be the same.
@@ -1765,13 +1765,12 @@ Internet-Draft                     SRT                        March 2020
 
        *  Handshake Type: CONCLUSION
 
-   NOTE: Both parties always send extension flags at this point, which
-   will contain HSREQ if the message comes from an Initiator, or HSRSP
-   if it comes from a Responder.  If the Initiator has received a
-   previous message from the Responder containing an advertised cipher
-   family and block size in the encryption flags field, it will be used
-   as the key length for key generation sent next in the KMREQ
-   extension.
+   Both parties always send extension flags at this point, which will
+   contain HSREQ if the message comes from an Initiator, or HSRSP if it
+   comes from a Responder.  If the Initiator has received a previous
+   message from the Responder containing an advertised cipher family and
+   block size in the encryption flags field, it will be used as the key
+   length for key generation sent next in the KMREQ extension.
 
    1.  Bob receives Alice's CONCLUSION message, and then does one of the
        following (depending on Bob's role):
@@ -1786,6 +1785,7 @@ Internet-Draft                     SRT                        March 2020
 
        *  If Bob is the Responder (Alice's message contains HSREQ), he:
 
+          -  switches to "initiated" state
 
 
 
@@ -1793,8 +1793,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 32]
 
 Internet-Draft                     SRT                        March 2020
 
-
-          -  switches to "initiated" state
 
           -  sends Alice a message with Handshake Type CONCLUSION that
              also contains extensions with HSRSP
@@ -1843,14 +1841,14 @@ Internet-Draft                     SRT                        March 2020
 
    Here's how the parallel handshake flow works, based on roles:
 
+   Initiator:
+
 
 
 Sharabayko, et al.      Expires 7 September 2020               [Page 33]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   Initiator:
 
    1.  Waving
 
@@ -1898,6 +1896,8 @@ Internet-Draft                     SRT                        March 2020
 
        *  Receives WAVEAHAND message
 
+       *  Switches to Attention
+
 
 
 
@@ -1906,16 +1906,14 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 34]
 Internet-Draft                     SRT                        March 2020
 
 
-       *  Switches to Attention
-
        *  Sends CONCLUSION message (with no extensions)
 
    2.  Attention
 
-       *  Receives CONCLUSION message with HSREQ NOTE: This message
-          might contain no extensions, in which case the party shall
-          simply send the empty CONCLUSION message, as before, and
-          remain in this state.
+       *  Receives CONCLUSION message with HSREQ This message might
+          contain no extensions, in which case the party shall simply
+          send the empty CONCLUSION message, as before, and remain in
+          this state.
 
        *  Switches to Initiated and sends CONCLUSION message with HSRSP
 
@@ -1953,6 +1951,8 @@ Internet-Draft                     SRT                        March 2020
    2.  If the Initiator misses the CONCLUSION + HSRSP response from the
        Responder, it continues sending CONCLUSION + HSREQ.  The
        Responder must always respond with CONCLUSION + HSRSP when the
+       Initiator sends CONCLUSION + HSREQ, even if it has already
+       received and interpreted it.
 
 
 
@@ -1961,9 +1961,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 35]
 
 Internet-Draft                     SRT                        March 2020
 
-
-       Initiator sends CONCLUSION + HSREQ, even if it has already
-       received and interpreted it.
 
    3.  When the Initiator switches to the Connected state it responds
        with a AGREEMENT message, which may be missed by the Responder.
@@ -2010,6 +2007,9 @@ Internet-Draft                     SRT                        March 2020
 
    Latency is configured through the exchange of capabilities during the
    extended handshake process between initiator and responder.  The
+   Handshake Extension Message (Section 3.2.1.1) has TSBPD delay
+   information (in milliseconds) from the SRT receiver and sender.  The
+
 
 
 
@@ -2018,8 +2018,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 36]
 Internet-Draft                     SRT                        March 2020
 
 
-   Handshake Extension Message (Section 3.2.1.1) has TSBPD delay
-   information (in milliseconds) from the SRT receiver and sender.  The
    latency for a connection will be established as the maximum value of
    latencies proposed by the initiator and responder.
 
@@ -2066,6 +2064,8 @@ Internet-Draft                     SRT                        March 2020
 
    Figure 14 illustrates the key latency points during the packet
    transmission with the TSBPD feature enabled.
+
+
 
 
 
@@ -2154,7 +2154,7 @@ Internet-Draft                     SRT                        March 2020
    negotiated during the SRT handshake exchange and is equal to 120
    milliseconds.  The recommended value of TsbpdDelay is 3-4 times RTT.
 
-   It's worth noting that TsbpdDelay limits the number of packet
+   it is worth noting that TsbpdDelay limits the number of packet
    retransmissions to a certain extent making impossible to retransmit
    packets endlessly.  This is important for live data transmission.
 
@@ -2306,7 +2306,7 @@ Internet-Draft                     SRT                        March 2020
    The receiver samples time drift data and periodically calculates a
    packet timestamp correction factor, which is applied to each data
    packet received by adjusting the inter-packet interval.  When a
-   packet is received it isn't given right away to the application.  As
+   packet is received it is not given right away to the application.  As
    time advances, the receiver knows the expected time for any missing
    or dropped packet, and can use this information to fill any "holes"
    in the receive queue with another packet (see Section 4.5).
@@ -2320,7 +2320,7 @@ Internet-Draft                     SRT                        March 2020
    fast reaction.
 
    The receiver uses local time to be able to schedule events -- to
-   determine, for example, if it's time to deliver a certain packet
+   determine, for example, if it is time to deliver a certain packet
    right away.  The timestamps in the packets themselves are just
    references to the beginning of the session.  When a packet is
    received (with a timestamp from the sender), the receiver makes a
@@ -2507,7 +2507,7 @@ Internet-Draft                     SRT                        March 2020
    variance, Available Buffer Size, Packets Receiving Rate and Estimated
    Link Capacity.  Upon reception of the NAK packet (Section 3.2.4) the
    sender can detect packet losses during the transmission.  These
-   mechanisms provide a solid backgroud for various congestion control
+   mechanisms provide a solid background for various congestion control
    algorithms.
 
    Given that SRT can operate in live and file transfer modes, there are
@@ -2555,28 +2555,9 @@ Internet-Draft                     SRT                        March 2020
    passphrase should be managed by security officers, which is out of
    scope of the present document.
 
-   SRT support confidentiality of user data using stream ciphering based
-   on AES, as specified in Section 5.  Session key for ciphering is
-   delivered control packet during handshake, with the protection by Key
-   encryption key, which is generated by a sender and receiver with pre-
-   shared secret such as passphrase.  Appropriate security policy
-   including key size, key refresh period, as well as passphrase should
-   be managed by security officers, which is out of scope of the present
-   document.
-
 7.  IANA Considerations
 
    This document makes no requests of the IANA.
-
-
-
-
-
-
-Sharabayko, et al.      Expires 7 September 2020               [Page 46]
-
-Internet-Draft                     SRT                        March 2020
-
 
 Contributors
 
@@ -2588,12 +2569,22 @@ Contributors
    Diouskine, Jean Dube, Mikolaj Malecki, Steve Matthews, Maria
    Sharabayko, Maxim Sharabayko, Adam Yellen.
 
+
+
+
+
+Sharabayko, et al.      Expires 7 September 2020               [Page 46]
+
+Internet-Draft                     SRT                        March 2020
+
+
    The contributors to this specification at SK Telecom are Jeongseok
    Kim and Joonwoong Kim.
 
-   We can't list all the contributors to the open-sourced implementation
-   of SRT on GitHub.  But we appreciate the help, contribution,
-   integrations and feedback of the SRT and SRT Alliances community.
+   We cannot list all the contributors to the open-sourced
+   implementation of SRT on GitHub.  But we appreciate the help,
+   contribution, integrations and feedback of the SRT and SRT Alliances
+   community.
 
 Acknowledgments
 
@@ -2627,13 +2618,6 @@ Informative References
    [PNPID]    "PNP ID AND ACPI ID REGISTRY", March 2020,
               <https://uefi.org/PNP_ACPI_Registry>.
 
-
-
-Sharabayko, et al.      Expires 7 September 2020               [Page 47]
-
-Internet-Draft                     SRT                        March 2020
-
-
    [RFC3610]  Whiting, D., Housley, R., and N. Ferguson, "Counter with
               CBC-MAC (CCM)", RFC 3610, DOI 10.17487/RFC3610, September
               2003, <https://www.rfc-editor.org/info/rfc3610>.
@@ -2641,6 +2625,14 @@ Internet-Draft                     SRT                        March 2020
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+
+Sharabayko, et al.      Expires 7 September 2020               [Page 47]
+
+Internet-Draft                     SRT                        March 2020
+
 
    [SP800-38A]
               Dworkin, M., "Recommendation for Block Cipher Modes of
@@ -2682,14 +2674,6 @@ Authors' Addresses
    Maxim Sharabayko
    Haivision Network Video, GmbH
 
-
-
-
-Sharabayko, et al.      Expires 7 September 2020               [Page 48]
-
-Internet-Draft                     SRT                        March 2020
-
-
    Email: maxsharabayko@haivision.com
 
 
@@ -2697,6 +2681,13 @@ Internet-Draft                     SRT                        March 2020
    Haivision Network Video, GmbH
 
    Email: msharabayko@haivision.com
+
+
+
+
+Sharabayko, et al.      Expires 7 September 2020               [Page 48]
+
+Internet-Draft                     SRT                        March 2020
 
 
    Jean Dubé
@@ -2715,6 +2706,15 @@ Internet-Draft                     SRT                        March 2020
    SK Telecom Co., Ltd.
 
    Email: joonwoong.kim@sk.com
+
+
+
+
+
+
+
+
+
 
 
 

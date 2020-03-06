@@ -1417,7 +1417,7 @@ See <a href="#srt-ctrl-pkt-type-table" class="xref">Table 1</a>.<a href="#sectio
 <dt id="section-3.2-3.5">Type-specific Information (32 bits):</dt>
 <dd id="section-3.2-3.6">
   The use of this field depends on the particular control
-packet type. Handshake packets don't use this field.<a href="#section-3.2-3.6" class="pilcrow">¶</a>
+packet type. Handshake packets do not use this field.<a href="#section-3.2-3.6" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2-3.7">Control Information Field (variable length):</dt>
 <dd id="section-3.2-3.8">
@@ -1708,7 +1708,7 @@ by the handshake message type. See <a href="#handshake-messages" class="xref">Se
 <dt id="section-3.2.1-10.5">Peer IP Address (128 bits):</dt>
 <dd id="section-3.2.1-10.6">
   The sender's IPv4 or IPv6 address. The value consists of four 32-bit fields. In the case
-of IPv4 adresses, fields 2, 3 and 4 are padded with zeroes.  &lt;- <strong>TO BE CONFIRMED</strong><a href="#section-3.2.1-10.6" class="pilcrow">¶</a>
+of IPv4 addresses, fields 2, 3 and 4 are padded with zeroes.<a href="#section-3.2.1-10.6" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.1-10.7">Extension Type (16 bits):</dt>
 <dd id="section-3.2.1-10.8">
@@ -1922,27 +1922,16 @@ extensions. The value of a request is 3, and the response value is 4.<a href="#s
 </dd>
 <dt id="section-3.2.1.2-3.3">Version (V): 3 bits. Value: {1}</dt>
 <dd id="section-3.2.1.2-3.4">
-                <p id="section-3.2.1.2-3.4.1">
-  This is a fixed-width field that indicates the SRT version:<a href="#section-3.2.1.2-3.4.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2.1.2-3.4.2.1">1: initial version<a href="#section-3.2.1.2-3.4.2.1" class="pilcrow">¶</a>
-</li>
-</ul>
+  This is a fixed-width field that indicates the SRT version:
+- 1: initial version<a href="#section-3.2.1.2-3.4" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.1.2-3.5">Packet Type (PT): 4 bits. Value: {2}</dt>
 <dd id="section-3.2.1.2-3.6">
-                <p id="section-3.2.1.2-3.6.1">
-  This is a fixed-width field that indicates the Packet Type:<a href="#section-3.2.1.2-3.6.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2.1.2-3.6.2.1">0: Reserved<a href="#section-3.2.1.2-3.6.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-3.6.2.2">1: MSmsg<a href="#section-3.2.1.2-3.6.2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-3.6.2.3">2: KMmsg<a href="#section-3.2.1.2-3.6.2.3" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-3.6.2.4">7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)<a href="#section-3.2.1.2-3.6.2.4" class="pilcrow">¶</a>
-</li>
-</ul>
+  This is a fixed-width field that indicates the Packet Type:
+- 0: Reserved
+- 1: MSmsg
+- 2: KMmsg 
+- 7: Reserved to discriminate MPEG-TS packet (0x47=sync byte)<a href="#section-3.2.1.2-3.6" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.1.2-3.7">Signature (Sign): 16 bits. Value: {0x2029}</dt>
 <dd id="section-3.2.1.2-3.8">
@@ -1953,104 +1942,75 @@ PnP Vendor ID (<span>[<a href="#PNPID" class="xref">PNPID</a>]</span>) (in big e
 <dd id="section-3.2.1.2-3.10">
   This is a fixed-width field reserved for flag extension or other usage.<a href="#section-3.2.1.2-3.10" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-3.11">Key-based Data Encryption (KK): 2 bits.  Value: ???</dt>
+<dt id="section-3.2.1.2-3.11">Key-based Data Encryption (KK): 2 bits.</dt>
 <dd id="section-3.2.1.2-3.12">
                 <p id="section-3.2.1.2-3.12.1">
-  This is a fixed-width field that indicates whether or not data is encrypted:<a href="#section-3.2.1.2-3.12.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2.1.2-3.12.2.1">00b: not encrypted (data packets only)<a href="#section-3.2.1.2-3.12.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-3.12.2.2">01b: even key<a href="#section-3.2.1.2-3.12.2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-3.12.2.3">10b: odd key<a href="#section-3.2.1.2-3.12.2.3" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-3.12.2.4">11b: even and odd keys<a href="#section-3.2.1.2-3.12.2.4" class="pilcrow">¶</a>
-</li>
-</ul>
+  This is a fixed-width field that indicates whether or not data is encrypted:
+- 00b: not encrypted (data packets only)
+- 01b: even key
+- 10b: odd key<a href="#section-3.2.1.2-3.12.1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1.2-3.12.2">
+- 11b: even and odd keys<a href="#section-3.2.1.2-3.12.2" class="pilcrow">¶</a></p>
 </dd>
 <dt id="section-3.2.1.2-3.13">Key Encryption Key Index (KEKI): 32 bits. Value: {0}</dt>
 <dd id="section-3.2.1.2-3.14">
-  This is a fixed-width field for specifying the KEK index (big endian order)<a href="#section-3.2.1.2-3.14" class="pilcrow">¶</a>
+  This is a fixed-width field for specifying the KEK index (big endian order)
+- 0: Default stream associated key (stream/system default)
+- 1..255: Reserved for manually indexed keys<a href="#section-3.2.1.2-3.14" class="pilcrow">¶</a>
 </dd>
-</dl>
-<ul>
-<li id="section-3.2.1.2-4.1">0: Default stream associated key (stream/system default)<a href="#section-3.2.1.2-4.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-4.2">1..255: Reserved for manually indexed keys<a href="#section-3.2.1.2-4.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<dl class="dlParallel" id="section-3.2.1.2-5">
-              <dt id="section-3.2.1.2-5.1">Cipher ( ): 8 bits. Value: {2}</dt>
-<dd id="section-3.2.1.2-5.2">
-                <p id="section-3.2.1.2-5.2.1">
-  This is a fixed-width field for specifying encryption cipher and mode:<a href="#section-3.2.1.2-5.2.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2.1.2-5.2.2.1">0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-5.2.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-5.2.2.2">1: AES-ECB (not supported in SRT)<a href="#section-3.2.1.2-5.2.2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-5.2.2.3">2: AES-CTR <span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span><a href="#section-3.2.1.2-5.2.2.3" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-5.2.2.4">x: AES-CCM <span>[<a href="#RFC3610" class="xref">RFC3610</a>]</span> if message integrity required (FIPS 140-2 approved)<a href="#section-3.2.1.2-5.2.2.4" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-5.2.2.5">x: AES-GCM if message integrity required (FIPS 140-3 &amp; NSA Suite B)<a href="#section-3.2.1.2-5.2.2.5" class="pilcrow">¶</a>
-</li>
-</ul>
+<dt id="section-3.2.1.2-3.15">Cipher ( ): 8 bits. Value: {0..2}</dt>
+<dd id="section-3.2.1.2-3.16">
+  This is a fixed-width field for specifying encryption cipher and mode:
+- 0: None or KEKI indexed crypto context
+- 1: AES-ECB (not supported in SRT)
+- 2: AES-CTR <span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span>
+- x: AES-CCM <span>[<a href="#RFC3610" class="xref">RFC3610</a>]</span> if message integrity required (FIPS 140-2 approved)
+- x: AES-GCM if message integrity required (FIPS 140-3 &amp; NSA Suite B)<a href="#section-3.2.1.2-3.16" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.3">Authentication (Auth): 8 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-5.4">
-                <p id="section-3.2.1.2-5.4.1">
-  This is a fixed-width field for specifying a message authentication code algorithm:<a href="#section-3.2.1.2-5.4.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2.1.2-5.4.2.1">0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-5.4.2.1" class="pilcrow">¶</a>
-</li>
-</ul>
+<dt id="section-3.2.1.2-3.17">Authentication (Auth): 8 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-3.18">
+  This is a fixed-width field for specifying a message authentication code algorithm:
+- 0: None or KEKI indexed crypto context<a href="#section-3.2.1.2-3.18" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.5">Stream Encapsulation (SE): 8 bits. Value: {2}</dt>
-<dd id="section-3.2.1.2-5.6">
-                <p id="section-3.2.1.2-5.6.1">
-  This is a fixed-width field for describing the stream encapsulation:<a href="#section-3.2.1.2-5.6.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2.1.2-5.6.2.1">0: Unspecified or KEKI indexed crypto context<a href="#section-3.2.1.2-5.6.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-5.6.2.2">1: MPEG-TS/UDP<a href="#section-3.2.1.2-5.6.2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-3.2.1.2-5.6.2.3">:MPEG-TS/SRT<a href="#section-3.2.1.2-5.6.2.3" class="pilcrow">¶</a>
-</li>
-</ul>
+<dt id="section-3.2.1.2-3.19">Stream Encapsulation (SE): 8 bits. Value: {2}</dt>
+<dd id="section-3.2.1.2-3.20">
+  This is a fixed-width field for describing the stream encapsulation:
+- 0: Unspecified or KEKI indexed crypto context
+- 1: MPEG-TS/UDP
+- 2: MPEG-TS/SRT<a href="#section-3.2.1.2-3.20" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.7">Reserved (Resv1): 8 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-5.8">
-  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-5.8" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-3.21">Reserved (Resv1): 8 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-3.22">
+  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-3.22" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.9">Reserved (Resv2): 16 bits. Value: {0}</dt>
-<dd id="section-3.2.1.2-5.10">
-  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-5.10" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-3.23">Reserved (Resv2): 16 bits. Value: {0}</dt>
+<dd id="section-3.2.1.2-3.24">
+  This is a fixed-width field reserved for future use.<a href="#section-3.2.1.2-3.24" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.11">Slen/4 ( ): 4 bits. Value: {0..255}</dt>
-<dd id="section-3.2.1.2-5.12">
+<dt id="section-3.2.1.2-3.25">Slen/4 ( ): 4 bits. Value: {0..255}</dt>
+<dd id="section-3.2.1.2-3.26">
   This is a fixed-width field for specifying salt length in bytes divided by 4. 
-Can be zero if no salt/IV present<a href="#section-3.2.1.2-5.12" class="pilcrow">¶</a>
+Can be zero if no salt/IV present<a href="#section-3.2.1.2-3.26" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.13">Klen/4 ( ): 8 bits. Value: {4,6,8}</dt>
-<dd id="section-3.2.1.2-5.14">
+<dt id="section-3.2.1.2-3.27">Klen/4 ( ): 8 bits. Value: {4,6,8}</dt>
+<dd id="section-3.2.1.2-3.28">
   This is a fixed-width field for specifying SEK length in bytes divided by 4. 
-Size of one key even if two keys present.<a href="#section-3.2.1.2-5.14" class="pilcrow">¶</a>
+Size of one key even if two keys present.<a href="#section-3.2.1.2-3.28" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.15">Salt (Slen): Slen*8 bits. Value: { }</dt>
-<dd id="section-3.2.1.2-5.16">
-  This is a variable-width field for specifying a salt key<a href="#section-3.2.1.2-5.16" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-3.29">Salt (Slen): Slen*8 bits. Value: { }</dt>
+<dd id="section-3.2.1.2-3.30">
+  This is a variable-width field for specifying a salt key<a href="#section-3.2.1.2-3.30" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-5.17">Wrap ( ): (64+n * Klen * 8) bits. Value: { }</dt>
-<dd id="section-3.2.1.2-5.18">
+<dt id="section-3.2.1.2-3.31">Wrap ( ): (64+n * Klen * 8) bits. Value: { }</dt>
+<dd id="section-3.2.1.2-3.32">
   This is a variable-width field for specifying Wrapped key(s), where n = 1 or 2
 NOTE 1: n = (KK + 1)/2
-NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-5.18" class="pilcrow">¶</a>
+NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-3.32" class="pilcrow">¶</a>
 </dd>
 </dl>
 <span id="name-unwrapped-key-structure"></span><div id="unwrapped-key-structure">
 <figure id="figure-8">
-              <div class="artwork art-text alignLeft" id="section-3.2.1.2-6.1">
+              <div class="artwork art-text alignLeft" id="section-3.2.1.2-4.1">
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -2069,20 +2029,20 @@ NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-5.18" c
 <a href="#name-unwrapped-key-structure" class="selfRef">Unwrapped key structure</a>
               </figcaption></figure>
 </div>
-<dl class="dlParallel" id="section-3.2.1.2-7">
-              <dt id="section-3.2.1.2-7.1">ICV (64 bits):</dt>
-<dd id="section-3.2.1.2-7.2">
-  64-bit Integrity Check Vector(AES key wrap integrity).<a href="#section-3.2.1.2-7.2" class="pilcrow">¶</a>
+<dl class="dlParallel" id="section-3.2.1.2-5">
+              <dt id="section-3.2.1.2-5.1">ICV (64 bits):</dt>
+<dd id="section-3.2.1.2-5.2">
+  64-bit Integrity Check Vector(AES key wrap integrity).<a href="#section-3.2.1.2-5.2" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-7.3">xSEK (variable length):</dt>
-<dd id="section-3.2.1.2-7.4">
+<dt id="section-3.2.1.2-5.3">xSEK (variable length):</dt>
+<dd id="section-3.2.1.2-5.4">
   This field identifies an odd or even SEK. If both keys are present,
 then this field is eSEK (even key) and the next one is the odd key.
-The length of this field is calculated by KLen * 4 * 8.<a href="#section-3.2.1.2-7.4" class="pilcrow">¶</a>
+The length of this field is calculated by KLen * 4 * 8.<a href="#section-3.2.1.2-5.4" class="pilcrow">¶</a>
 </dd>
-<dt id="section-3.2.1.2-7.5">oSEK (variable length):</dt>
-<dd id="section-3.2.1.2-7.6">
-  This field is present only when the message carries the two SEKs.<a href="#section-3.2.1.2-7.6" class="pilcrow">¶</a>
+<dt id="section-3.2.1.2-5.5">oSEK (variable length):</dt>
+<dd id="section-3.2.1.2-5.6">
+  This field is present only when the message carries the two SEKs.<a href="#section-3.2.1.2-5.6" class="pilcrow">¶</a>
 </dd>
 </dl>
 </section>
@@ -2213,7 +2173,7 @@ sequential number of the full ACK packet starting from 1.<a href="#section-3.2.3
 </dd>
 <dt id="section-3.2.3-3.5">RTT (32 bits):</dt>
 <dd id="section-3.2.3-3.6">
-  RTT value (in microseconds) estimated by the receiver based on the previous ACK-ACKACK 
+  RTT value (in microseconds) estimated by the receiver based on the previous ACK-ACKACK
 packet exchange.<a href="#section-3.2.3-3.6" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.3-3.7">RTT variance (32 bits):</dt>
@@ -2439,20 +2399,23 @@ every control and data packet (see <a href="#packet-structure" class="xref">Sect
         <h3 id="name-data-transmission-modes">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-data-transmission-modes" class="section-name selfRef">Data Transmission Modes</a>
         </h3>
-<p id="section-4.2-1">In Live Transmission Mode the only valid value is "1".<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">SRT has been mainly created for Live Streaming and therefore its main and
+default transmission mode is "live". SRT supports, however, the modes that
+the original UDT library supported, that is, buffer and message transmission.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <div id="transmission-mode-msg">
 <section id="section-4.2.1">
           <h4 id="name-message-mode">
 <a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-message-mode" class="section-name selfRef">Message Mode</a>
           </h4>
-<p id="section-4.2.1-1">When the STREAM flag of the handshake Extension Message {#handshake-extension-msg} is set 
-to 0, the protocol operates in Message mode, characterized as follows:<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-1">When the STREAM flag of the handshake Extension Message
+<a href="#handshake-extension-msg" class="xref">Section 3.2.1.1</a> is set to 0, the protocol operates
+in Message mode, characterized as follows:<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-4.2.1-2.1">Every packet has its own Packet Sequence Number.<a href="#section-4.2.1-2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-4.2.1-2.2">One or several consecutive SRT Data packets can form a message.<a href="#section-4.2.1-2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-4.2.1-2.3">All the packets belonging to the same message have a similar message number set 
+<li id="section-4.2.1-2.3">All the packets belonging to the same message have a similar message number set
     in the Message Number field.<a href="#section-4.2.1-2.3" class="pilcrow">¶</a>
 </li>
 </ul>
@@ -2479,10 +2442,8 @@ already fully available, before any preceding messages that may have some packet
           </h4>
 <p id="section-4.2.2-1">Live mode is a special type of message mode where only data packets
 with their PP field set to "11b" are allowed.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-2">Additionally, TsbPd (<a href="#tsbpd" class="xref">Section 4.5</a>) and TL Packet drop (<a href="#too-late-packet-drop" class="xref">Section 4.6</a>) mechanisms are used 
-in this mode.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-3">Additionally Timestamp Based Packet Delivery (TSBPD) (<a href="#tsbpd" class="xref">Section 4.5</a>) and
-Too-Late Packet Drop (<a href="#too-late-packet-drop" class="xref">Section 4.6</a>) mechanisms are used in this mode.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-2">Additionally Timestamp Based Packet Delivery (TSBPD) (<a href="#tsbpd" class="xref">Section 4.5</a>) and
+Too-Late Packet Drop (<a href="#too-late-packet-drop" class="xref">Section 4.6</a>) mechanisms are used in this mode.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="transmission-mode-buffer">
@@ -2709,10 +2670,10 @@ The process has two phases: induction and conclusion.<a href="#section-4.3.1-1" 
 </ul>
 <p id="section-4.3.1.1-3">The Destination Socket ID of the SRT packet header in this message is 0, which is
 interpreted as a connection request.<a href="#section-4.3.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.1-4">NOTE: The handshake version number is set to 4 in this initial handshake.
+<p id="section-4.3.1.1-4">The handshake version number is set to 4 in this initial handshake.
 This is due to the initial design of SRT that was to be compliant with the UDT
 protocol (<span>[<a href="#GHG04b" class="xref">GHG04b</a>]</span>) on which it is based.<a href="#section-4.3.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.1-5">NOTE: This phase serves only to set a cookie on the Listener so that it
+<p id="section-4.3.1.1-5">This phase serves only to set a cookie on the Listener so that it
 doesn't allocate resources, thus mitigating a potential DoS attack that might be
 perpetrated by flooding the Listener with handshake commands.<a href="#section-4.3.1.1-5" class="pilcrow">¶</a></p>
 <p id="section-4.3.1.1-6">The Listener responds with the following:<a href="#section-4.3.1.1-6" class="pilcrow">¶</a></p>
@@ -2731,7 +2692,7 @@ perpetrated by flooding the Listener with handshake commands.<a href="#section-4
 with 1 minute accuracy<a href="#section-4.3.1.1-7.6" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-4.3.1.1-8">NOTE: At this point the Listener still doesn't know if the Caller is SRT or UDT,
+<p id="section-4.3.1.1-8">At this point the Listener still doesn't know if the Caller is SRT or UDT,
 and it responds with the same set of values regardless of whether the Caller is
 SRT or UDT.<a href="#section-4.3.1.1-8" class="pilcrow">¶</a></p>
 <p id="section-4.3.1.1-9">If the party is SRT, it does interpret the values in Version and Extension Field.
@@ -2781,9 +2742,9 @@ of the handshake structure.<a href="#section-4.3.1.2-4" class="pilcrow">¶</a></
 </li>
 </ul>
 <p id="section-4.3.1.2-6">The Listener responds with the same values shown above, without the cookie (which
-isn't needed here), as well as the extensions for HSv5 (which will probably be
+is not needed here), as well as the extensions for HS Version 5 (which will probably be
 exactly the same).<a href="#section-4.3.1.2-6" class="pilcrow">¶</a></p>
-<p id="section-4.3.1.2-7">IMPORTANT: There isn't any "negotiation" here. If the values passed in the
+<p id="section-4.3.1.2-7">There is not any "negotiation" here. If the values passed in the
 handshake are in any way not acceptable by the other side, the connection will
 be rejected. The only case when the Listener can have precedence over the Caller
 is the advertised Cipher Family and Block Size (<a href="#handshake-encr-fld" class="xref">Table 2</a>)
@@ -2813,7 +2774,7 @@ roles. Each party generates a cookie value (a 32-bit number) based on the host,
 port, and current time with 1 minute accuracy. This value is scrambled using
 an MD5 sum calculation. The cookie values are then compared with one another.<a href="#section-4.3.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.3.2-4">Since it is impossible to have two sockets on the same machine bound to the same NIC
-and port and operating independently, it's virtually impossible that the
+and port and operating independently, it is virtually impossible that the
 parties will generate identical cookies. However, this situation may occur if an
 application tries to "connect to itself" - that is, either connects to a local
 IP address, when the socket is bound to INADDR_ANY, or to the same IP address to
@@ -2867,7 +2828,7 @@ state. Since Bob now knows Alice's cookie, he performs a "cookie contest"
 become the Initiator. Otherwise, he will become the Responder.<a href="#section-4.3.2.1-5.1" class="pilcrow">¶</a>
 </li>
 </ol>
-<p id="section-4.3.2.1-6">IMPORTANT: The resolution of the Handshake Role
+<p id="section-4.3.2.1-6">The resolution of the Handshake Role
 (Initiator or Responder) is essential for further processing.<a href="#section-4.3.2.1-6" class="pilcrow">¶</a></p>
 <p id="section-4.3.2.1-7">Then Bob responds:<a href="#section-4.3.2.1-7" class="pilcrow">¶</a></p>
 <ul>
@@ -2880,7 +2841,7 @@ become the Initiator. Otherwise, he will become the Responder.<a href="#section-
 <li id="section-4.3.2.1-8.4">Handshake Type: CONCLUSION<a href="#section-4.3.2.1-8.4" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-4.3.2.1-9">NOTE: If Bob is the Initiator and encryption is on, he will use either his
+<p id="section-4.3.2.1-9">If Bob is the Initiator and encryption is on, he will use either his
 own cipher family and block size or the one received from Alice (if she has advertised
 those values).<a href="#section-4.3.2.1-9" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.3.2.1-10">
@@ -2898,7 +2859,7 @@ performs the "cookie contest", the outcome will be the same. She switches to the
 </ul>
 </li>
 </ol>
-<p id="section-4.3.2.1-11">NOTE: Both parties always send extension flags at this point, which will
+<p id="section-4.3.2.1-11">Both parties always send extension flags at this point, which will
 contain HSREQ if the message comes from an Initiator, or
 HSRSP if it comes from a Responder. If the Initiator has received a
 previous message from the Responder containing an advertised cipher family and block size in the
@@ -3070,7 +3031,7 @@ by now it should already have received payload packets.<a href="#section-4.3.2.2
                 <p id="section-4.3.2.2-9.2.1">Attention<a href="#section-4.3.2.2-9.2.1" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-4.3.2.2-9.2.2.1">Receives CONCLUSION message with HSREQ
-NOTE: This message might contain no extensions, in which case the party 
+This message might contain no extensions, in which case the party 
 shall simply send the empty CONCLUSION message, as before, and remain 
 in this state.<a href="#section-4.3.2.2-9.2.2.1" class="pilcrow">¶</a>
 </li>
@@ -3133,12 +3094,13 @@ CONCLUSION + HSREQ, even if it has already received and interpreted it.<a href="
 </li>
 <li id="section-4.3.2.2-11.3">When the Initiator switches to the Connected state it responds with a
 AGREEMENT message, which may be missed by the Responder. Nonetheless, the
-Initiator may start sending data packets because it considers itself connected
-- it doesn't know that the Responder has not yet switched to the Connected state.
-  Therefore it is exceptionally allowed that when the Responder is in the Initiated
-  state and receives a data packet (or any control packet that is normally sent only
-  between connected parties) over this connection, it may switch to the Connected
-  state just as if it had received a AGREEMENT message.<a href="#section-4.3.2.2-11.3" class="pilcrow">¶</a>
+Initiator may start sending data packets because it considers itself
+connected - it doesn't know that the Responder has not yet switched
+to the Connected state. Therefore it is exceptionally allowed that when
+the Responder is in the Initiated state and receives a data packet
+(or any control packet that is normally sent only between connected
+parties) over this connection, it may switch to the Connected
+state just as if it had received a AGREEMENT message.<a href="#section-4.3.2.2-11.3" class="pilcrow">¶</a>
 </li>
 <li id="section-4.3.2.2-11.4">If the the Initiator has already switched to the Connected state it will not
 bother the Responder with any more handshake messages. But the Responder may be
@@ -3291,7 +3253,7 @@ should be delivered to the upstream application;<a href="#section-4.5.1-4.3" cla
 extended RTT time, and the time needed to retransmit the lost packet. The value of minimum TsbpdDelay
 is negotiated during the SRT handshake exchange and is equal to 120 milliseconds. The recommended
 value of TsbpdDelay is 3-4 times RTT.<a href="#section-4.5.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.5.1-6">It's worth noting that TsbpdDelay limits the number of packet retransmissions to a certain extent
+<p id="section-4.5.1-6">it is worth noting that TsbpdDelay limits the number of packet retransmissions to a certain extent
 making impossible to retransmit packets endlessly. This is important for live data transmission.<a href="#section-4.5.1-6" class="pilcrow">¶</a></p>
 <div id="tsbpd-time-base">
 <section id="section-4.5.1.1">
@@ -3414,7 +3376,7 @@ events (packet delivery, etc.) can be scheduled.<a href="#section-4.7-3" class="
 <p id="section-4.7-4">The receiver samples time drift data and periodically calculates a
 packet timestamp correction factor, which is applied to each data
 packet received by adjusting the inter-packet interval. When a
-packet is received it isn't given right away to the application.
+packet is received it is not given right away to the application.
 As time advances, the receiver knows the expected time for any
 missing or dropped packet, and can use this information to fill
 any "holes" in the receive queue with another packet
@@ -3426,7 +3388,7 @@ network jitter on the estimated time drift is attenuated by using a
 large number of samples. The actual time drift being very slow (affecting a
 stream only after many hours) does not require a fast reaction.<a href="#section-4.7-5" class="pilcrow">¶</a></p>
 <p id="section-4.7-6">The receiver uses local time to be able to schedule events -- to
-determine, for example, if it's time to deliver a certain packet
+determine, for example, if it is time to deliver a certain packet
 right away. The timestamps in the packets themselves are just
 references to the beginning of the session. When a packet is received
 (with a timestamp from the sender), the receiver makes a reference to
@@ -3562,7 +3524,7 @@ Every 10 ms the sender receives the latest values of RTT and RTT variance,
 Available Buffer Size, Packets Receiving Rate and Estimated Link Capacity.
 Upon reception of the NAK packet (<a href="#ctrl-pkt-nak" class="xref">Section 3.2.4</a>) the sender can detect
 packet losses during the transmission.
-These mechanisms provide a solid backgroud for various congestion control
+These mechanisms provide a solid background for various congestion control
 algorithms.<a href="#section-4.11-1" class="pilcrow">¶</a></p>
 <p id="section-4.11-2">Given that SRT can operate in live and file transfer modes, there are two groups
 of congestion control algorithms possible.<a href="#section-4.11-2" class="pilcrow">¶</a></p>
@@ -3602,13 +3564,6 @@ with pre-shared secret such as passphrase. As in UDT, careful uses of SYN Cookie
 may help to deter denial of service attacks. Appropriate security policy including
 key size, key refresh period, as well as passphrase should be managed by security
 officers, which is out of scope of the present document.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">SRT support confidentiality of user data using stream ciphering based on AES,
-as specified in <a href="#encryption" class="xref">Section 5</a>. Session key for ciphering is delivered control
-packet during handshake, with the protection by Key encryption key,
-which is generated by a sender and receiver with pre-shared secret such as passphrase.
-Appropriate security policy including key size, key refresh period,
-as well as passphrase should be managed by security officers,
-which is out of scope of the present document.<a href="#section-6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -3632,8 +3587,8 @@ Jean Dube, Mikolaj Malecki, Steve Matthews, Maria Sharabayko,
 Maxim Sharabayko, Adam Yellen.<a href="#section-8-2" class="pilcrow">¶</a></p>
 <p id="section-8-3">The contributors to this specification at SK Telecom
 are Jeongseok Kim and Joonwoong Kim.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">We can't list all the contributors to the open-sourced implementation of SRT on GitHub.
-But we appreciate the help, contribution, integrations and feedback of the 
+<p id="section-8-4">We cannot list all the contributors to the open-sourced implementation of SRT on GitHub.
+But we appreciate the help, contribution, integrations and feedback of the
 SRT and SRT Alliances community.<a href="#section-8-4" class="pilcrow">¶</a></p>
 </section>
 </div>
