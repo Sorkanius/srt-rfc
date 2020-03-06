@@ -845,9 +845,7 @@ Internet-Draft                     SRT                        March 2020
    Cipher ( ): 8 bits.  Value: {0..2}  This is a fixed-width field for
       specifying encryption cipher and mode: - 0: None or KEKI indexed
       crypto context - 1: AES-ECB (not supported in SRT) - 2: AES-CTR
-      [SP800-38A] - x: AES-CCM [RFC3610] if message integrity required
-      (FIPS 140-2 approved) - x: AES-GCM if message integrity required
-      (FIPS 140-3 & NSA Suite B)
+      [SP800-38A]
 
    Authentication (Auth): 8 bits.  Value: {0}  This is a fixed-width
       field for specifying a message authentication code algorithm: - 0:
@@ -890,6 +888,8 @@ Internet-Draft                     SRT                        March 2020
    |                              oSEK                             |
    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
+                     Figure 8: Unwrapped key structure
+
 
 
 
@@ -897,8 +897,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 16]
 
 Internet-Draft                     SRT                        March 2020
 
-
-                     Figure 8: Unwrapped key structure
 
    ICV (64 bits):  64-bit Integrity Check Vector(AES key wrap
       integrity).
@@ -946,6 +944,8 @@ Internet-Draft                     SRT                        March 2020
 
    Reserved ( ): 16 bits.  Value: ???  This is a fixed-width field
       reserved for future use.
+
+
 
 
 
@@ -2618,13 +2618,13 @@ Informative References
    [PNPID]    "PNP ID AND ACPI ID REGISTRY", March 2020,
               <https://uefi.org/PNP_ACPI_Registry>.
 
-   [RFC3610]  Whiting, D., Housley, R., and N. Ferguson, "Counter with
-              CBC-MAC (CCM)", RFC 3610, DOI 10.17487/RFC3610, September
-              2003, <https://www.rfc-editor.org/info/rfc3610>.
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [SP800-38A]
+              Dworkin, M., "Recommendation for Block Cipher Modes of
+              Operation", December 2001.
 
 
 
@@ -2633,10 +2633,6 @@ Sharabayko, et al.      Expires 7 September 2020               [Page 47]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   [SP800-38A]
-              Dworkin, M., "Recommendation for Block Cipher Modes of
-              Operation", December 2001.
 
    [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
               Overview", December 2019.
@@ -2683,15 +2679,16 @@ Authors' Addresses
    Email: msharabayko@haivision.com
 
 
+   Jean Dubé
+   Haivision
+
+
 
 
 Sharabayko, et al.      Expires 7 September 2020               [Page 48]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   Jean Dubé
-   Haivision
 
    Email: jdube@haivision.com
 
@@ -2706,6 +2703,9 @@ Internet-Draft                     SRT                        March 2020
    SK Telecom Co., Ltd.
 
    Email: joonwoong.kim@sk.com
+
+
+
 
 
 

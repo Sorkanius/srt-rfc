@@ -1963,9 +1963,7 @@ PnP Vendor ID (<span>[<a href="#PNPID" class="xref">PNPID</a>]</span>) (in big e
   This is a fixed-width field for specifying encryption cipher and mode:
 - 0: None or KEKI indexed crypto context
 - 1: AES-ECB (not supported in SRT)
-- 2: AES-CTR <span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span>
-- x: AES-CCM <span>[<a href="#RFC3610" class="xref">RFC3610</a>]</span> if message integrity required (FIPS 140-2 approved)
-- x: AES-GCM if message integrity required (FIPS 140-3 &amp; NSA Suite B)<a href="#section-3.2.1.2-3.16" class="pilcrow">¶</a>
+- 2: AES-CTR <span>[<a href="#SP800-38A" class="xref">SP800-38A</a>]</span><a href="#section-3.2.1.2-3.16" class="pilcrow">¶</a>
 </dd>
 <dt id="section-3.2.1.2-3.17">Authentication (Auth): 8 bits. Value: {0}</dt>
 <dd id="section-3.2.1.2-3.18">
@@ -3632,9 +3630,6 @@ the authors of the UDP-based Data Transfer Protocol <span>[<a href="#GHG04b" cla
 <dt id="PNPID">[PNPID]</dt>
 <dd>
 <span class="refTitle">"PNP ID AND ACPI ID REGISTRY"</span>, <time datetime="2020-03">March 2020</time>, <span>&lt;<a href="https://uefi.org/PNP_ACPI_Registry">https://uefi.org/PNP_ACPI_Registry</a>&gt;</span>. </dd>
-<dt id="RFC3610">[RFC3610]</dt>
-<dd>
-<span class="refAuthor">Whiting, D.</span><span class="refAuthor">, Housley, R.</span><span class="refAuthor">, and N. Ferguson</span>, <span class="refTitle">"Counter with CBC-MAC (CCM)"</span>, <span class="seriesInfo">RFC 3610</span>, <span class="seriesInfo">DOI 10.17487/RFC3610</span>, <time datetime="2003-09">September 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3610">https://www.rfc-editor.org/info/rfc3610</a>&gt;</span>. </dd>
 <dt id="RFC8174">[RFC8174]</dt>
 <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
