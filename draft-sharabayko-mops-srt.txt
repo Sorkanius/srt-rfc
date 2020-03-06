@@ -4,12 +4,13 @@
 
 MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
-Intended status: Standards Track                                 J. Dube
-Expires: 6 September 2020                  Haivision Network Video, GmbH
+Intended status: Standards Track           Haivision Network Video, GmbH
+Expires: 7 September 2020                                        J. Dubé
+                                                               Haivision
                                                                  JS. Kim
                                                                  JW. Kim
                                                     SK Telecom Co., Ltd.
-                                                            5 March 2020
+                                                            6 March 2020
 
 
                             The SRT Protocol
@@ -45,15 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 September 2020.
+   This Internet-Draft will expire on 7 September 2020.
 
 
 
 
 
 
-
-Sharabayko, et al.      Expires 6 September 2020                [Page 1]
+Sharabayko, et al.      Expires 7 September 2020                [Page 1]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 2]
+Sharabayko, et al.      Expires 7 September 2020                [Page 2]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -165,7 +165,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 3]
+Sharabayko, et al.      Expires 7 September 2020                [Page 3]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 4]
+Sharabayko, et al.      Expires 7 September 2020                [Page 4]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -261,7 +261,7 @@ Internet-Draft                     SRT                        March 2020
    KK (2 bits):  Key-based Encryption Flag.  The flag bits indicate
       whether or not data is encrypted.  The value "00b" (binary) means
       data is not encrypted. "01b" indicates that data is encrypted with
-      even key, and "10b" is used for odd key encryption.  Refer to
+      an even key, and "10b" is used for odd key encryption.  Refer to
       Section 5.  The value "11b" is only used in control packets.
 
    R (1 bit):  Retransmitted Packet Flag.  This flag is clear when a
@@ -277,7 +277,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 5]
+Sharabayko, et al.      Expires 7 September 2020                [Page 5]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -319,8 +319,8 @@ Internet-Draft                     SRT                        March 2020
 
    KK (2 bits):  Encryption Flag.  The flag bits indicate whether or not
       data is encrypted.  The value "00b" means data is not encrypted,
-      "01b" indicates that data is encrypted with even key, and "10b" is
-      used for odd key encryption.  The value "11b" is is used to carry
+      "01b" indicates that data is encrypted with an even key, and "10b"
+      is used for odd key encryption.  The value "11b" is used to carry
       both keys in single message.
 
    The types of SRT control packets are shown in Table 1.  The value
@@ -333,7 +333,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 6]
+Sharabayko, et al.      Expires 7 September 2020                [Page 6]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 7]
+Sharabayko, et al.      Expires 7 September 2020                [Page 7]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 8]
+Sharabayko, et al.      Expires 7 September 2020                [Page 8]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020                [Page 9]
+Sharabayko, et al.      Expires 7 September 2020                [Page 9]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 10]
+Sharabayko, et al.      Expires 7 September 2020               [Page 10]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 11]
+Sharabayko, et al.      Expires 7 September 2020               [Page 11]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -669,7 +669,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 12]
+Sharabayko, et al.      Expires 7 September 2020               [Page 12]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 13]
+Sharabayko, et al.      Expires 7 September 2020               [Page 13]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 14]
+Sharabayko, et al.      Expires 7 September 2020               [Page 14]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 15]
+Sharabayko, et al.      Expires 7 September 2020               [Page 15]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 16]
+Sharabayko, et al.      Expires 7 September 2020               [Page 16]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 17]
+Sharabayko, et al.      Expires 7 September 2020               [Page 17]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 18]
+Sharabayko, et al.      Expires 7 September 2020               [Page 18]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 19]
+Sharabayko, et al.      Expires 7 September 2020               [Page 19]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 20]
+Sharabayko, et al.      Expires 7 September 2020               [Page 20]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 21]
+Sharabayko, et al.      Expires 7 September 2020               [Page 21]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 22]
+Sharabayko, et al.      Expires 7 September 2020               [Page 22]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 23]
+Sharabayko, et al.      Expires 7 September 2020               [Page 23]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1341,7 +1341,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 24]
+Sharabayko, et al.      Expires 7 September 2020               [Page 24]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1397,7 +1397,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 25]
+Sharabayko, et al.      Expires 7 September 2020               [Page 25]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1453,7 +1453,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 26]
+Sharabayko, et al.      Expires 7 September 2020               [Page 26]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1509,7 +1509,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 27]
+Sharabayko, et al.      Expires 7 September 2020               [Page 27]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1565,7 +1565,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 28]
+Sharabayko, et al.      Expires 7 September 2020               [Page 28]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1621,7 +1621,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 29]
+Sharabayko, et al.      Expires 7 September 2020               [Page 29]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1677,7 +1677,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 30]
+Sharabayko, et al.      Expires 7 September 2020               [Page 30]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1733,7 +1733,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 31]
+Sharabayko, et al.      Expires 7 September 2020               [Page 31]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1789,7 +1789,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 32]
+Sharabayko, et al.      Expires 7 September 2020               [Page 32]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1845,7 +1845,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 33]
+Sharabayko, et al.      Expires 7 September 2020               [Page 33]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1901,7 +1901,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 34]
+Sharabayko, et al.      Expires 7 September 2020               [Page 34]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1957,7 +1957,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 35]
+Sharabayko, et al.      Expires 7 September 2020               [Page 35]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2013,7 +2013,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 36]
+Sharabayko, et al.      Expires 7 September 2020               [Page 36]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2069,7 +2069,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 37]
+Sharabayko, et al.      Expires 7 September 2020               [Page 37]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2125,7 +2125,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 38]
+Sharabayko, et al.      Expires 7 September 2020               [Page 38]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2181,7 +2181,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 39]
+Sharabayko, et al.      Expires 7 September 2020               [Page 39]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2237,7 +2237,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 40]
+Sharabayko, et al.      Expires 7 September 2020               [Page 40]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2293,7 +2293,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 41]
+Sharabayko, et al.      Expires 7 September 2020               [Page 41]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2349,7 +2349,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 42]
+Sharabayko, et al.      Expires 7 September 2020               [Page 42]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2405,7 +2405,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 43]
+Sharabayko, et al.      Expires 7 September 2020               [Page 43]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2461,7 +2461,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 44]
+Sharabayko, et al.      Expires 7 September 2020               [Page 44]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2517,7 +2517,7 @@ Informative References
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 45]
+Sharabayko, et al.      Expires 7 September 2020               [Page 45]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2573,7 +2573,7 @@ Authors' Addresses
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 46]
+Sharabayko, et al.      Expires 7 September 2020               [Page 46]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2587,8 +2587,8 @@ Internet-Draft                     SRT                        March 2020
    Email: msharabayko@haivision.com
 
 
-   Jean Dube
-   Haivision Network Video, GmbH
+   Jean Dubé
+   Haivision
 
    Email: jdube@haivision.com
 
@@ -2629,4 +2629,4 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 6 September 2020               [Page 47]
+Sharabayko, et al.      Expires 7 September 2020               [Page 47]
