@@ -880,7 +880,7 @@ Internet-Draft                     SRT                        March 2020
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                                                               |
-   +                  Integrity Check Vector (ICV)                  +
+   +                  Integrity Check Vector (ICV)                 +
    |                                                               |
    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
    |                              xSEK                             |
@@ -2248,8 +2248,12 @@ Internet-Draft                     SRT                        March 2020
                 packet relatively to the current buffer position pos */
 
    while(True) {
-       Get the position of the next available in receiver buffer packet i;
-       Calculate packet delivery time for the next available packet PktTsbpdTime;
+       // Get the position i of the next available packet
+       // in the receiver buffer
+       i = next_avail();
+       // Calculate packet delivery time PktTsbpdTime
+       // for the next available packet
+       PktTsbpdTime = delivery_time(i);
 
        if T_NOW < PktTsbpdTime:
            continue;
@@ -2285,11 +2289,7 @@ Internet-Draft                     SRT                        March 2020
    time base drifts by a few microseconds every minute.  The drift may
    accumulate over many days to a point where the sender or receiver
    buffers will overflow or deplete, seriously affecting the quality of
-   the video.  SRT has a time management mechanism to compensate for
-   this drift.
 
-   When a packet is received, SRT determines the difference between the
-   time it was expected and its timestamp.  The timestamp is calculated
 
 
 
@@ -2298,6 +2298,11 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 41]
 Internet-Draft                     SRT                        March 2020
 
 
+   the video.  SRT has a time management mechanism to compensate for
+   this drift.
+
+   When a packet is received, SRT determines the difference between the
+   time it was expected and its timestamp.  The timestamp is calculated
    on the receiver side.  The RTT tells the receiver how much time it
    was supposed to take.  SRT maintains a reference between the time at
    the leading edge of the send buffer's latency window and the
@@ -2340,11 +2345,6 @@ Internet-Draft                     SRT                        March 2020
    The SRT receiver periodically sends acknowledgements (ACKs) for the
    received data packets so that the SRT sender can remove the
    acknowledged packets from its buffer (Section 4.8.1).  Once the
-   acknowledged packets are removed, their retransmission is no longer
-   possible and presumably not needed.
-
-   Upon receiving the full acknowledgement (ACK) control packet, the SRT
-   sender should acknowledge its reception to the receiver by sending an
 
 
 
@@ -2354,6 +2354,11 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 42]
 Internet-Draft                     SRT                        March 2020
 
 
+   acknowledged packets are removed, their retransmission is no longer
+   possible and presumably not needed.
+
+   Upon receiving the full acknowledgement (ACK) control packet, the SRT
+   sender should acknowledge its reception to the receiver by sending an
    ACKACK control packet with the sequence number of the full ACK packet
    being acknowledged.
 
@@ -2397,11 +2402,6 @@ Internet-Draft                     SRT                        March 2020
    is based on a timer of 10 milliseconds (the ACK period).  For high
    bit rate transmissions, a "light ACK" can be sent, which is an ACK
    for a sequence of packets.  In a 10 milliseconds interval, there are
-   often so many packets being sent and received that the ACK position
-   on the sender doesn't advance quickly enough.  To mitigate this,
-   after 64 packets (even if the ACK period has not fully elapsed) the
-   receiver sends a light ACK.  A light ACK is a shorter ACK (header + 1
-   x 32-bit field).  It does not trigger an ACKACK.
 
 
 
@@ -2409,6 +2409,12 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 43]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   often so many packets being sent and received that the ACK position
+   on the sender doesn't advance quickly enough.  To mitigate this,
+   after 64 packets (even if the ACK period has not fully elapsed) the
+   receiver sends a light ACK.  A light ACK is a shorter ACK (header + 1
+   x 32-bit field).  It does not trigger an ACKACK.
 
    When a receiver encounters the situation where the next packet to be
    played was not successfully received from the sender, it will "skip"
@@ -2452,12 +2458,6 @@ Internet-Draft                     SRT                        March 2020
    point this will cause the send queue to fill.  When the send queue is
    full, the sender will begin to drop packets without even sending them
    the first time.  An encoder (or other application) may continue to
-   provide packets, but there's no place for them, so they will end up
-   being thrown away.
-
-   This condition where packets are unsent doesn't happen often.  There
-   is a maximum number of packets held in the send buffer based on the
-   configured latency.  Older packets that have no chance to be
 
 
 
@@ -2466,6 +2466,12 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 44]
 Internet-Draft                     SRT                        March 2020
 
 
+   provide packets, but there's no place for them, so they will end up
+   being thrown away.
+
+   This condition where packets are unsent doesn't happen often.  There
+   is a maximum number of packets held in the send buffer based on the
+   configured latency.  Older packets that have no chance to be
    retransmitted and played in time are dropped, making room for newer
    real-time packets produced by the sending application.  See sections
    Section 4.5, Section 4.6 for details.
@@ -2508,12 +2514,6 @@ Internet-Draft                     SRT                        March 2020
    variance, Available Buffer Size, Packets Receiving Rate and Estimated
    Link Capacity.  Upon reception of the NAK packet (Section 3.2.4) the
    sender can detect packet losses during the transmission.  These
-   mechanisms provide a solid background for various congestion control
-   algorithms.
-
-   Given that SRT can operate in live and file transfer modes, there are
-   two groups of congestion control algorithms possible.
-
 
 
 
@@ -2521,6 +2521,12 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 45]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   mechanisms provide a solid background for various congestion control
+   algorithms.
+
+   Given that SRT can operate in live and file transfer modes, there are
+   two groups of congestion control algorithms possible.
 
    For live transmission mode (Section 4.2.2) the congestion control
    algorithm does not need to control the sending pace of the data
@@ -2565,18 +2571,17 @@ Contributors
    This specification is heavily based on the SRT Protocol Technical
    Overview [SRTTO] written by Jean Dube and Steve Matthews.
 
-   In alphabetical order, the contributors to the pre-IETF SRT project
-   and specification at Haivision are: Marc Cymontkowski, Roman
-   Diouskine, Jean Dube, Mikolaj Malecki, Steve Matthews, Maria
-   Sharabayko, Maxim Sharabayko, Adam Yellen.
-
-
 
 
 Sharabayko, et al.      Expires 10 September 2020              [Page 46]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   In alphabetical order, the contributors to the pre-IETF SRT project
+   and specification at Haivision are: Marc Cymontkowski, Roman
+   Diouskine, Jean Dube, Mikolaj Malecki, Steve Matthews, Maria
+   Sharabayko, Maxim Sharabayko, Adam Yellen.
 
    The contributors to this specification at SK Telecom are Jeongseok
    Kim and Joonwoong Kim.
@@ -2620,12 +2625,7 @@ Informative References
               <https://doi.org/10.1109/SC.2004.24>.
 
    [H.265]    International Telecommunications Union, "H.265 : High
-              efficiency video coding", ITU-T Recommendation H.265,
-              2019.
 
-   [I-D.ietf-quic-http]
-              Bishop, M., "Hypertext Transfer Protocol Version 3
-              (HTTP/3)", Work in Progress, Internet-Draft, draft-ietf-
 
 
 
@@ -2634,6 +2634,12 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 47]
 Internet-Draft                     SRT                        March 2020
 
 
+              efficiency video coding", ITU-T Recommendation H.265,
+              2019.
+
+   [I-D.ietf-quic-http]
+              Bishop, M., "Hypertext Transfer Protocol Version 3
+              (HTTP/3)", Work in Progress, Internet-Draft, draft-ietf-
               quic-http-27, 21 February 2020, <http://www.ietf.org/
               internet-drafts/draft-ietf-quic-http-27.txt>.
 
@@ -2675,12 +2681,6 @@ Internet-Draft                     SRT                        March 2020
               Dworkin, M., "Recommendation for Block Cipher Modes of
               Operation", December 2001.
 
-   [SRTSRC]   "SRT fully functional reference implementation", March
-              2020, <https://github.com/Haivision/srt>.
-
-   [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
-              Overview", December 2019.
-
 
 
 
@@ -2689,6 +2689,12 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 48]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   [SRTSRC]   "SRT fully functional reference implementation", March
+              2020, <https://github.com/Haivision/srt>.
+
+   [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
+              Overview", December 2019.
 
    [VP9]      WebM, "VP9 Video Codec", March 2020,
               <https://www.webmproject.org/vp9>.
@@ -2732,12 +2738,6 @@ Authors' Addresses
    Maria Sharabayko
    Haivision Network Video, GmbH
 
-   Email: msharabayko@haivision.com
-
-
-   Jean Dube
-   Haivision
-
 
 
 
@@ -2745,6 +2745,12 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 49]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   Email: msharabayko@haivision.com
+
+
+   Jean Dube
+   Haivision
 
    Email: jdube@haivision.com
 
@@ -2759,12 +2765,6 @@ Internet-Draft                     SRT                        March 2020
    SK Telecom Co., Ltd.
 
    Email: joonwoong.kim@sk.com
-
-
-
-
-
-
 
 
 

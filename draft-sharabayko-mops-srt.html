@@ -1988,7 +1988,7 @@ NOTE 2: size in bytes = (((KK+1/2) * Klen) + 8)<a href="#section-3.2.1.2-3.32" c
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                                                               |
-+                  Integrity Check Vector (ICV)                  +
++                  Integrity Check Vector (ICV)                 +
 |                                                               |
 +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 |                              xSEK                             |
@@ -3296,8 +3296,12 @@ i = 0;    /* Position of the next available in the receiver buffer
              packet relatively to the current buffer position pos */
 
 while(True) {
-    Get the position of the next available in receiver buffer packet i;
-    Calculate packet delivery time for the next available packet PktTsbpdTime;
+    // Get the position i of the next available packet
+    // in the receiver buffer
+    i = next_avail();
+    // Calculate packet delivery time PktTsbpdTime
+    // for the next available packet
+    PktTsbpdTime = delivery_time(i);
 
     if T_NOW &lt; PktTsbpdTime:
         continue;
