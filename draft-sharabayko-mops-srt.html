@@ -2565,7 +2565,7 @@ connection. See the list of error codes in <a href="#hs-rej-reason" class="xref"
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1008</td>
               <td class="text-left" rowspan="1" colspan="1">REJ_VERSION</td>
-              <td class="text-left" rowspan="1" colspan="1">peer is older version than agent's minimum set</td>
+              <td class="text-left" rowspan="1" colspan="1">peer is older version than agent's min</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1009</td>
@@ -3289,8 +3289,8 @@ or retransmitted in time, and delivers the subsequent packets to the application
 it is their time to play.<a href="#section-4.6-3" class="pilcrow">¶</a></p>
 <p id="section-4.6-4">In pseudo-code, the algorithm of reading from the receiver buffer is
 the following:<a href="#section-4.6-4" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-4.6-5">
-<pre>
+<div id="section-4.6-5">
+<pre class="sourcecode">&lt;CODE BEGINS&gt;
 pos = 0;  /* Current receiver buffer position */
 i = 0;    /* Position of the next available in the receiver buffer
              packet relatively to the current buffer position pos */
@@ -3308,7 +3308,8 @@ while(True) {
 
     pos = i + 1;
 }
-</pre><a href="#section-4.6-5" class="pilcrow">¶</a>
+
+&lt;CODE ENDS&gt;</pre><a href="#section-4.6-5" class="pilcrow">¶</a>
 </div>
 <p id="section-4.6-6">where T_NOW is the current time according to the receiver clock.<a href="#section-4.6-6" class="pilcrow">¶</a></p>
 <p id="section-4.6-7">The TLPKTDROP mechanism can be turned off to always ensure a clean

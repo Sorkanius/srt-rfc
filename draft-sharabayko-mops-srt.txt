@@ -1458,44 +1458,41 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 26]
 Internet-Draft                     SRT                        March 2020
 
 
-          +------+----------------+-----------------------------+
-          | Code | Error          | Description                 |
-          +======+================+=============================+
-          | 1000 | REJ_UNKNOWN    | Unknown reason              |
-          +------+----------------+-----------------------------+
-          | 1001 | REJ_SYSTEM     | System function error       |
-          +------+----------------+-----------------------------+
-          | 1002 | REJ_PEER       | Rejected by peer            |
-          +------+----------------+-----------------------------+
-          | 1003 | REJ_RESOURCE   | Resource allocation problem |
-          +------+----------------+-----------------------------+
-          | 1004 | REJ_ROGUE      | incorrect data in handshake |
-          +------+----------------+-----------------------------+
-          | 1005 | REJ_BACKLOG    | listener's backlog exceeded |
-          +------+----------------+-----------------------------+
-          | 1006 | REJ_IPE        | internal program error      |
-          +------+----------------+-----------------------------+
-          | 1007 | REJ_CLOSE      | socket is closing           |
-          +------+----------------+-----------------------------+
-          | 1008 | REJ_VERSION    | peer is older version than  |
-          |      |                | agent's minimum set         |
-          +------+----------------+-----------------------------+
-          | 1009 | REJ_RDVCOOKIE  | rendezvous cookie collision |
-          +------+----------------+-----------------------------+
-          | 1010 | REJ_BADSECRET  | wrong password              |
-          +------+----------------+-----------------------------+
-          | 1011 | REJ_UNSECURE   | password required or        |
-          |      |                | unexpected                  |
-          +------+----------------+-----------------------------+
-          | 1012 | REJ_MESSAGEAPI | Stream flag collision       |
-          +------+----------------+-----------------------------+
-          | 1013 | REJ_CONGESTION | incompatible congestion-    |
-          |      |                | controller type             |
-          +------+----------------+-----------------------------+
-          | 1014 | REJ_FILTER     | incompatible packet filter  |
-          +------+----------------+-----------------------------+
-          | 1015 | REJ_GROUP      | incompatible group          |
-          +------+----------------+-----------------------------+
+    +------+----------------+-----------------------------------------+
+    | Code | Error          | Description                             |
+    +======+================+=========================================+
+    | 1000 | REJ_UNKNOWN    | Unknown reason                          |
+    +------+----------------+-----------------------------------------+
+    | 1001 | REJ_SYSTEM     | System function error                   |
+    +------+----------------+-----------------------------------------+
+    | 1002 | REJ_PEER       | Rejected by peer                        |
+    +------+----------------+-----------------------------------------+
+    | 1003 | REJ_RESOURCE   | Resource allocation problem             |
+    +------+----------------+-----------------------------------------+
+    | 1004 | REJ_ROGUE      | incorrect data in handshake             |
+    +------+----------------+-----------------------------------------+
+    | 1005 | REJ_BACKLOG    | listener's backlog exceeded             |
+    +------+----------------+-----------------------------------------+
+    | 1006 | REJ_IPE        | internal program error                  |
+    +------+----------------+-----------------------------------------+
+    | 1007 | REJ_CLOSE      | socket is closing                       |
+    +------+----------------+-----------------------------------------+
+    | 1008 | REJ_VERSION    | peer is older version than agent's min  |
+    +------+----------------+-----------------------------------------+
+    | 1009 | REJ_RDVCOOKIE  | rendezvous cookie collision             |
+    +------+----------------+-----------------------------------------+
+    | 1010 | REJ_BADSECRET  | wrong password                          |
+    +------+----------------+-----------------------------------------+
+    | 1011 | REJ_UNSECURE   | password required or unexpected         |
+    +------+----------------+-----------------------------------------+
+    | 1012 | REJ_MESSAGEAPI | Stream flag collision                   |
+    +------+----------------+-----------------------------------------+
+    | 1013 | REJ_CONGESTION | incompatible congestion-controller type |
+    +------+----------------+-----------------------------------------+
+    | 1014 | REJ_FILTER     | incompatible packet filter              |
+    +------+----------------+-----------------------------------------+
+    | 1015 | REJ_GROUP      | incompatible group                      |
+    +------+----------------+-----------------------------------------+
 
                  Table 7: Handshake Rejection Reason Codes
 
@@ -1505,6 +1502,9 @@ Internet-Draft                     SRT                        March 2020
    wins.  For Caller-Listener connections it is reasonable to set this
    value on the Listener only.  In the case of Rendezvous the only
    reasonable approach is to decide upon the correct value from the
+   different sources and to set it on both parties (note that *AES-128*
+   is the default).
+
 
 
 
@@ -1513,9 +1513,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 27]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   different sources and to set it on both parties (note that *AES-128*
-   is the default).
 
 4.3.1.  Caller-Listener Handshake
 
@@ -1562,6 +1559,9 @@ Internet-Draft                     SRT                        March 2020
 
    *  Handshake Type: INDUCTION
 
+   *  SRT Socket ID: Socket ID of the Listener
+
+
 
 
 
@@ -1569,8 +1569,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 28]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   *  SRT Socket ID: Socket ID of the Listener
 
    *  SYN Cookie: a cookie that is crafted based on host, port and
       current time with 1 minute accuracy
@@ -1618,6 +1616,8 @@ Internet-Draft                     SRT                        March 2020
    previously received in the induction phase in the SRT Socket ID field
    of the handshake structure.
 
+   *  Encryption Flags: advertised cipher family and block size.
+
 
 
 
@@ -1625,8 +1625,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 29]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   *  Encryption Flags: advertised cipher family and block size.
 
    *  Extension Flags: A set of flags that define the extensions
       provided in the handshake.
@@ -1673,6 +1671,8 @@ Internet-Draft                     SRT                        March 2020
    socket was bound.  If the cookies are identical (for any reason), the
    connection will not be made until new, unique cookies are generated
    (after a delay of up to one minute).  In the case of an application
+   "connecting to itself", the cookies will always be identical, and so
+   the connection will never be established.
 
 
 
@@ -1681,9 +1681,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 30]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   "connecting to itself", the cookies will always be identical, and so
-   the connection will never be established.
 
    When one party's cookie value is greater than its peer's, it wins the
    cookie contest and becomes Initiator (the other party becomes the
@@ -1730,6 +1727,9 @@ Internet-Draft                     SRT                        March 2020
        Bob's cookie is greater than Alice's, he will become the
        Initiator.  Otherwise, he will become the Responder.
 
+   The resolution of the Handshake Role (Initiator or Responder) is
+   essential for further processing.
+
 
 
 
@@ -1737,9 +1737,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 31]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   The resolution of the Handshake Role (Initiator or Responder) is
-   essential for further processing.
 
    Then Bob responds:
 
@@ -1787,15 +1784,15 @@ Internet-Draft                     SRT                        March 2020
 
           -  switches to "initiated" state
 
+          -  sends Alice a message with Handshake Type CONCLUSION that
+             also contains extensions with HSRSP
+
 
 
 Sharabayko, et al.      Expires 10 September 2020              [Page 32]
 
 Internet-Draft                     SRT                        March 2020
 
-
-          -  sends Alice a message with Handshake Type CONCLUSION that
-             also contains extensions with HSRSP
 
              o  awaits a confirmation from Alice that she is also
                 connected (preferably by AGREEMENT message)
@@ -1843,14 +1840,15 @@ Internet-Draft                     SRT                        March 2020
 
    Initiator:
 
+   1.  Waving
+
+
 
 
 Sharabayko, et al.      Expires 10 September 2020              [Page 33]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   1.  Waving
 
        *  Receives WAVEAHAND message
 
@@ -1898,6 +1896,8 @@ Internet-Draft                     SRT                        March 2020
 
        *  Switches to Attention
 
+       *  Sends CONCLUSION message (with no extensions)
+
 
 
 
@@ -1905,8 +1905,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 34]
 
 Internet-Draft                     SRT                        March 2020
 
-
-       *  Sends CONCLUSION message (with no extensions)
 
    2.  Attention
 
@@ -1954,6 +1952,8 @@ Internet-Draft                     SRT                        March 2020
        Initiator sends CONCLUSION + HSREQ, even if it has already
        received and interpreted it.
 
+   3.  When the Initiator switches to the Connected state it responds
+       with a AGREEMENT message, which may be missed by the Responder.
 
 
 
@@ -1962,8 +1962,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 35]
 Internet-Draft                     SRT                        March 2020
 
 
-   3.  When the Initiator switches to the Connected state it responds
-       with a AGREEMENT message, which may be missed by the Responder.
        Nonetheless, the Initiator may start sending data packets because
        it considers itself connected - it doesn't know that the
        Responder has not yet switched to the Connected state.  Therefore
@@ -2009,6 +2007,8 @@ Internet-Draft                     SRT                        March 2020
    extended handshake process between initiator and responder.  The
    Handshake Extension Message (Section 3.2.1.1) has TSBPD delay
    information (in milliseconds) from the SRT receiver and sender.  The
+   latency for a connection will be established as the maximum value of
+   latencies proposed by the initiator and responder.
 
 
 
@@ -2017,9 +2017,6 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 36]
 
 Internet-Draft                     SRT                        March 2020
 
-
-   latency for a connection will be established as the maximum value of
-   latencies proposed by the initiator and responder.
 
 4.5.  Timestamp Based Packet Delivery
 
@@ -2064,6 +2061,9 @@ Internet-Draft                     SRT                        March 2020
 
    Figure 14 illustrates the key latency points during the packet
    transmission with the TSBPD feature enabled.
+
+
+
 
 
 
@@ -2242,6 +2242,7 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 40]
 Internet-Draft                     SRT                        March 2020
 
 
+   <CODE BEGINS>
    pos = 0;  /* Current receiver buffer position */
    i = 0;    /* Position of the next available in the receiver buffer
                 packet relatively to the current buffer position pos */
@@ -2259,6 +2260,7 @@ Internet-Draft                     SRT                        March 2020
 
        pos = i + 1;
    }
+   <CODE ENDS>
 
    where T_NOW is the current time according to the receiver clock.
 
@@ -2288,8 +2290,6 @@ Internet-Draft                     SRT                        March 2020
 
    When a packet is received, SRT determines the difference between the
    time it was expected and its timestamp.  The timestamp is calculated
-   on the receiver side.  The RTT tells the receiver how much time it
-   was supposed to take.  SRT maintains a reference between the time at
 
 
 
@@ -2298,6 +2298,8 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 41]
 Internet-Draft                     SRT                        March 2020
 
 
+   on the receiver side.  The RTT tells the receiver how much time it
+   was supposed to take.  SRT maintains a reference between the time at
    the leading edge of the send buffer's latency window and the
    corresponding time on the receiver (the present time).  This allows
    to convert packet timestamp to the local receiver time.  Based on
@@ -2343,8 +2345,6 @@ Internet-Draft                     SRT                        March 2020
 
    Upon receiving the full acknowledgement (ACK) control packet, the SRT
    sender should acknowledge its reception to the receiver by sending an
-   ACKACK control packet with the sequence number of the full ACK packet
-   being acknowledged.
 
 
 
@@ -2353,6 +2353,9 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 42]
 
 Internet-Draft                     SRT                        March 2020
 
+
+   ACKACK control packet with the sequence number of the full ACK packet
+   being acknowledged.
 
    The SRT receiver also sends NAK control packets to notify the sender
    about the missing packets (Section 4.8.2).  The sending of a NAK
@@ -2400,9 +2403,6 @@ Internet-Draft                     SRT                        March 2020
    receiver sends a light ACK.  A light ACK is a shorter ACK (header + 1
    x 32-bit field).  It does not trigger an ACKACK.
 
-   When a receiver encounters the situation where the next packet to be
-   played was not successfully received from the sender, it will "skip"
-
 
 
 Sharabayko, et al.      Expires 10 September 2020              [Page 43]
@@ -2410,6 +2410,8 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 43]
 Internet-Draft                     SRT                        March 2020
 
 
+   When a receiver encounters the situation where the next packet to be
+   played was not successfully received from the sender, it will "skip"
    this packet (see Section 4.6) and send a fake ACK.  To the sender,
    this fake ACK is a real ACK, and so it just behaves as if the packet
    had been received.  This facilitates the synchronization between SRT
@@ -2456,8 +2458,6 @@ Internet-Draft                     SRT                        March 2020
    This condition where packets are unsent doesn't happen often.  There
    is a maximum number of packets held in the send buffer based on the
    configured latency.  Older packets that have no chance to be
-   retransmitted and played in time are dropped, making room for newer
-
 
 
 
@@ -2466,6 +2466,7 @@ Sharabayko, et al.      Expires 10 September 2020              [Page 44]
 Internet-Draft                     SRT                        March 2020
 
 
+   retransmitted and played in time are dropped, making room for newer
    real-time packets produced by the sending application.  See sections
    Section 4.5, Section 4.6 for details.
 
@@ -2512,7 +2513,6 @@ Internet-Draft                     SRT                        March 2020
 
    Given that SRT can operate in live and file transfer modes, there are
    two groups of congestion control algorithms possible.
-
 
 
 
