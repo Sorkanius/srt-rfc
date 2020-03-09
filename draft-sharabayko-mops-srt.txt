@@ -5,12 +5,12 @@
 MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
 Intended status: Standards Track           Haivision Network Video, GmbH
-Expires: 7 September 2020                                        J. Dube
+Expires: 10 September 2020                                       J. Dube
                                                                Haivision
                                                                  JS. Kim
                                                                  JW. Kim
                                                     SK Telecom Co., Ltd.
-                                                            6 March 2020
+                                                            9 March 2020
 
 
                             The SRT Protocol
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 September 2020.
+   This Internet-Draft will expire on 10 September 2020.
 
 
 
 
 
 
-Sharabayko, et al.      Expires 7 September 2020                [Page 1]
+Sharabayko, et al.      Expires 10 September 2020               [Page 1]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -77,10 +77,9 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Motivation  . . . . . . . . . . . . . . . . . . . . . . .   3
      1.2.  Secure Reliable Transport Protocol  . . . . . . . . . . .   4
-     1.3.  Open Source Initiative  . . . . . . . . . . . . . . . . .   5
-   2.  Conventions and Definitions . . . . . . . . . . . . . . . . .   6
-   3.  Packet Structure  . . . . . . . . . . . . . . . . . . . . . .   6
-     3.1.  Data Packets  . . . . . . . . . . . . . . . . . . . . . .   7
+   2.  Conventions and Definitions . . . . . . . . . . . . . . . . .   5
+   3.  Packet Structure  . . . . . . . . . . . . . . . . . . . . . .   5
+     3.1.  Data Packets  . . . . . . . . . . . . . . . . . . . . . .   6
      3.2.  Control Packets . . . . . . . . . . . . . . . . . . . . .   8
        3.2.1.  Handshake . . . . . . . . . . . . . . . . . . . . . .   9
        3.2.2.  Keep-Alive  . . . . . . . . . . . . . . . . . . . . .  17
@@ -106,15 +105,15 @@ Table of Contents
        4.8.1.  Packet Acknowledgement (ACKs, ACKACKs)  . . . . . . .  43
        4.8.2.  Packet Retransmission (NAKs)  . . . . . . . . . . . .  44
      4.9.  Bidirectional Transmission Queues . . . . . . . . . . . .  45
+     4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  45
 
 
 
-Sharabayko, et al.      Expires 7 September 2020                [Page 2]
+Sharabayko, et al.      Expires 10 September 2020               [Page 2]
 
 Internet-Draft                     SRT                        March 2020
 
 
-     4.10. Round Trip Time Estimation  . . . . . . . . . . . . . . .  45
      4.11. Congestion Control  . . . . . . . . . . . . . . . . . . .  45
    5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  46
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  46
@@ -124,8 +123,8 @@ Internet-Draft                     SRT                        March 2020
    References  . . . . . . . . . . . . . . . . . . . . . . . . . . .  47
      Normative References  . . . . . . . . . . . . . . . . . . . . .  47
      Informative References  . . . . . . . . . . . . . . . . . . . .  47
-   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  48
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  48
+   Appendix A.  Packet Sequence List coding  . . . . . . . . . . . .  49
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  49
 
 1.  Introduction
 
@@ -135,17 +134,18 @@ Internet-Draft                     SRT                        March 2020
    many years.  With the emergence of cloud technologies, many video
    processing pipeline components have transitioned from on-premises
    appliances to software running on cloud instances.  While real-time
-   streaming over TCP-based protocols like RTMP is possible at low
+   streaming over TCP-based protocols like RTMP[RTMP] is possible at low
    bitrates and on a small scale, the exponential growth of the
    streaming market has created a need for more powerful solutions.
 
    To improve scalability on the delivery side, content delivery
    networks (CDNs) at one point transitioned to segmentation-based
-   technologies like HLS (HTTP Live Streaming) and DASH (Dynamic
-   Adaptive Streaming over HTTP).  This move increased the end-to-end
-   latency of live streaming to over 30 seconds, which makes it
-   unattractive for many use cases.  Over time, the industry optimized
-   these delivery methods, bringing the latency down to 3 seconds.
+   technologies like HLS (HTTP Live Streaming)[RFC8216] and DASH
+   (Dynamic Adaptive Streaming over HTTP)[ISO23009].  This move
+   increased the end-to-end latency of live streaming to over 30
+   seconds, which makes it unattractive for many use cases.  Over time,
+   the industry optimized these delivery methods, bringing the latency
+   down to 3 seconds.
 
    While the delivery side scaled up, improvements to video transcoding
    became a necessity.  Viewers watch video streams on a variety of
@@ -157,81 +157,80 @@ Internet-Draft                     SRT                        March 2020
    internet.  But there are limitations for the payload to be
    transmitted, since RTMP as a media specific protocol only supports
    two audio channels and a restricted set of audio and video codecs,
-   lacking support for newer formats such as HEVC, VP9, or AV1.
+   lacking support for newer formats such as HEVC[H.265], VP9[VP9], or
+   AV1[AV1].
 
    Since RTMP, HLS and DASH rely on TCP, these protocols can only
    guarantee acceptable reliability over connections with low RTTs, and
-   can't use the bandwidth of network connections to their full extent
 
 
 
-Sharabayko, et al.      Expires 7 September 2020                [Page 3]
+Sharabayko, et al.      Expires 10 September 2020               [Page 3]
 
 Internet-Draft                     SRT                        March 2020
 
 
-   due to limitations imposed by congestion control.  Notably, QUIC has
-   been designed to address these problems with HTTP-based delivery
-   protocols in HTTP/3.  Like QUIC, SRT uses UDP instead of the TCP
-   transport protocol, but includes features which assure more reliable
-   delivery.
+   can not use the bandwidth of network connections to their full extent
+   due to limitations imposed by congestion control.  Notably,
+   QUIC[I-D.ietf-quic-transport] has been designed to address these
+   problems with HTTP-based delivery protocols in
+   HTTP/3[I-D.ietf-quic-http].  Like QUIC, SRT[SRTSRC] uses UDP instead
+   of the TCP transport protocol, but includes features which assure
+   more reliable delivery.
 
 1.2.  Secure Reliable Transport Protocol
 
    Low latency video transmissions across reliable (usually local) IP
-   based networks typically take the form of MPEG-TS unicast or
-   multicast streams using the UDP/RTP protocol, where any packet loss
-   can be mitigated by enabling forward error correction (FEC).
+   based networks typically take the form of MPEG-TS[ISO13818-1] unicast
+   or multicast streams using the UDP/RTP protocol, where any packet
+   loss can be mitigated by enabling forward error correction (FEC).
    Achieving the same low latency between sites in different cities,
    countries or even continents is more challenging.  While it is
-   possible with satellite links or dedicated MPLS networks, these are
-   expensive solutions.  The use of public internet connectivity, while
-   less expensive, imposes significant bandwidth overhead to achieve the
-   necessary level of packet loss recovery.  Introducing selective
-   packet retransmission (reliable UDP) to recover from packet loss
-   removes those limitations.
+   possible with satellite links or dedicated MPLS[RFC3031] networks,
+   these are expensive solutions.  The use of public internet
+   connectivity, while less expensive, imposes significant bandwidth
+   overhead to achieve the necessary level of packet loss recovery.
+   Introducing selective packet retransmission (reliable UDP) to recover
+   from packet loss removes those limitations.
 
    Derived from the UDP-based Data Transfer protocol (UDT), SRT is a
    user-level protocol that retains most of the core concepts and
    mechanisms while introducing several refinements and enhancements,
    including control packet modifications, improved flow control for
    handling live streaming, enhanced congestion control, and a mechanism
-   for encrypting packets.  A fully functional reference implementation
-   can be found at https://github.com/Haivision/srt.
+   for encrypting packets.
 
    SRT is a transport protocol that enables the secure, reliable
    transport of data across unpredictable networks, such as the
    Internet.  While any data type can be transferred via SRT, it is
    ideal for low latency (sub-second) video streaming.  SRT provides
-   dramatically improved bandwidth utilization compared to RTMP,
-   allowing much higher contribution bitrates over long distance
-   connections.
+   improved bandwidth utilization compared to RTMP, allowing much higher
+   contribution bitrates over long distance connections.
 
    As packets are streamed from source to destination, SRT detects and
    adapts to the real-time network conditions between the two endpoints,
    and helps compensate for jitter and bandwidth fluctuations due to
    congestion over noisy networks.  Its error recovery mechanism
-   minimizes the packet loss typical of Internet connections.  SRT
-   supports AES encryption for end-to-end security.
+   minimizes the packet loss typical of Internet connections.
 
    To achieve low latency streaming, SRT had to address timing issues.
    The characteristics of a stream from a source network are completely
    changed by transmission over the public internet, which introduces
    delays, jitter, and packet loss.  This, in turn, leads to problems
+   with decoding, as the audio and video decoders do not receive packets
 
 
 
-Sharabayko, et al.      Expires 7 September 2020                [Page 4]
+Sharabayko, et al.      Expires 10 September 2020               [Page 4]
 
 Internet-Draft                     SRT                        March 2020
 
 
-   with decoding, as the audio and video decoders do not receive packets
    at the expected times.  The use of large buffers helps, but latency
    is increased.
 
    SRT includes a mechanism that recreates the signal characteristics on
-   the receiver side, dramatically reducing the need for buffering.
+   the receiver side, reducing the need for buffering.
 
    Like TCP, SRT employs a listener/caller model.  The data flow is bi-
    directional and independent of the connection initiation - either the
@@ -248,39 +247,6 @@ Internet-Draft                     SRT                        March 2020
 
    SRT maintains the ability for fast file transfers introduced in UDT,
    and adds support for AES encryption.
-
-1.3.  Open Source Initiative
-
-   Haivision developed the SRT protocol in 2012.  After successfully
-   using it in thousands of installations worldwide for five years, they
-   decided to open it up to the community and made it open source in
-   April 2017.
-
-   Open source SRT is distributed under MPL-2.0, which was chosen
-   because it strikes a balance between driving adoption for open source
-   SRT, while encouraging contributions to improve upon it by the
-   community of adopters.  Any third party is free to use the SRT source
-   in a larger work regardless of how that larger work is compiled.
-   Should they make source code changes, they would be obligated to make
-   those changes available to the community.
-
-   In the three years since Haivision opened up the source code, more
-   than 350 companies have joined the SRT Industry Alliance
-   (https://www.srtalliance.org), and even more have adopted the
-   protocol.  SRT has seen the fastest adoption of a protocol in the
-   media industry to date, and has become the new de facto standard for
-   secure, low latency, high quality contribution and point-
-   to-(multi-)point distribution.
-
-
-
-
-
-
-Sharabayko, et al.      Expires 7 September 2020                [Page 5]
-
-Internet-Draft                     SRT                        March 2020
-
 
 2.  Conventions and Definitions
 
@@ -308,6 +274,14 @@ Internet-Draft                     SRT                        March 2020
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+
+
+
+Sharabayko, et al.      Expires 10 September 2020               [Page 5]
+
+Internet-Draft                     SRT                        March 2020
+
+
                     Figure 1: SRT packet as UDP payload
 
    SRT has two types of packets distinguished by the Packet Type Flag:
@@ -331,13 +305,6 @@ Internet-Draft                     SRT                        March 2020
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-
-
-Sharabayko, et al.      Expires 7 September 2020                [Page 6]
-
-Internet-Draft                     SRT                        March 2020
-
-
                        Figure 2: SRT packet structure
 
    F (1 bit):  Packet Type Flag.  The control packet has this flag set
@@ -356,6 +323,20 @@ Internet-Draft                     SRT                        March 2020
 3.1.  Data Packets
 
    The structure of the SRT data packet is shown in Figure 3.
+
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 10 September 2020               [Page 6]
+
+Internet-Draft                     SRT                        March 2020
+
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -386,14 +367,6 @@ Internet-Draft                     SRT                        March 2020
 
    O (1 bit):  Order Flag.  Indicates whether the message should be
       delivered by the receiver in order (1) or not (0).  Certain
-
-
-
-Sharabayko, et al.      Expires 7 September 2020                [Page 7]
-
-Internet-Draft                     SRT                        March 2020
-
-
       restrictions apply depending on the data transmission mode used
       (Section 4.2).
 
@@ -412,6 +385,14 @@ Internet-Draft                     SRT                        March 2020
 
    Data (variable length):  The payload of the data packet.  The length
       of the data is the remaining length of the UDP packet.
+
+
+
+
+Sharabayko, et al.      Expires 10 September 2020               [Page 7]
+
+Internet-Draft                     SRT                        March 2020
+
 
 3.2.  Control Packets
 
@@ -441,15 +422,6 @@ Internet-Draft                     SRT                        March 2020
    Subtype (16 bits):  This field specifies an additional subtype for
       specific packets.  See Table 1.
 
-
-
-
-
-Sharabayko, et al.      Expires 7 September 2020                [Page 8]
-
-Internet-Draft                     SRT                        March 2020
-
-
    Type-specific Information (32 bits):  The use of this field depends
       on the particular control packet type.  Handshake packets do not
       use this field.
@@ -459,6 +431,24 @@ Internet-Draft                     SRT                        March 2020
 
    The types of SRT control packets are shown in Table 1.  The value
    "0x7ffff" is reserved for a user-defined type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 10 September 2020               [Page 8]
+
+Internet-Draft                     SRT                        March 2020
+
 
       +-------------------+--------------+---------+---------------+
       | Packet Type       | Control Type | Subtype | Section       |
@@ -501,7 +491,17 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020                [Page 9]
+
+
+
+
+
+
+
+
+
+
+Sharabayko, et al.      Expires 10 September 2020               [Page 9]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 10]
+Sharabayko, et al.      Expires 10 September 2020              [Page 10]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 11]
+Sharabayko, et al.      Expires 10 September 2020              [Page 11]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -669,7 +669,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 12]
+Sharabayko, et al.      Expires 10 September 2020              [Page 12]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 13]
+Sharabayko, et al.      Expires 10 September 2020              [Page 13]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 14]
+Sharabayko, et al.      Expires 10 September 2020              [Page 14]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 15]
+Sharabayko, et al.      Expires 10 September 2020              [Page 15]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 16]
+Sharabayko, et al.      Expires 10 September 2020              [Page 16]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 17]
+Sharabayko, et al.      Expires 10 September 2020              [Page 17]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 18]
+Sharabayko, et al.      Expires 10 September 2020              [Page 18]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 19]
+Sharabayko, et al.      Expires 10 September 2020              [Page 19]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 20]
+Sharabayko, et al.      Expires 10 September 2020              [Page 20]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 21]
+Sharabayko, et al.      Expires 10 September 2020              [Page 21]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 22]
+Sharabayko, et al.      Expires 10 September 2020              [Page 22]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 23]
+Sharabayko, et al.      Expires 10 September 2020              [Page 23]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1341,7 +1341,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 24]
+Sharabayko, et al.      Expires 10 September 2020              [Page 24]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1397,7 +1397,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 25]
+Sharabayko, et al.      Expires 10 September 2020              [Page 25]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1453,7 +1453,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 26]
+Sharabayko, et al.      Expires 10 September 2020              [Page 26]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1509,7 +1509,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 27]
+Sharabayko, et al.      Expires 10 September 2020              [Page 27]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1565,7 +1565,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 28]
+Sharabayko, et al.      Expires 10 September 2020              [Page 28]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1621,7 +1621,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 29]
+Sharabayko, et al.      Expires 10 September 2020              [Page 29]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1677,7 +1677,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 30]
+Sharabayko, et al.      Expires 10 September 2020              [Page 30]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1733,7 +1733,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 31]
+Sharabayko, et al.      Expires 10 September 2020              [Page 31]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1789,7 +1789,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 32]
+Sharabayko, et al.      Expires 10 September 2020              [Page 32]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1845,7 +1845,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 33]
+Sharabayko, et al.      Expires 10 September 2020              [Page 33]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1901,7 +1901,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 34]
+Sharabayko, et al.      Expires 10 September 2020              [Page 34]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -1957,7 +1957,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 35]
+Sharabayko, et al.      Expires 10 September 2020              [Page 35]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2013,7 +2013,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 36]
+Sharabayko, et al.      Expires 10 September 2020              [Page 36]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2069,7 +2069,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 37]
+Sharabayko, et al.      Expires 10 September 2020              [Page 37]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2125,7 +2125,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 38]
+Sharabayko, et al.      Expires 10 September 2020              [Page 38]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2181,7 +2181,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 39]
+Sharabayko, et al.      Expires 10 September 2020              [Page 39]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2237,7 +2237,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 40]
+Sharabayko, et al.      Expires 10 September 2020              [Page 40]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2293,7 +2293,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 41]
+Sharabayko, et al.      Expires 10 September 2020              [Page 41]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2349,7 +2349,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 42]
+Sharabayko, et al.      Expires 10 September 2020              [Page 42]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2405,7 +2405,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 43]
+Sharabayko, et al.      Expires 10 September 2020              [Page 43]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2461,7 +2461,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 44]
+Sharabayko, et al.      Expires 10 September 2020              [Page 44]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2517,7 +2517,7 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 45]
+Sharabayko, et al.      Expires 10 September 2020              [Page 45]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2573,7 +2573,7 @@ Contributors
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 46]
+Sharabayko, et al.      Expires 10 September 2020              [Page 46]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2610,32 +2610,88 @@ Normative References
 
 Informative References
 
+   [AV1]      Rivaz, P.d. and J. Haughton, "AV1 Bitstream & Decoding
+              Process Specification", March 2020,
+              <https://aomediacodec.github.io/av1-spec/av1-spec.pdf>.
+
    [GHG04b]   Gu, Y., Hong, X., and R.L. Grossman,, "Experiences in
               Design and Implementation of a High Performance Transport
               Protocol", DOI 10.1109/SC.2004.24, December 2004,
               <https://doi.org/10.1109/SC.2004.24>.
 
+   [H.265]    International Telecommunications Union, "H.265 : High
+              efficiency video coding", ITU-T Recommendation H.265,
+              2019.
+
+   [I-D.ietf-quic-http]
+              Bishop, M., "Hypertext Transfer Protocol Version 3
+              (HTTP/3)", Work in Progress, Internet-Draft, draft-ietf-
+
+
+
+Sharabayko, et al.      Expires 10 September 2020              [Page 47]
+
+Internet-Draft                     SRT                        March 2020
+
+
+              quic-http-27, 21 February 2020, <http://www.ietf.org/
+              internet-drafts/draft-ietf-quic-http-27.txt>.
+
+   [I-D.ietf-quic-transport]
+              Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
+              and Secure Transport", Work in Progress, Internet-Draft,
+              draft-ietf-quic-transport-27, 21 February 2020,
+              <http://www.ietf.org/internet-drafts/draft-ietf-quic-
+              transport-27.txt>.
+
+   [ISO13818-1]
+              ISO, "Information technology -- Generic coding of moving
+              pictures and associated audio information: Systems", ISO/
+              IEC 13818-1, March 2020.
+
+   [ISO23009] ISO, "Information technology -- Dynamic adaptive streaming
+              over HTTP (DASH)", ISO/IEC 23009:2019, March 2020.
+
    [PNPID]    "PNP ID AND ACPI ID REGISTRY", March 2020,
               <https://uefi.org/PNP_ACPI_Registry>.
+
+   [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
+              Label Switching Architecture", RFC 3031,
+              DOI 10.17487/RFC3031, January 2001,
+              <https://www.rfc-editor.org/info/rfc3031>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+   [RFC8216]  Pantos, R., Ed. and W. May, "HTTP Live Streaming",
+              RFC 8216, DOI 10.17487/RFC8216, August 2017,
+              <https://www.rfc-editor.org/info/rfc8216>.
+
+   [RTMP]     "Real-Time Messaging Protocol", March 2020,
+              <https://www.adobe.com/devnet/rtmp.html>.
+
    [SP800-38A]
               Dworkin, M., "Recommendation for Block Cipher Modes of
               Operation", December 2001.
 
+   [SRTSRC]   "SRT fully functional reference implementation", March
+              2020, <https://github.com/Haivision/srt>.
+
+   [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
+              Overview", December 2019.
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 47]
+
+
+Sharabayko, et al.      Expires 10 September 2020              [Page 48]
 
 Internet-Draft                     SRT                        March 2020
 
 
-   [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
-              Overview", December 2019.
+   [VP9]      WebM, "VP9 Video Codec", March 2020,
+              <https://www.webmproject.org/vp9>.
 
 Appendix A.  Packet Sequence List coding
 
@@ -2685,7 +2741,7 @@ Authors' Addresses
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 48]
+Sharabayko, et al.      Expires 10 September 2020              [Page 49]
 
 Internet-Draft                     SRT                        March 2020
 
@@ -2741,4 +2797,4 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.      Expires 7 September 2020               [Page 49]
+Sharabayko, et al.      Expires 10 September 2020              [Page 50]
