@@ -5,12 +5,12 @@
 MOPS                                                     M.P. Sharabayko
 Internet-Draft                                           M.A. Sharabayko
 Intended status: Standards Track           Haivision Network Video, GmbH
-Expires: 1 October 2020                                          J. Dube
+Expires: 3 October 2020                                          J. Dube
                                                                Haivision
                                                                  JS. Kim
                                                                  JW. Kim
                                                     SK Telecom Co., Ltd.
-                                                           30 March 2020
+                                                            1 April 2020
 
 
                             The SRT Protocol
@@ -46,16 +46,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 October 2020.
+   This Internet-Draft will expire on 3 October 2020.
 
 
 
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 1]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 1]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
 Copyright Notice
@@ -109,15 +109,14 @@ Table of Contents
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 2]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 2]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
      4.11. Congestion Control  . . . . . . . . . . . . . . . . . . .  45
-       4.11.1.  Slow Start . . . . . . . . . . . . . . . . . . . . .  46
-       4.11.2.  Congestion Avoidance . . . . . . . . . . . . . . . .  47
-       4.11.3.  Slow Down  . . . . . . . . . . . . . . . . . . . . .  47
+       4.11.1.  Live Congestion Control (LiveCC) . . . . . . . . . .  46
+       4.11.2.  File Transfer Congestion Control (FileCC)  . . . . .  46
    5.  Encryption  . . . . . . . . . . . . . . . . . . . . . . . . .  48
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .  48
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  48
@@ -165,9 +164,10 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 3]
+
+Sharabayko, et al.       Expires 3 October 2020                 [Page 3]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Since RTMP, HLS and DASH rely on TCP, these protocols can only
@@ -221,9 +221,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 4]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 4]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    delays, jitter, and packet loss.  This, in turn, leads to problems
@@ -277,9 +277,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 5]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 5]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     0                   1                   2                   3
@@ -333,9 +333,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 6]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 6]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
       may have the special value "0" when the packet is a connection
@@ -389,9 +389,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 7]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 7]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Message Number (26 bits):  The sequential number of consecutive data
@@ -445,9 +445,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 8]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 8]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
       +-------------------+--------------+---------+---------------+
@@ -501,9 +501,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                 [Page 9]
+Sharabayko, et al.       Expires 3 October 2020                 [Page 9]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     0                   1                   2                   3
@@ -557,9 +557,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 10]
+Sharabayko, et al.       Expires 3 October 2020                [Page 10]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
                  +-------+------------------------------+
@@ -613,9 +613,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 11]
+Sharabayko, et al.       Expires 3 October 2020                [Page 11]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Handshake Type (32 bits):  This field indicates the handshake packet
@@ -669,9 +669,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 12]
+Sharabayko, et al.       Expires 3 October 2020                [Page 12]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
             +-------+--------------------+-------------------+
@@ -725,9 +725,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 13]
+Sharabayko, et al.       Expires 3 October 2020                [Page 13]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    SRT Version (32 bits):  SRT library version.
@@ -781,9 +781,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 14]
+Sharabayko, et al.       Expires 3 October 2020                [Page 14]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     0                   1                   2                   3
@@ -837,9 +837,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 15]
+Sharabayko, et al.       Expires 3 October 2020                [Page 15]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Cipher ( ): 8 bits.  Value: {0..2}  This is a fixed-width field for
@@ -893,9 +893,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 16]
+Sharabayko, et al.       Expires 3 October 2020                [Page 16]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    ICV (64 bits):  64-bit Integrity Check Vector(AES key wrap
@@ -949,9 +949,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 17]
+Sharabayko, et al.       Expires 3 October 2020                [Page 17]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Type-specific Information:  This field is reserved for future
@@ -1005,9 +1005,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 18]
+Sharabayko, et al.       Expires 3 October 2020                [Page 18]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     0                   1                   2                   3
@@ -1061,9 +1061,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 19]
+Sharabayko, et al.       Expires 3 October 2020                [Page 19]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Estimated Link Capacity (32 bits):  Estimated bandwidth of the link
@@ -1117,9 +1117,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 20]
+Sharabayko, et al.       Expires 3 October 2020                [Page 20]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     0                   1                   2                   3
@@ -1173,9 +1173,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 21]
+Sharabayko, et al.       Expires 3 October 2020                [Page 21]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     0                   1                   2                   3
@@ -1229,9 +1229,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 22]
+Sharabayko, et al.       Expires 3 October 2020                [Page 22]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Type-specific Information:  ACK Sequence Number.  This field is used
@@ -1285,9 +1285,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 23]
+Sharabayko, et al.       Expires 3 October 2020                [Page 23]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    The first packet of a message has the first bit of the Packet
@@ -1341,9 +1341,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 24]
+Sharabayko, et al.       Expires 3 October 2020                [Page 24]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    *  first engaged by a handshake process;
@@ -1397,9 +1397,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 25]
+Sharabayko, et al.       Expires 3 October 2020                [Page 25]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Caller-Listener handshake exchange has the following order of
@@ -1453,9 +1453,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 26]
+Sharabayko, et al.       Expires 3 October 2020                [Page 26]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
     +------+----------------+-----------------------------------------+
@@ -1509,9 +1509,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 27]
+Sharabayko, et al.       Expires 3 October 2020                [Page 27]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
 4.3.1.  Caller-Listener Handshake
@@ -1565,9 +1565,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 28]
+Sharabayko, et al.       Expires 3 October 2020                [Page 28]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    *  SYN Cookie: a cookie that is crafted based on host, port and
@@ -1621,9 +1621,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 29]
+Sharabayko, et al.       Expires 3 October 2020                [Page 29]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    *  Extension Flags: A set of flags that define the extensions
@@ -1677,9 +1677,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 30]
+Sharabayko, et al.       Expires 3 October 2020                [Page 30]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    When one party's cookie value is greater than its peer's, it wins the
@@ -1733,9 +1733,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 31]
+Sharabayko, et al.       Expires 3 October 2020                [Page 31]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    Then Bob responds:
@@ -1789,9 +1789,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 32]
+Sharabayko, et al.       Expires 3 October 2020                [Page 32]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
              o  awaits a confirmation from Alice that she is also
@@ -1845,9 +1845,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 33]
+Sharabayko, et al.       Expires 3 October 2020                [Page 33]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
        *  Receives WAVEAHAND message
@@ -1901,9 +1901,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 34]
+Sharabayko, et al.       Expires 3 October 2020                [Page 34]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    2.  Attention
@@ -1957,9 +1957,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 35]
+Sharabayko, et al.       Expires 3 October 2020                [Page 35]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
        Nonetheless, the Initiator may start sending data packets because
@@ -2013,9 +2013,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 36]
+Sharabayko, et al.       Expires 3 October 2020                [Page 36]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
 4.5.  Timestamp Based Packet Delivery
@@ -2069,9 +2069,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 37]
+Sharabayko, et al.       Expires 3 October 2020                [Page 37]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
                  |  Sending  |              |                   |
@@ -2125,9 +2125,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 38]
+Sharabayko, et al.       Expires 3 October 2020                [Page 38]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    PktTsbpdTime = TsbpdTimeBase + PKT_TIMESTAMP + TsbpdDelay + Drift
@@ -2181,9 +2181,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 39]
+Sharabayko, et al.       Expires 3 October 2020                [Page 39]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    The TSBPD wrapping period happens every 01:11:35 hours.  This time
@@ -2237,9 +2237,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 40]
+Sharabayko, et al.       Expires 3 October 2020                [Page 40]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    <CODE BEGINS>
@@ -2293,9 +2293,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 41]
+Sharabayko, et al.       Expires 3 October 2020                [Page 41]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    the video.  SRT has a time management mechanism to compensate for
@@ -2349,9 +2349,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 42]
+Sharabayko, et al.       Expires 3 October 2020                [Page 42]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    acknowledged packets are removed, their retransmission is no longer
@@ -2405,9 +2405,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 43]
+Sharabayko, et al.       Expires 3 October 2020                [Page 43]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    often so many packets being sent and received that the ACK position
@@ -2461,9 +2461,9 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 44]
+Sharabayko, et al.       Expires 3 October 2020                [Page 44]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    provide packets, but there's no place for them, so they will end up
@@ -2517,24 +2517,33 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-Sharabayko, et al.       Expires 1 October 2020                [Page 45]
+Sharabayko, et al.       Expires 3 October 2020                [Page 45]
 
-Internet-Draft                     SRT                        March 2020
+Internet-Draft                     SRT                        April 2020
 
 
    mechanisms provide a solid background for various congestion control
    algorithms.
 
    Given that SRT can operate in live and file transfer modes, there are
-   two groups of congestion control algorithms possible.
+   two possible groups of congestion control algorithms.
+
+4.11.1.  Live Congestion Control (LiveCC)
 
    For live transmission mode (Section 4.2.2) the congestion control
    algorithm does not need to control the sending pace of the data
-   packets, as the sending timing is provided by the live input.
-   Although certain limitations on the minimal inter-sending time of
-   consecutive packets can be applied in order to avoid congestion
-   during fluctuations of the source bitrate.  Also it is allowed to
-   drop those packets that can not be delivered in time.
+   packets, as the sending timing is provided by the live input.  It is
+   mainly a reactor on network events.  Although certain limitations on
+   the minimal inter-sending time of consecutive packets can be applied
+   in order to avoid congestion during fluctuations of the source
+   bitrate.  Also, it is allowed to drop those packets that can not be
+   delivered in time.
+
+   On the receiving side, LiveCC may decide when an ACK is needed prior
+   to ACK timeout.  It also determines the minimum time between
+   consecutive packets are sent.
+
+4.11.2.  File Transfer Congestion Control (FileCC)
 
    For file transfer, any known File Congestion Control algorithms like
    CUBIC and BBR can apply, including the congestion control mechanism
@@ -2545,7 +2554,7 @@ Internet-Draft                     SRT                        March 2020
    congestion, it can block the main stream and focus on the lost
    packets.
 
-   The algorithm consists on three states: slow start, congestion
+   The algorithm consists of three states: slow start, congestion
    avoidance and slow down.  Starting with no information, the
    congestion control module probes the network to determine the
    available bandwidth and the sending pace for the desired operation
@@ -2555,12 +2564,19 @@ Internet-Draft                     SRT                        March 2020
    is changed to slow down and the sending pace is decreased to reduce
    packet loss.
 
-4.11.1.  Slow Start
+4.11.2.1.  Slow Start
 
    Slow start state has a limit on the number of data packets that can
    be sent before acknowledgment of those segments is received.  File CC
    starts with 16 DATA packets (CWND_SIZE=16) sent with minimum possible
    interval.
+
+
+
+Sharabayko, et al.       Expires 3 October 2020                [Page 46]
+
+Internet-Draft                     SRT                        April 2020
+
 
    CWND_SIZE is increased by the difference between the acknowledged
    sequence number since last ACK processing and the sequence number
@@ -2570,14 +2586,6 @@ Internet-Draft                     SRT                        March 2020
 
    When the congestion window size exceeds its maximum set value
    (MAX_CWND_SIZE), slow start period ends.  Note that this congestion
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 46]
-
-Internet-Draft                     SRT                        March 2020
-
-
    maximum window size is equal to the flow window size (FLOW_WND_SIZE).
    If a delivery rate was reported by the receiver the inter sending
    interval is set as:
@@ -2588,7 +2596,7 @@ Internet-Draft                     SRT                        March 2020
 
    PKT_SND_PERIOD = CWND_SIZE / (RTT + RC_INTERVAL)
 
-4.11.2.  Congestion Avoidance
+4.11.2.2.  Congestion Avoidance
 
    At the end of the slow start state, the congestion avoidance state
    begins.  If the estimated bandwidth (B) is smaller than the actual
@@ -2606,7 +2614,7 @@ Internet-Draft                     SRT                        March 2020
 
    PKT_SND_PERIOD = (PKT_SND_PERIOD * RC_INTERVAL) / (PKT_SND_PERIOD * inc + RC_INTERVAL)
 
-4.11.3.  Slow Down
+4.11.2.3.  Slow Down
 
    Upon the arrival of a NACK a congestion period is started if the lost
    packet sequence in the NACK is bigger than the largest sequence
@@ -2619,20 +2627,18 @@ Internet-Draft                     SRT                        March 2020
    *  NAKCount: Number of NACKs received in the current congestion
       period.  Initial value: 1.
 
+
+
+Sharabayko, et al.       Expires 3 October 2020                [Page 47]
+
+Internet-Draft                     SRT                        April 2020
+
+
    *  DecCount: Number of times the sending period has been increased in
       the former congestion period.  Initial value: 0.
 
    *  DecRandom: Uniformly distributed random number to avoid global
       synchronization.  Ranges from 1 to AvgNAKNum.
-
-
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 47]
-
-Internet-Draft                     SRT                        March 2020
-
 
    When a new congestion period is started the previously enumerated
    variables are reset and the packet sending period is increased as:
@@ -2676,19 +2682,19 @@ Contributors
 
    In alphabetical order, the contributors to the pre-IETF SRT project
    and specification at Haivision are: Marc Cymontkowski, Roman
+
+
+
+Sharabayko, et al.       Expires 3 October 2020                [Page 48]
+
+Internet-Draft                     SRT                        April 2020
+
+
    Diouskine, Jean Dube, Mikolaj Malecki, Steve Matthews, Maria
    Sharabayko, Maxim Sharabayko, Adam Yellen.
 
    The contributors to this specification at SK Telecom are Jeongseok
    Kim and Joonwoong Kim.
-
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 48]
-
-Internet-Draft                     SRT                        March 2020
-
 
    We cannot list all the contributors to the open-sourced
    implementation of SRT on GitHub.  But we appreciate the help,
@@ -2720,7 +2726,7 @@ Normative References
 Informative References
 
    [AV1]      Rivaz, P.d. and J. Haughton, "AV1 Bitstream & Decoding
-              Process Specification", March 2020,
+              Process Specification", April 2020,
               <https://aomediacodec.github.io/av1-spec/av1-spec.pdf>.
 
    [GHG04b]   Gu, Y., Hong, X., and R.L. Grossman,, "Experiences in
@@ -2732,19 +2738,19 @@ Informative References
               efficiency video coding", ITU-T Recommendation H.265,
               2019.
 
+
+
+
+Sharabayko, et al.       Expires 3 October 2020                [Page 49]
+
+Internet-Draft                     SRT                        April 2020
+
+
    [I-D.ietf-quic-http]
               Bishop, M., "Hypertext Transfer Protocol Version 3
               (HTTP/3)", Work in Progress, Internet-Draft, draft-ietf-
               quic-http-27, 21 February 2020, <http://www.ietf.org/
               internet-drafts/draft-ietf-quic-http-27.txt>.
-
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 49]
-
-Internet-Draft                     SRT                        March 2020
-
 
    [I-D.ietf-quic-transport]
               Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
@@ -2756,12 +2762,12 @@ Internet-Draft                     SRT                        March 2020
    [ISO13818-1]
               ISO, "Information technology -- Generic coding of moving
               pictures and associated audio information: Systems", ISO/
-              IEC 13818-1, March 2020.
+              IEC 13818-1, April 2020.
 
    [ISO23009] ISO, "Information technology -- Dynamic adaptive streaming
-              over HTTP (DASH)", ISO/IEC 23009:2019, March 2020.
+              over HTTP (DASH)", ISO/IEC 23009:2019, April 2020.
 
-   [PNPID]    "PNP ID AND ACPI ID REGISTRY", March 2020,
+   [PNPID]    "PNP ID AND ACPI ID REGISTRY", April 2020,
               <https://uefi.org/PNP_ACPI_Registry>.
 
    [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
@@ -2777,30 +2783,30 @@ Internet-Draft                     SRT                        March 2020
               RFC 8216, DOI 10.17487/RFC8216, August 2017,
               <https://www.rfc-editor.org/info/rfc8216>.
 
-   [RTMP]     "Real-Time Messaging Protocol", March 2020,
+   [RTMP]     "Real-Time Messaging Protocol", April 2020,
               <https://www.adobe.com/devnet/rtmp.html>.
 
    [SP800-38A]
               Dworkin, M., "Recommendation for Block Cipher Modes of
               Operation", December 2001.
 
-   [SRTSRC]   "SRT fully functional reference implementation", March
+   [SRTSRC]   "SRT fully functional reference implementation", April
               2020, <https://github.com/Haivision/srt>.
+
+
+
+
+
+Sharabayko, et al.       Expires 3 October 2020                [Page 50]
+
+Internet-Draft                     SRT                        April 2020
+
 
    [SRTTO]    Dube, J. and S. Matthews, "SRT Protocol Technical
               Overview", December 2019.
 
-   [VP9]      WebM, "VP9 Video Codec", March 2020,
+   [VP9]      WebM, "VP9 Video Codec", April 2020,
               <https://www.webmproject.org/vp9>.
-
-
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 50]
-
-Internet-Draft                     SRT                        March 2020
-
 
 Appendix A.  Packet Sequence List coding
 
@@ -2844,18 +2850,18 @@ Authors' Addresses
    Email: msharabayko@haivision.com
 
 
+
+
+
+Sharabayko, et al.       Expires 3 October 2020                [Page 51]
+
+Internet-Draft                     SRT                        April 2020
+
+
    Jean Dube
    Haivision
 
    Email: jdube@haivision.com
-
-
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 51]
-
-Internet-Draft                     SRT                        March 2020
 
 
    Jeongseok Kim
@@ -2903,10 +2909,4 @@ Internet-Draft                     SRT                        March 2020
 
 
 
-
-
-
-
-
-
-Sharabayko, et al.       Expires 1 October 2020                [Page 52]
+Sharabayko, et al.       Expires 3 October 2020                [Page 52]
